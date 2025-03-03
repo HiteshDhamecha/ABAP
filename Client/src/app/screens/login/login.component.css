@@ -1,0 +1,53 @@
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 75px;
+    height: calc(100vh - 75px)
+}
+
+.welcome-logo {
+    max-width: 250px
+}
+
+.welcome h1 {
+    font-size: 4rem;
+    text-align: center;
+    color: var(--secondary);
+}
+
+.welcome-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.welcome-buttons button {
+    font-size: 1.25rem;
+    padding: .5rem 1.5rem;
+    border-radius: var(--border-radius);
+    border-style: solid;
+    transition: var(--transition-time);
+}
+
+.welcome-buttons button.login {
+    color: #FFF;
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.welcome-buttons button.signup {
+    color: var(--primary);
+    background-color: #FFF;
+    border-color: var(--primary);
+}
+
+.welcome-buttons button:hover {
+    color: #FFF;
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.loader kendo-loader {
+    color: var(--primary);
+}
