@@ -132,5 +132,6 @@ dist
 MJExplorer/.angular
 /MJExplorer/src/environments
 Client/.angular
+/Client/src/environments
 
 install.config.json 
