@@ -1,0 +1,15 @@
+
+<div class="welcome">
+    <img class="welcome-logo" [src]='"https://www.elastikteams.com/wp-content/uploads/2021/06/logo.png"' alt="Company Logo" />
+    <h1>Welcome to the Abstract Process Application</h1>
+    <div class="welcome-buttons">
+        @if(ShowLoading){
+            <div class="loader">
+            </div>
+        }
+        @else {
+            <button class="login" (click)="Login()">Login</button>
+            <button class="signup" (click)="Login()">Signup</button> 
+        }  
+    </div>
+</div>
