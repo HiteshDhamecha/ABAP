@@ -44,8 +44,8 @@ import { ManageAbstractComponent } from './component/manage-abstract/manage-abst
     AppRoutingModule,
     FormsModule,
     AuthModule.forRoot({
-      domain: environment.CLIENT_AUTHORITY,
-      clientId: environment.CLIENT_ID,
+      domain: environment.AUTH0_DOMAIN,
+      clientId: environment.AUTH0_CLIENTID,
       authorizationParams: {
         redirect_uri: window.location.origin
       },

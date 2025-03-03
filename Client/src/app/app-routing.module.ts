@@ -24,6 +24,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: ManageAbstractComponent,
+    canActivate: [AuthGuard, MJProviderSet]
   },
   {
     path: '**',
