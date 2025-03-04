@@ -135,3 +135,5 @@ Client/.angular
 /Client/src/environments
 
 install.config.json 
+
+SQL Scripts/generated/et-ci-dev-abpa-sqldb/dbo
