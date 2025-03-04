@@ -1,12 +1,11 @@
 .sidebar {
   width: 250px;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   padding: 10px;
   height: 100%;
 }
 
 .logo {
-  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -27,6 +26,12 @@
   transition: background-color 0.3s;
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19.12px;
+  letter-spacing: 0%;
 }
 
 .sidebar ul li:hover {

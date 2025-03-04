@@ -10,7 +10,7 @@
     <li *ngFor="let tab of tabs" 
         [class.selected]="tab.selected" 
         (click)="navigateTo(tab)">
-      <i [class]="tab.name === 'Manage Events' ? 'fa fa-calendar' : 'fa fa-user'"></i>&nbsp;&nbsp;
+      <i [class]="tab.name === 'Manage Event' ? 'fa fa-calendar' : 'fa fa-user'"></i>&nbsp;&nbsp;
       <span>{{ tab.name }}</span>
     </li>
   </ul>
