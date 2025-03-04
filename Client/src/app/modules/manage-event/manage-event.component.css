@@ -1,0 +1,49 @@
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s;
+}
+
+.tab.active {
+  background-color: #767CFF;
+  color: white;
+}
+
+.tab.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.tab-content {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.table-main {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-main th, .table-main td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.table-main th {
+  background-color: #f8f9fa;
+}
+
+.table-main td {
+  vertical-align: middle;
+}

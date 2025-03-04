@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService, IdToken, User } from '@auth0/auth0-angular';
 import { Metadata } from '@memberjunction/core';
 import { GraphQLDataProvider, GraphQLProviderConfigData, setupGraphQLClient } from '@memberjunction/graphql-dataprovider';
 import { environment } from 'src/environments/environment';
-import { LoginComponent } from './screens/login/login.component';
+import { LoginComponent } from './modules/login/login.component';
 
 export type RefreshTokenFunction = () => Promise<string>;
 
@@ -15,8 +15,14 @@ export type RefreshTokenFunction = () => Promise<string>;
 })
 export class AppComponent implements OnInit {
   private loginComponent: LoginComponent | null = null;
+  public showSidebar: boolean = true;
 
   constructor(private router: Router, public authService: AuthService) { 
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showSidebar = event.url !== '/';
+      }
+    });
   }
 
   public async ngOnInit(): Promise<void> {
@@ -94,7 +100,7 @@ export class AppComponent implements OnInit {
       localStorage.setItem(environment.TOKEN_CACHE_KEY, token);
   
       this.loginComponent?.SetLoading(false);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/event-settings']);
     } 
     catch (err) {
       if (err.response && err.response.errors) {

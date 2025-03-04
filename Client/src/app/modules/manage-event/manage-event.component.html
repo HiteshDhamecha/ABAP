@@ -1,0 +1,45 @@
+<h2>Manage Event</h2>
+
+<div class="tabs">
+      <div class="tab" [class.active]="selectedTab === 'event-settings'" (click)="selectTab('event-settings')">
+        <i class="fa fa-user"></i>&nbsp;
+        <span>Event Settings</span>      
+      </div>
+      <div class="tab" [class.active]="selectedTab === 'agent-settings'" (click)="selectTab('agent-settings')">
+        <i class="fa fa-user"></i>&nbsp;
+        <span>Agent Settings</span>      
+      </div>
+      <div class="tab" [class.active]="selectedTab === 'publish-preview'" (click)="selectTab('publish-preview')">
+        <i class="fa fa-user"></i>&nbsp;
+        <span>Publish and Preview</span>      
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <div *ngIf="selectedTab === 'event-settings'">
+        <table class="table-main">
+          <thead style="justify-content: left;">
+            <tr>
+              <th>Event Name</th>
+              <th>Event Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let event of events">
+              <td>{{ event.name }}</td>
+              <td>{{ event.date }}</td>
+              <td>{{ event.status }}</td>
+              <td><button (click)="editEvent(event)"><i class="fa fa-pencil"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="selectedTab === 'agent-settings'">
+        <p>Hello from Agent Settings</p>
+      </div>
+      <div *ngIf="selectedTab === 'publish-preview'">
+        <p>Hello from Publish and Preview</p>
+      </div>
+    </div>

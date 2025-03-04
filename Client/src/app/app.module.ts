@@ -31,12 +31,16 @@ import { MenuModule } from '@progress/kendo-angular-menu';
 import { PDFExportModule } from "@progress/kendo-angular-pdf-export";
 import { ChatModule } from '@memberjunction/ng-chat';
 import { MarkdownModule } from 'ngx-markdown';
-import { ManageAbstractComponent } from './component/manage-abstract/manage-abstract.component';
+import { ManageEventComponent } from './modules/manage-event/manage-event.component';
+import { SidebarComponent } from './modules/sidebar/sidebar.component';
+import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstract.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ManageEventComponent,
+    SidebarComponent,
     ManageAbstractComponent
   ],
   imports: [
