@@ -1,45 +1,60 @@
-<h2>Manage Event</h2>
-
-<div class="tabs">
-      <div class="tab" [class.active]="selectedTab === 'event-settings'" (click)="selectTab('event-settings')">
-        <i class="fa fa-user"></i>&nbsp;
-        <span>Event Settings</span>      
-      </div>
-      <div class="tab" [class.active]="selectedTab === 'agent-settings'" (click)="selectTab('agent-settings')">
-        <i class="fa fa-user"></i>&nbsp;
-        <span>Agent Settings</span>      
-      </div>
-      <div class="tab" [class.active]="selectedTab === 'publish-preview'" (click)="selectTab('publish-preview')">
-        <i class="fa fa-user"></i>&nbsp;
-        <span>Publish and Preview</span>      
-      </div>
+<div class="heading-row">
+  <div class="title">Manage Event</div>
+  <div class="add-event">
+    <button class="add-event-btn">Add New Event</button>
+  </div>
+</div>
+<div class="container-manage">
+  <div class="tabs">
+    <div class="tab" style=" border-top-left-radius: 8px; border-bottom-left-radius: 8px;"
+      [class.active]="selectedTab === 'event-settings'" (click)="selectTab('event-settings')">
+      <i class="fa fa-user"></i>&nbsp;
+      <span class="tab-title">Event Settings</span>
     </div>
-
-    <div class="tab-content">
-      <div *ngIf="selectedTab === 'event-settings'">
-        <table class="table-main">
-          <thead style="justify-content: left;">
-            <tr>
-              <th>Event Name</th>
-              <th>Event Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let event of events">
-              <td>{{ event.name }}</td>
-              <td>{{ event.date }}</td>
-              <td>{{ event.status }}</td>
-              <td><button (click)="editEvent(event)"><i class="fa fa-pencil"></i></button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div *ngIf="selectedTab === 'agent-settings'">
-        <p>Hello from Agent Settings</p>
-      </div>
-      <div *ngIf="selectedTab === 'publish-preview'">
-        <p>Hello from Publish and Preview</p>
-      </div>
+    <div class="tab" [class.active]="selectedTab === 'agent-settings'" (click)="selectTab('agent-settings')">
+      <i class="fa fa-user"></i>&nbsp;
+      <span class="tab-title">Agent Setting</span>
     </div>
+    <div class="tab" style="  border-top-right-radius: 8px; border-bottom-right-radius: 8px;"
+      [class.active]="selectedTab === 'publish-preview'" (click)="selectTab('publish-preview')">
+      <i class="fa fa-user"></i>&nbsp;
+      <span class="tab-title">Publish & Preview</span>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div *ngIf="selectedTab === 'event-settings'">
+      <table mat-table [dataSource]="events" class=" table-main">
+        <!-- Event Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Event Name </th>
+          <td mat-cell *matCellDef="let event"> {{event.name}} </td>
+        </ng-container>
+
+        <!-- Event Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Event Date </th>
+          <td mat-cell *matCellDef="let event"> {{event.date}} </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let event" [ngClass]="{
+            'status-completed': event.status === 'Completed',
+            'status-live': event.status === 'Live',
+            'status-upcoming': event.status === 'Upcoming'
+          }"> {{event.status}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div *ngIf="selectedTab === 'agent-settings'">
+      <p>Hello from Agent Settings</p>
+    </div>
+    <div *ngIf="selectedTab === 'publish-preview'">
+      <p>Hello from Publish and Preview</p>
+    </div>
+  </div>
+</div>

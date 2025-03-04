@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   public tabs = [
-    { name: 'Manage Events', route: '/event-settings', selected: true },
-    { name: 'Manage Abstracts', route: '/manage-abstract', selected: false }
+    { name: 'Manage Event', route: '/event-settings', selected: true },
+    { name: 'Manage Abstract', route: '/manage-abstract', selected: false }
   ];
 
   constructor(private router: Router) {}
