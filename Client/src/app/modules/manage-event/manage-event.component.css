@@ -1,49 +1,125 @@
+.heading-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.title{
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32.78px;
+  letter-spacing: 0%;
+  padding-bottom: 20px;
+}
+.add-event-btn{
+  background-color:#767CFF;
+  width: 140;
+  height: 30;
+  gap: 10px;
+  border-radius: 4px;
+  padding-top: 5px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  border-width: 1px;
+  border: none;
+  color: #fff;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19.36px;
+  letter-spacing: 0%;
+  text-align: center;
+}
+.container-manage {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
 .tabs {
   display: flex;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
+}
+
+.tab-title {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21.86px;
+  letter-spacing: 0%;
 }
 
 .tab {
   padding: 10px 20px;
   cursor: pointer;
-  border: 1px solid #ccc;
-  border-bottom: none;
-  background-color: #f8f9fa;
+  background-color: #EEF2F5;
   transition: background-color 0.3s;
 }
 
 .tab.active {
-  background-color: #767CFF;
-  color: white;
+  background-color: white;
 }
 
-.tab.disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
 
 .tab-content {
   padding: 20px;
   background-color: #fff;
-  border: 1px solid #ccc;
 }
 
-.table-main {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table-main th, .table-main td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
+.table-main th,
+.table-main td {
+  color: #404D61;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24.2px;
+  letter-spacing: 0%;
+  border: none;
 }
 
 .table-main th {
-  background-color: #f8f9fa;
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the table header */
 }
 
+.table-main tr:last-child td {
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the last table row */
+}
+.table-main tr {
+  display: block;
+  margin-bottom: 10px; /* Adds gap */
+}
+.table-main tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Adds row gap */
+}
+
+.table-main th, 
 .table-main td {
-  vertical-align: middle;
+  flex: 1; /* Ensures equal width distribution */
+  text-align: left;
+  padding: 10px;
+}
+
+.table-main td.status-completed {
+  background-color: #107C1033;
+  border: 1px solid #107C10;
+  border-radius: 4px;
+  color:#107C10;
+}
+
+.table-main td.status-live {
+  background-color: #767CFF33;
+  border: 1px solid #767CFF;
+  border-radius: 4px;
+  color: #767CFF;
+}
+
+.table-main td.status-upcoming {
+  background-color: #FFCD2333;
+  border: 1px solid #FFCD23;
+  border-radius: 4px;
+  color: #FFCD23;
 }

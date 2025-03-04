@@ -35,6 +35,10 @@ import { ManageEventComponent } from './modules/manage-event/manage-event.compon
 import { SidebarComponent } from './modules/sidebar/sidebar.component';
 import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstract.component';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -44,6 +48,9 @@ import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstra
     ManageAbstractComponent
   ],
   imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
