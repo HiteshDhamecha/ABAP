@@ -49,8 +49,7 @@ export const AbstractLogsSchema = z.object({
     AIAgentId_Virtual: z.string().nullish().describe(`
         * * Field Name: AIAgentId_Virtual
         * * Display Name: AI Agent Id _ Virtual
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type AbstractLogsEntityType = z.infer<typeof AbstractLogsSchema>;
@@ -91,8 +90,7 @@ export const AbstractResultSchema = z.object({
     AbstractStatusId_Virtual: z.string().describe(`
         * * Field Name: AbstractStatusId_Virtual
         * * Display Name: Abstract Status Id _ Virtual
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type AbstractResultEntityType = z.infer<typeof AbstractResultSchema>;
@@ -168,13 +166,11 @@ export const AbstractSchema = z.object({
     Session: z.string().describe(`
         * * Field Name: Session
         * * Display Name: Session
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
     User: z.string().describe(`
         * * Field Name: User
         * * Display Name: User
-        * * SQL Data Type: nvarchar(100)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(100)`),
 });
 
 export type AbstractEntityType = z.infer<typeof AbstractSchema>;
@@ -200,14 +196,10 @@ export const EventSchema = z.object({
         * * Field Name: EventEndDate
         * * Display Name: Event End Date
         * * SQL Data Type: datetime`),
-    AbstractStartDate: z.date().nullish().describe(`
-        * * Field Name: AbstractStartDate
-        * * Display Name: Abstract Start Date
-        * * SQL Data Type: datetime`),
-    AbstractEndDate: z.date().nullish().describe(`
-        * * Field Name: AbstractEndDate
-        * * Display Name: Abstract End Date
-        * * SQL Data Type: datetime`),
+    Description: z.string().nullish().describe(`
+        * * Field Name: Description
+        * * Display Name: Description
+        * * SQL Data Type: nvarchar(255)`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -297,13 +289,11 @@ export const SessionScoreBoardSchema = z.object({
     SessionId_Virtual: z.string().describe(`
         * * Field Name: SessionId_Virtual
         * * Display Name: Session Id _ Virtual
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
     ScoreBoardId_Virtual: z.string().nullish().describe(`
         * * Field Name: ScoreBoardId_Virtual
         * * Display Name: Score Board Id _ Virtual
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type SessionScoreBoardEntityType = z.infer<typeof SessionScoreBoardSchema>;
@@ -347,8 +337,7 @@ export const SessionSchema = z.object({
     Event: z.string().describe(`
         * * Field Name: Event
         * * Display Name: Event
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type SessionEntityType = z.infer<typeof SessionSchema>;
@@ -469,7 +458,6 @@ export class AbstractLogsEntity extends BaseEntity<AbstractLogsEntityType> {
     * * Field Name: AIAgentId_Virtual
     * * Display Name: AI Agent Id _ Virtual
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get AIAgentId_Virtual(): string | null {
         return this.Get('AIAgentId_Virtual');
@@ -578,7 +566,6 @@ export class AbstractResultEntity extends BaseEntity<AbstractResultEntityType> {
     * * Field Name: AbstractStatusId_Virtual
     * * Display Name: Abstract Status Id _ Virtual
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get AbstractStatusId_Virtual(): string {
         return this.Get('AbstractStatusId_Virtual');
@@ -784,7 +771,6 @@ export class AbstractEntity extends BaseEntity<AbstractEntityType> {
     * * Field Name: Session
     * * Display Name: Session
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get Session(): string {
         return this.Get('Session');
@@ -794,7 +780,6 @@ export class AbstractEntity extends BaseEntity<AbstractEntityType> {
     * * Field Name: User
     * * Display Name: User
     * * SQL Data Type: nvarchar(100)
-    * * Default Value: null
     */
     get User(): string {
         return this.Get('User');
@@ -878,27 +863,15 @@ export class EventEntity extends BaseEntity<EventEntityType> {
     }
 
     /**
-    * * Field Name: AbstractStartDate
-    * * Display Name: Abstract Start Date
-    * * SQL Data Type: datetime
+    * * Field Name: Description
+    * * Display Name: Description
+    * * SQL Data Type: nvarchar(255)
     */
-    get AbstractStartDate(): Date | null {
-        return this.Get('AbstractStartDate');
+    get Description(): string | null {
+        return this.Get('Description');
     }
-    set AbstractStartDate(value: Date | null) {
-        this.Set('AbstractStartDate', value);
-    }
-
-    /**
-    * * Field Name: AbstractEndDate
-    * * Display Name: Abstract End Date
-    * * SQL Data Type: datetime
-    */
-    get AbstractEndDate(): Date | null {
-        return this.Get('AbstractEndDate');
-    }
-    set AbstractEndDate(value: Date | null) {
-        this.Set('AbstractEndDate', value);
+    set Description(value: string | null) {
+        this.Set('Description', value);
     }
 
     /**
@@ -1133,7 +1106,6 @@ export class SessionScoreBoardEntity extends BaseEntity<SessionScoreBoardEntityT
     * * Field Name: SessionId_Virtual
     * * Display Name: Session Id _ Virtual
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get SessionId_Virtual(): string {
         return this.Get('SessionId_Virtual');
@@ -1143,7 +1115,6 @@ export class SessionScoreBoardEntity extends BaseEntity<SessionScoreBoardEntityT
     * * Field Name: ScoreBoardId_Virtual
     * * Display Name: Score Board Id _ Virtual
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get ScoreBoardId_Virtual(): string | null {
         return this.Get('ScoreBoardId_Virtual');
@@ -1263,7 +1234,6 @@ export class SessionEntity extends BaseEntity<SessionEntityType> {
     * * Field Name: Event
     * * Display Name: Event
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get Event(): string {
         return this.Get('Event');

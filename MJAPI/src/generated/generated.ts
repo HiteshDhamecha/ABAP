@@ -528,12 +528,8 @@ export class Event_ {
     EventEndDate?: Date;
         
     @Field({nullable: true}) 
-    @MaxLength(8)
-    AbstractStartDate?: Date;
-        
-    @Field({nullable: true}) 
-    @MaxLength(8)
-    AbstractEndDate?: Date;
+    @MaxLength(510)
+    Description?: string;
         
     @Field() 
     @MaxLength(10)
@@ -563,10 +559,7 @@ export class CreateEventInput {
     EventEndDate: Date | null;
 
     @Field({ nullable: true })
-    AbstractStartDate: Date | null;
-
-    @Field({ nullable: true })
-    AbstractEndDate: Date | null;
+    Description: string | null;
 }
     
 
@@ -588,10 +581,7 @@ export class UpdateEventInput {
     EventEndDate?: Date | null;
 
     @Field({ nullable: true })
-    AbstractStartDate?: Date | null;
-
-    @Field({ nullable: true })
-    AbstractEndDate?: Date | null;
+    Description?: string | null;
 
     @Field(() => [KeyValuePairInput], { nullable: true })
     OldValues___?: KeyValuePairInput[];
