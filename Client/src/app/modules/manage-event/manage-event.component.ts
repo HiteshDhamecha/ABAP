@@ -1,10 +1,11 @@
-import { Component,ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateEventDialogComponent } from '../../components/create-event-dialog/create-event-dialog.component';
 
 @Component({
   selector: 'app-manage-event',
   templateUrl: './manage-event.component.html',
-  styleUrl: './manage-event.component.css',
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./manage-event.component.css'],
 })
 export class ManageEventComponent {
   public selectedTab: string = 'event-settings';
@@ -13,7 +14,9 @@ export class ManageEventComponent {
     { name: 'Quarter 1 Meeting', date: '2025-03-15', status: 'Live' },
     { name: 'AI Astra Global Launch', date: '2025-04-01', status: 'Upcoming' }
   ];
-  
+
+  constructor(public dialog: MatDialog) {}
+
   public displayedColumns: string[] = ['name', 'date', 'status'];
 
   selectTab(tab: string) {
@@ -22,4 +25,20 @@ export class ManageEventComponent {
     }
   }
 
+  openCreateEventDialog(): void {
+    const dialogRef = this.dialog.open(CreateEventDialogComponent, {
+      width: '350px',
+      height: 'auto',
+     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.events.push({
+          name: result.name,
+          date: result.startDate,
+          status: 'Upcoming'
+        });
+      }
+    });
+  }
 }
