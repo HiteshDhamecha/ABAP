@@ -11,10 +11,6 @@
       <i class="fa fa-user"></i>&nbsp;
       <span class="tab-title">Event Settings</span>
     </div>
-    <div class="tab" [class.active]="selectedTab === 'agent-settings'" (click)="selectTab('agent-settings')">
-      <i class="fa fa-user"></i>&nbsp;
-      <span class="tab-title">Agent Setting</span>
-    </div>
     <div class="tab" style="  border-top-right-radius: 8px; border-bottom-right-radius: 8px;"
       [class.active]="selectedTab === 'publish-preview'" (click)="selectTab('publish-preview')">
       <i class="fa fa-user"></i>&nbsp;
@@ -49,9 +45,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-    </div>
-    <div *ngIf="selectedTab === 'agent-settings'">
-      <p>Hello from Agent Settings</p>
     </div>
     <div *ngIf="selectedTab === 'publish-preview'">
       <p>Hello from Publish and Preview</p>
