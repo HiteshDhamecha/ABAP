@@ -1,1 +1,30 @@
-<p>manage-abstract works!</p>
+<div class="manage-abstract-container">
+    <h2>Manage Abstract</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Speaker Name</th>
+            <th>Event Name</th>
+            <th>Session Name</th>
+            <th>Submission Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let abstract of abstracts">
+            <td>{{ abstract.speaker }}</td>
+            <td>{{ abstract.event || '-' }}</td>
+            <td>{{ abstract.session || '-' }}</td>
+            <td>{{ abstract.date }}</td>
+            <td>
+              <span class="status" [ngClass]="abstract.status.toLowerCase()">
+                {{ abstract.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
