@@ -1,7 +1,7 @@
 <div class="heading-row">
   <div class="title">Manage Event</div>
   <div class="add-event">
-    <button class="add-event-btn">Add New Event</button>
+    <button class="add-event-btn" (click)="openCreateEventDialog()">Add New Event</button>
   </div>
 </div>
 <div class="container-manage">
@@ -27,20 +27,20 @@
       <table mat-table [dataSource]="events" class=" table-main">
         <!-- Event Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Event Name </th>
-          <td mat-cell *matCellDef="let event"> {{event.name}} </td>
+          <th mat-header-cell *matHeaderCellDef class="event-header"> Event Name </th>
+          <td mat-cell *matCellDef="let event" class="event-cell"> {{event.name}} </td>
         </ng-container>
 
         <!-- Event Date Column -->
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Event Date </th>
-          <td mat-cell *matCellDef="let event"> {{event.date}} </td>
+          <th mat-header-cell *matHeaderCellDef class="date-header"> Event Date </th>
+          <td mat-cell *matCellDef="let event" class="date-cell"> {{event.date}} </td>
         </ng-container>
 
         <!-- Status Column -->
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let event" [ngClass]="{
+          <th mat-header-cell *matHeaderCellDef class="status-header"> Status </th>
+          <td mat-cell *matCellDef="let event"class="status-cell" [ngClass]="{
             'status-completed': event.status === 'Completed',
             'status-live': event.status === 'Live',
             'status-upcoming': event.status === 'Upcoming'

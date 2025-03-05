@@ -3,7 +3,7 @@ import 'hammerjs'
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';  
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +38,12 @@ import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstra
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDividerModule } from '@angular/material/divider';
+import { CreateEventDialogComponent } from './components/create-event-dialog/create-event-dialog.component';
+
 
 
 @NgModule({
@@ -45,13 +51,20 @@ import { MatIconModule } from '@angular/material/icon';
     AppComponent,
     ManageEventComponent,
     SidebarComponent,
-    ManageAbstractComponent
+    ManageAbstractComponent,
+    CreateEventDialogComponent
   ],
   imports: [
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDividerModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     AuthModule.forRoot({
