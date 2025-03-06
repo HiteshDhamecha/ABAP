@@ -43,7 +43,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateEventDialogComponent } from './components/create-event-dialog/create-event-dialog.component';
-
+import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
 
 
 @NgModule({
@@ -52,7 +52,8 @@ import { CreateEventDialogComponent } from './components/create-event-dialog/cre
     ManageEventComponent,
     SidebarComponent,
     ManageAbstractComponent,
-    CreateEventDialogComponent
+    CreateEventDialogComponent,
+    ManageAbstractDetailsComponent
   ],
   imports: [
     MatDialogModule,
