@@ -5,6 +5,7 @@ import { Metadata } from '@memberjunction/core';
 import { LoginComponent } from './modules/login/login.component';
 import { ManageEventComponent } from './modules/manage-event/manage-event.component';
 import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstract.component';
+import { ManageScorecardComponent } from './modules/manage-scorecard/manage-scorecard.component';
 
 const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => { 
   if (!Metadata.Provider) {
@@ -34,14 +35,13 @@ const routes: Routes = [
     component: ManageAbstractComponent,
     canActivate: [AuthGuard, MJProviderSet]
   },
-  // {
-  //   path: 'publish-preview',
-  //   component: PublishPreviewComponent,
-  //   canActivate: [AuthGuard]
-  // },
+  {
+    path: 'manage-scorecard',
+    component: ManageScorecardComponent,
+  },
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'event-settings'
   }
 ];
 

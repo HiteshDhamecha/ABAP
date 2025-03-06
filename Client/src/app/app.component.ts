@@ -5,6 +5,7 @@ import { Metadata } from '@memberjunction/core';
 import { GraphQLDataProvider, GraphQLProviderConfigData, setupGraphQLClient } from '@memberjunction/graphql-dataprovider';
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './modules/login/login.component';
+import { UserService } from './service/user.service';
 
 export type RefreshTokenFunction = () => Promise<string>;
 
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   private loginComponent: LoginComponent | null = null;
   public showSidebar: boolean = true;
 
-  constructor(private router: Router, public authService: AuthService) { 
+  constructor(private router: Router, public authService: AuthService, private userService: UserService) { 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showSidebar = event.url !== '/';
@@ -83,7 +84,10 @@ export class AppComponent implements OnInit {
         this.NavigateToLogin();
         return;
       }
-  
+      else{
+        console.log(md.CurrentUser);
+        this.userService.setUserInfo(md.CurrentUser);
+      }
       if(md.CurrentUser.Email !== user.email){
         console.log("User's email does not match metadata email, refreshing metadata");
         await provider.Refresh();
