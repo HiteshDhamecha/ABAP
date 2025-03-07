@@ -1,0 +1,47 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Flexbox to align labels and inputs in two columns */
+.form-group-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    width: 48%; /* Adjust width for two-column layout */
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.summary-section, .experience-section {
+    margin-top: 20px;
+}
+
+.summary-section p, .experience-section p {
+    line-height: 1.5;
+    color: #555;
+}
