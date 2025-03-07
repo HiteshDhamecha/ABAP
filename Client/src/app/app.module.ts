@@ -45,6 +45,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CreateEventDialogComponent } from './components/create-event-dialog/create-event-dialog.component';
 import { EventDetailsComponent } from './modules/manage-event/event-details/event-details.component';
 
+import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { EventDetailsComponent } from './modules/manage-event/event-details/even
     ManageAbstractComponent,
     CreateEventDialogComponent,
     EventDetailsComponent
+    ManageAbstractDetailsComponent
   ],
   imports: [
     MatDialogModule,

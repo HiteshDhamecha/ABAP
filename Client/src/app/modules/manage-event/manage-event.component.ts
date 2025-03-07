@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateEventDialogComponent } from '../../components/create-event-dialog/create-event-dialog.component';
+
 import { EventEntity } from 'mj_generatedentities';
 import { LogStatus, Metadata, RunView } from '@memberjunction/core';
 import { Router } from '@angular/router';
 
+import { CreateEventDialogComponent } from 'src/app/components/create-event-dialog/create-event-dialog.component';
 
 @Component({
   selector: 'app-manage-event',
