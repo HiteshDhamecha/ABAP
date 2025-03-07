@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { RegisterClass } from '@memberjunction/global';
 import { BaseFormSectionComponent } from '@memberjunction/ng-base-forms';
-import { AbstractEntity } from 'mj_generatedentities';
+import { AbstractStagingEntity } from 'mj_generatedentities';
 
-@RegisterClass(BaseFormSectionComponent, 'Abstracts.details') // Tell MemberJunction about this class 
+@RegisterClass(BaseFormSectionComponent, 'Abstract Stagings.details') // Tell MemberJunction about this class 
 @Component({
-    selector: 'gen-abstract-form-details',
+    selector: 'gen-abstractstaging-form-details',
     styleUrls: ['../../../../../shared/form-styles.css'],
     template: `<div *ngIf="this.record">
     <div class="record-form">
@@ -15,8 +15,6 @@ import { AbstractEntity } from 'mj_generatedentities';
             FieldName="SessionID"
             Type="textbox"
             [EditMode]="EditMode"
-            LinkType="Record"
-            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -24,8 +22,6 @@ import { AbstractEntity } from 'mj_generatedentities';
             FieldName="UserID"
             Type="textbox"
             [EditMode]="EditMode"
-            LinkType="Record"
-            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -66,28 +62,28 @@ import { AbstractEntity } from 'mj_generatedentities';
             [record]="record"
             [ShowLabel]="true"
             FieldName="Session"
-            Type="textbox"
+            Type="textarea"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="User"
-            Type="textbox"
+            Type="textarea"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="FirstName"
-            Type="textbox"
+            Type="textarea"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="LastName"
-            Type="textbox"
+            Type="textarea"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
@@ -100,50 +96,43 @@ import { AbstractEntity } from 'mj_generatedentities';
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
-            FieldName="Expr1"
-            Type="textbox"
-            [EditMode]="EditMode"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
             FieldName="EventName"
-            Type="textbox"
+            Type="textarea"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="EventStartDate"
-            Type="textbox"
+            Type="datepicker"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="EventEndDate"
-            Type="textbox"
+            Type="datepicker"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="Description"
-            Type="textbox"
+            Type="textarea"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="EventCreatedAt"
-            Type="textbox"
+            Type="datepicker"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="EventUpdatedAt"
-            Type="textbox"
+            Type="datepicker"
             [EditMode]="EditMode"
         ></mj-form-field>
 
@@ -151,12 +140,12 @@ import { AbstractEntity } from 'mj_generatedentities';
 </div>
     `
 })
-export class AbstractDetailsComponent extends BaseFormSectionComponent {
-    @Input() override record!: AbstractEntity;
+export class AbstractStagingDetailsComponent extends BaseFormSectionComponent {
+    @Input() override record!: AbstractStagingEntity;
     @Input() override EditMode: boolean = false;
 }
 
-export function LoadAbstractDetailsComponent() {
+export function LoadAbstractStagingDetailsComponent() {
     // does nothing, but called in order to prevent tree-shaking from eliminating this component from the build
 }
       
