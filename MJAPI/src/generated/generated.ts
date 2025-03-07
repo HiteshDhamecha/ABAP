@@ -18,7 +18,7 @@ import { DataSource } from 'typeorm';
 import * as mj_core_schema_server_object_types from '@memberjunction/server'
 
 
-import { AbstractStatusEntity, AbstractResultEntity, ScoreBoardEntity, EventEntity, SessionScoreBoardEntity, SessionEntity, AbstractLogsEntity, AbstractEntity } from 'mj_generatedentities';
+import { AbstractStatusEntity, EmailTemplateEntity, AbstractResultEntity, ScoreBoardEntity, EventEntity, SessionScoreBoardEntity, SessionEntity, AbstractStagingEntity, AbstractLogsEntity, AbstractEntity } from 'mj_generatedentities';
     
 
 //****************************************************************************
@@ -162,6 +162,158 @@ export class AbstractStatusResolver extends ResolverBase {
         const dataSource = GetReadWriteDataSource(dataSources);
         const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
         return this.DeleteRecord('Abstract Status', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
+// ENTITY CLASS for Email Templates
+//****************************************************************************
+@ObjectType()
+export class EmailTemplate_ {
+    @Field() 
+    @MaxLength(16)
+    ID: string;
+        
+    @Field() 
+    @MaxLength(510)
+    Subject: string;
+        
+    @Field() 
+    Body: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    CreatedAt?: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+}
+
+//****************************************************************************
+// INPUT TYPE for Email Templates
+//****************************************************************************
+@InputType()
+export class CreateEmailTemplateInput {
+    @Field({ nullable: true })
+    Subject?: string;
+
+    @Field({ nullable: true })
+    Body?: string;
+
+    @Field({ nullable: true })
+    CreatedAt?: Date | null;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Email Templates
+//****************************************************************************
+@InputType()
+export class UpdateEmailTemplateInput {
+    @Field()
+    ID: string;
+
+    @Field({ nullable: true })
+    Subject?: string;
+
+    @Field({ nullable: true })
+    Body?: string;
+
+    @Field({ nullable: true })
+    CreatedAt?: Date | null;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Email Templates
+//****************************************************************************
+@ObjectType()
+export class RunEmailTemplateViewResult {
+    @Field(() => [EmailTemplate_])
+    Results: EmailTemplate_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(EmailTemplate_)
+export class EmailTemplateResolver extends ResolverBase {
+    @Query(() => RunEmailTemplateViewResult)
+    async RunEmailTemplateViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunEmailTemplateViewResult)
+    async RunEmailTemplateViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunEmailTemplateViewResult)
+    async RunEmailTemplateDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        input.EntityName = 'Email Templates';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => EmailTemplate_, { nullable: true })
+    async EmailTemplate(@Arg('ID', () => String) ID: string, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<EmailTemplate_ | null> {
+        this.CheckUserReadPermissions('Email Templates', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwEmailTemplates] WHERE [ID]='${ID}' ` + this.getRowLevelSecurityWhereClause('Email Templates', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Email Templates', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @Mutation(() => EmailTemplate_)
+    async CreateEmailTemplate(
+        @Arg('input', () => CreateEmailTemplateInput) input: CreateEmailTemplateInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.CreateRecord('Email Templates', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => EmailTemplate_)
+    async UpdateEmailTemplate(
+        @Arg('input', () => UpdateEmailTemplateInput) input: UpdateEmailTemplateInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.UpdateRecord('Email Templates', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => EmailTemplate_)
+    async DeleteEmailTemplate(@Arg('ID', () => String) ID: string, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Email Templates', key, options, dataSource, userPayload, pubSub);
     }
     
 }
@@ -1033,6 +1185,286 @@ export class SessionResolver extends ResolverBase {
 }
 
 //****************************************************************************
+// ENTITY CLASS for Abstract Stagings
+//****************************************************************************
+@ObjectType()
+export class AbstractStaging_ {
+    @Field() 
+    @MaxLength(16)
+    ID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    SessionID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    UserID: string;
+        
+    @Field(() => Int, {nullable: true}) 
+    YearOfExp?: number;
+        
+    @Field({nullable: true}) 
+    AbstractText?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(1000)
+    UploadUrl?: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+    @Field() 
+    @MaxLength(510)
+    Session: string;
+        
+    @Field() 
+    @MaxLength(510)
+    User: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    FirstName?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    LastName?: string;
+        
+    @Field() 
+    @MaxLength(16)
+    EventID: string;
+        
+    @Field() 
+    @MaxLength(510)
+    EventName: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    EventStartDate?: Date;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    EventEndDate?: Date;
+        
+    @Field({nullable: true}) 
+    Description?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    EventCreatedAt?: Date;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    EventUpdatedAt?: Date;
+        
+}
+
+//****************************************************************************
+// INPUT TYPE for Abstract Stagings
+//****************************************************************************
+@InputType()
+export class CreateAbstractStagingInput {
+    @Field({ nullable: true })
+    SessionID?: string;
+
+    @Field({ nullable: true })
+    UserID?: string;
+
+    @Field(() => Int, { nullable: true })
+    YearOfExp: number | null;
+
+    @Field({ nullable: true })
+    AbstractText: string | null;
+
+    @Field({ nullable: true })
+    UploadUrl: string | null;
+
+    @Field({ nullable: true })
+    Session?: string;
+
+    @Field({ nullable: true })
+    User?: string;
+
+    @Field({ nullable: true })
+    FirstName: string | null;
+
+    @Field({ nullable: true })
+    LastName: string | null;
+
+    @Field({ nullable: true })
+    EventID?: string;
+
+    @Field({ nullable: true })
+    EventName?: string;
+
+    @Field({ nullable: true })
+    EventStartDate: Date | null;
+
+    @Field({ nullable: true })
+    EventEndDate: Date | null;
+
+    @Field({ nullable: true })
+    Description: string | null;
+
+    @Field({ nullable: true })
+    EventCreatedAt?: Date | null;
+
+    @Field({ nullable: true })
+    EventUpdatedAt?: Date | null;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Abstract Stagings
+//****************************************************************************
+@InputType()
+export class UpdateAbstractStagingInput {
+    @Field()
+    ID: string;
+
+    @Field({ nullable: true })
+    SessionID?: string;
+
+    @Field({ nullable: true })
+    UserID?: string;
+
+    @Field(() => Int, { nullable: true })
+    YearOfExp?: number | null;
+
+    @Field({ nullable: true })
+    AbstractText?: string | null;
+
+    @Field({ nullable: true })
+    UploadUrl?: string | null;
+
+    @Field({ nullable: true })
+    Session?: string;
+
+    @Field({ nullable: true })
+    User?: string;
+
+    @Field({ nullable: true })
+    FirstName?: string | null;
+
+    @Field({ nullable: true })
+    LastName?: string | null;
+
+    @Field({ nullable: true })
+    EventID?: string;
+
+    @Field({ nullable: true })
+    EventName?: string;
+
+    @Field({ nullable: true })
+    EventStartDate?: Date | null;
+
+    @Field({ nullable: true })
+    EventEndDate?: Date | null;
+
+    @Field({ nullable: true })
+    Description?: string | null;
+
+    @Field({ nullable: true })
+    EventCreatedAt?: Date | null;
+
+    @Field({ nullable: true })
+    EventUpdatedAt?: Date | null;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Abstract Stagings
+//****************************************************************************
+@ObjectType()
+export class RunAbstractStagingViewResult {
+    @Field(() => [AbstractStaging_])
+    Results: AbstractStaging_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(AbstractStaging_)
+export class AbstractStagingResolver extends ResolverBase {
+    @Query(() => RunAbstractStagingViewResult)
+    async RunAbstractStagingViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunAbstractStagingViewResult)
+    async RunAbstractStagingViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunAbstractStagingViewResult)
+    async RunAbstractStagingDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        input.EntityName = 'Abstract Stagings';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => AbstractStaging_, { nullable: true })
+    async AbstractStaging(@Arg('ID', () => String) ID: string, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<AbstractStaging_ | null> {
+        this.CheckUserReadPermissions('Abstract Stagings', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstractStagings] WHERE [ID]='${ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Stagings', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Abstract Stagings', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @Mutation(() => AbstractStaging_)
+    async CreateAbstractStaging(
+        @Arg('input', () => CreateAbstractStagingInput) input: CreateAbstractStagingInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.CreateRecord('Abstract Stagings', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => AbstractStaging_)
+    async UpdateAbstractStaging(
+        @Arg('input', () => UpdateAbstractStagingInput) input: UpdateAbstractStagingInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.UpdateRecord('Abstract Stagings', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => AbstractStaging_)
+    async DeleteAbstractStaging(@Arg('ID', () => String) ID: string, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Abstract Stagings', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
 // ENTITY CLASS for Abstract Logs
 //****************************************************************************
 @ObjectType()
@@ -1240,6 +1672,46 @@ export class Abstract_ {
     @Field() 
     @MaxLength(200)
     User: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(100)
+    FirstName?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(100)
+    LastName?: string;
+        
+    @Field() 
+    @MaxLength(16)
+    EventID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    Expr1: string;
+        
+    @Field() 
+    @MaxLength(510)
+    EventName: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    EventStartDate?: Date;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    EventEndDate?: Date;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    Description?: string;
+        
+    @Field() 
+    @MaxLength(10)
+    EventCreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    EventUpdatedAt: Date;
         
     @Field(() => [AbstractResult_])
     AbstractResults_AbstractIDArray: AbstractResult_[]; // Link to AbstractResults

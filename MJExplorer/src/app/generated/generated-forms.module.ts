@@ -28,16 +28,20 @@ import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 // Import Generated Components
 import { AbstractLogsFormComponent, LoadAbstractLogsFormComponent } from "./Entities/AbstractLogs/abstractlogs.form.component";
 import { AbstractResultFormComponent, LoadAbstractResultFormComponent } from "./Entities/AbstractResult/abstractresult.form.component";
+import { AbstractStagingFormComponent, LoadAbstractStagingFormComponent } from "./Entities/AbstractStaging/abstractstaging.form.component";
 import { AbstractStatusFormComponent, LoadAbstractStatusFormComponent } from "./Entities/AbstractStatus/abstractstatus.form.component";
 import { AbstractFormComponent, LoadAbstractFormComponent } from "./Entities/Abstract/abstract.form.component";
+import { EmailTemplateFormComponent, LoadEmailTemplateFormComponent } from "./Entities/EmailTemplate/emailtemplate.form.component";
 import { EventFormComponent, LoadEventFormComponent } from "./Entities/Event/event.form.component";
 import { ScoreBoardFormComponent, LoadScoreBoardFormComponent } from "./Entities/ScoreBoard/scoreboard.form.component";
 import { SessionScoreBoardFormComponent, LoadSessionScoreBoardFormComponent } from "./Entities/SessionScoreBoard/sessionscoreboard.form.component";
 import { SessionFormComponent, LoadSessionFormComponent } from "./Entities/Session/session.form.component";
 import { AbstractLogsDetailsComponent, LoadAbstractLogsDetailsComponent } from "./Entities/AbstractLogs/sections/details.component"
 import { AbstractResultDetailsComponent, LoadAbstractResultDetailsComponent } from "./Entities/AbstractResult/sections/details.component"
+import { AbstractStagingDetailsComponent, LoadAbstractStagingDetailsComponent } from "./Entities/AbstractStaging/sections/details.component"
 import { AbstractStatusDetailsComponent, LoadAbstractStatusDetailsComponent } from "./Entities/AbstractStatus/sections/details.component"
 import { AbstractDetailsComponent, LoadAbstractDetailsComponent } from "./Entities/Abstract/sections/details.component"
+import { EmailTemplateDetailsComponent, LoadEmailTemplateDetailsComponent } from "./Entities/EmailTemplate/sections/details.component"
 import { EventDetailsComponent, LoadEventDetailsComponent } from "./Entities/Event/sections/details.component"
 import { ScoreBoardDetailsComponent, LoadScoreBoardDetailsComponent } from "./Entities/ScoreBoard/sections/details.component"
 import { SessionScoreBoardDetailsComponent, LoadSessionScoreBoardDetailsComponent } from "./Entities/SessionScoreBoard/sections/details.component"
@@ -48,16 +52,20 @@ import { SessionDetailsComponent, LoadSessionDetailsComponent } from "./Entities
 declarations: [
     AbstractLogsFormComponent,
     AbstractResultFormComponent,
+    AbstractStagingFormComponent,
     AbstractStatusFormComponent,
     AbstractFormComponent,
+    EmailTemplateFormComponent,
     EventFormComponent,
     ScoreBoardFormComponent,
     SessionScoreBoardFormComponent,
     SessionFormComponent,
     AbstractLogsDetailsComponent,
     AbstractResultDetailsComponent,
+    AbstractStagingDetailsComponent,
     AbstractStatusDetailsComponent,
     AbstractDetailsComponent,
+    EmailTemplateDetailsComponent,
     EventDetailsComponent,
     ScoreBoardDetailsComponent,
     SessionScoreBoardDetailsComponent,
@@ -103,16 +111,20 @@ export function LoadGeneratedForms() {
     // in production builds tree shaking will eliminate the code unless we do this
     LoadAbstractLogsFormComponent();
     LoadAbstractResultFormComponent();
+    LoadAbstractStagingFormComponent();
     LoadAbstractStatusFormComponent();
     LoadAbstractFormComponent();
+    LoadEmailTemplateFormComponent();
     LoadEventFormComponent();
     LoadScoreBoardFormComponent();
     LoadSessionScoreBoardFormComponent();
     LoadSessionFormComponent();
     LoadAbstractLogsDetailsComponent();
     LoadAbstractResultDetailsComponent();
+    LoadAbstractStagingDetailsComponent();
     LoadAbstractStatusDetailsComponent();
     LoadAbstractDetailsComponent();
+    LoadEmailTemplateDetailsComponent();
     LoadEventDetailsComponent();
     LoadScoreBoardDetailsComponent();
     LoadSessionScoreBoardDetailsComponent();
