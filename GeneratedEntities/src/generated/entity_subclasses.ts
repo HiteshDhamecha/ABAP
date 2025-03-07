@@ -96,6 +96,95 @@ export const AbstractResultSchema = z.object({
 export type AbstractResultEntityType = z.infer<typeof AbstractResultSchema>;
 
 /**
+ * zod schema definition for the entity Abstract Stagings
+ */
+export const AbstractStagingSchema = z.object({
+    ID: z.string().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: uniqueidentifier
+        * * Default Value: newid()`),
+    SessionID: z.string().describe(`
+        * * Field Name: SessionID
+        * * Display Name: Session ID
+        * * SQL Data Type: uniqueidentifier`),
+    UserID: z.string().describe(`
+        * * Field Name: UserID
+        * * Display Name: User ID
+        * * SQL Data Type: uniqueidentifier`),
+    YearOfExp: z.number().nullish().describe(`
+        * * Field Name: YearOfExp
+        * * Display Name: Year Of Exp
+        * * SQL Data Type: int`),
+    AbstractText: z.string().nullish().describe(`
+        * * Field Name: AbstractText
+        * * Display Name: Abstract Text
+        * * SQL Data Type: nvarchar(MAX)`),
+    UploadUrl: z.string().nullish().describe(`
+        * * Field Name: UploadUrl
+        * * Display Name: Upload Url
+        * * SQL Data Type: nvarchar(500)`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    Session: z.string().describe(`
+        * * Field Name: Session
+        * * Display Name: Session
+        * * SQL Data Type: nvarchar(255)`),
+    User: z.string().describe(`
+        * * Field Name: User
+        * * Display Name: User
+        * * SQL Data Type: nvarchar(255)`),
+    FirstName: z.string().nullish().describe(`
+        * * Field Name: FirstName
+        * * Display Name: First Name
+        * * SQL Data Type: nvarchar(255)`),
+    LastName: z.string().nullish().describe(`
+        * * Field Name: LastName
+        * * Display Name: Last Name
+        * * SQL Data Type: nvarchar(255)`),
+    EventID: z.string().describe(`
+        * * Field Name: EventID
+        * * Display Name: Event ID
+        * * SQL Data Type: uniqueidentifier`),
+    EventName: z.string().describe(`
+        * * Field Name: EventName
+        * * Display Name: Event Name
+        * * SQL Data Type: nvarchar(255)`),
+    EventStartDate: z.date().nullish().describe(`
+        * * Field Name: EventStartDate
+        * * Display Name: Event Start Date
+        * * SQL Data Type: datetime`),
+    EventEndDate: z.date().nullish().describe(`
+        * * Field Name: EventEndDate
+        * * Display Name: Event End Date
+        * * SQL Data Type: datetime`),
+    Description: z.string().nullish().describe(`
+        * * Field Name: Description
+        * * Display Name: Description
+        * * SQL Data Type: nvarchar(MAX)`),
+    EventCreatedAt: z.date().nullish().describe(`
+        * * Field Name: EventCreatedAt
+        * * Display Name: Event Created At
+        * * SQL Data Type: datetime
+        * * Default Value: getdate()`),
+    EventUpdatedAt: z.date().nullish().describe(`
+        * * Field Name: EventUpdatedAt
+        * * Display Name: Event Updated At
+        * * SQL Data Type: datetime
+        * * Default Value: getdate()`),
+});
+
+export type AbstractStagingEntityType = z.infer<typeof AbstractStagingSchema>;
+
+/**
  * zod schema definition for the entity Abstract Status
  */
 export const AbstractStatusSchema = z.object({
@@ -171,9 +260,85 @@ export const AbstractSchema = z.object({
         * * Field Name: User
         * * Display Name: User
         * * SQL Data Type: nvarchar(100)`),
+    FirstName: z.string().nullish().describe(`
+        * * Field Name: FirstName
+        * * Display Name: First Name
+        * * SQL Data Type: nvarchar(50)`),
+    LastName: z.string().nullish().describe(`
+        * * Field Name: LastName
+        * * Display Name: Last Name
+        * * SQL Data Type: nvarchar(50)`),
+    EventID: z.string().describe(`
+        * * Field Name: EventID
+        * * Display Name: Event ID
+        * * SQL Data Type: uniqueidentifier`),
+    Expr1: z.string().describe(`
+        * * Field Name: Expr1
+        * * Display Name: Expr 1
+        * * SQL Data Type: uniqueidentifier`),
+    EventName: z.string().describe(`
+        * * Field Name: EventName
+        * * Display Name: Event Name
+        * * SQL Data Type: nvarchar(255)`),
+    EventStartDate: z.date().nullish().describe(`
+        * * Field Name: EventStartDate
+        * * Display Name: Event Start Date
+        * * SQL Data Type: datetime`),
+    EventEndDate: z.date().nullish().describe(`
+        * * Field Name: EventEndDate
+        * * Display Name: Event End Date
+        * * SQL Data Type: datetime`),
+    Description: z.string().nullish().describe(`
+        * * Field Name: Description
+        * * Display Name: Description
+        * * SQL Data Type: nvarchar(255)`),
+    EventCreatedAt: z.date().describe(`
+        * * Field Name: EventCreatedAt
+        * * Display Name: Event Created At
+        * * SQL Data Type: datetimeoffset`),
+    EventUpdatedAt: z.date().describe(`
+        * * Field Name: EventUpdatedAt
+        * * Display Name: Event Updated At
+        * * SQL Data Type: datetimeoffset`),
 });
 
 export type AbstractEntityType = z.infer<typeof AbstractSchema>;
+
+/**
+ * zod schema definition for the entity Email Templates
+ */
+export const EmailTemplateSchema = z.object({
+    ID: z.string().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: uniqueidentifier
+        * * Default Value: newid()`),
+    Subject: z.string().describe(`
+        * * Field Name: Subject
+        * * Display Name: Subject
+        * * SQL Data Type: nvarchar(255)`),
+    Body: z.string().describe(`
+        * * Field Name: Body
+        * * Display Name: Body
+        * * SQL Data Type: nvarchar(MAX)`),
+    CreatedAt: z.date().nullish().describe(`
+        * * Field Name: CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetime
+        * * Default Value: getdate()`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+});
+
+export type EmailTemplateEntityType = z.infer<typeof EmailTemplateSchema>;
 
 /**
  * zod schema definition for the entity Events
@@ -574,6 +739,261 @@ export class AbstractResultEntity extends BaseEntity<AbstractResultEntityType> {
 
 
 /**
+ * Abstract Stagings - strongly typed entity sub-class
+ * * Schema: dbo
+ * * Base Table: AbstractStaging
+ * * Base View: vwAbstractStagings
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'Abstract Stagings')
+export class AbstractStagingEntity extends BaseEntity<AbstractStagingEntityType> {
+    /**
+    * Loads the Abstract Stagings record from the database
+    * @param ID: string - primary key value to load the Abstract Stagings record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof AbstractStagingEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: string, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: uniqueidentifier
+    * * Default Value: newid()
+    */
+    get ID(): string {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: SessionID
+    * * Display Name: Session ID
+    * * SQL Data Type: uniqueidentifier
+    */
+    get SessionID(): string {
+        return this.Get('SessionID');
+    }
+    set SessionID(value: string) {
+        this.Set('SessionID', value);
+    }
+
+    /**
+    * * Field Name: UserID
+    * * Display Name: User ID
+    * * SQL Data Type: uniqueidentifier
+    */
+    get UserID(): string {
+        return this.Get('UserID');
+    }
+    set UserID(value: string) {
+        this.Set('UserID', value);
+    }
+
+    /**
+    * * Field Name: YearOfExp
+    * * Display Name: Year Of Exp
+    * * SQL Data Type: int
+    */
+    get YearOfExp(): number | null {
+        return this.Get('YearOfExp');
+    }
+    set YearOfExp(value: number | null) {
+        this.Set('YearOfExp', value);
+    }
+
+    /**
+    * * Field Name: AbstractText
+    * * Display Name: Abstract Text
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get AbstractText(): string | null {
+        return this.Get('AbstractText');
+    }
+    set AbstractText(value: string | null) {
+        this.Set('AbstractText', value);
+    }
+
+    /**
+    * * Field Name: UploadUrl
+    * * Display Name: Upload Url
+    * * SQL Data Type: nvarchar(500)
+    */
+    get UploadUrl(): string | null {
+        return this.Get('UploadUrl');
+    }
+    set UploadUrl(value: string | null) {
+        this.Set('UploadUrl', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
+    }
+
+    /**
+    * * Field Name: Session
+    * * Display Name: Session
+    * * SQL Data Type: nvarchar(255)
+    */
+    get Session(): string {
+        return this.Get('Session');
+    }
+    set Session(value: string) {
+        this.Set('Session', value);
+    }
+
+    /**
+    * * Field Name: User
+    * * Display Name: User
+    * * SQL Data Type: nvarchar(255)
+    */
+    get User(): string {
+        return this.Get('User');
+    }
+    set User(value: string) {
+        this.Set('User', value);
+    }
+
+    /**
+    * * Field Name: FirstName
+    * * Display Name: First Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get FirstName(): string | null {
+        return this.Get('FirstName');
+    }
+    set FirstName(value: string | null) {
+        this.Set('FirstName', value);
+    }
+
+    /**
+    * * Field Name: LastName
+    * * Display Name: Last Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get LastName(): string | null {
+        return this.Get('LastName');
+    }
+    set LastName(value: string | null) {
+        this.Set('LastName', value);
+    }
+
+    /**
+    * * Field Name: EventID
+    * * Display Name: Event ID
+    * * SQL Data Type: uniqueidentifier
+    */
+    get EventID(): string {
+        return this.Get('EventID');
+    }
+    set EventID(value: string) {
+        this.Set('EventID', value);
+    }
+
+    /**
+    * * Field Name: EventName
+    * * Display Name: Event Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get EventName(): string {
+        return this.Get('EventName');
+    }
+    set EventName(value: string) {
+        this.Set('EventName', value);
+    }
+
+    /**
+    * * Field Name: EventStartDate
+    * * Display Name: Event Start Date
+    * * SQL Data Type: datetime
+    */
+    get EventStartDate(): Date | null {
+        return this.Get('EventStartDate');
+    }
+    set EventStartDate(value: Date | null) {
+        this.Set('EventStartDate', value);
+    }
+
+    /**
+    * * Field Name: EventEndDate
+    * * Display Name: Event End Date
+    * * SQL Data Type: datetime
+    */
+    get EventEndDate(): Date | null {
+        return this.Get('EventEndDate');
+    }
+    set EventEndDate(value: Date | null) {
+        this.Set('EventEndDate', value);
+    }
+
+    /**
+    * * Field Name: Description
+    * * Display Name: Description
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get Description(): string | null {
+        return this.Get('Description');
+    }
+    set Description(value: string | null) {
+        this.Set('Description', value);
+    }
+
+    /**
+    * * Field Name: EventCreatedAt
+    * * Display Name: Event Created At
+    * * SQL Data Type: datetime
+    * * Default Value: getdate()
+    */
+    get EventCreatedAt(): Date | null {
+        return this.Get('EventCreatedAt');
+    }
+    set EventCreatedAt(value: Date | null) {
+        this.Set('EventCreatedAt', value);
+    }
+
+    /**
+    * * Field Name: EventUpdatedAt
+    * * Display Name: Event Updated At
+    * * SQL Data Type: datetime
+    * * Default Value: getdate()
+    */
+    get EventUpdatedAt(): Date | null {
+        return this.Get('EventUpdatedAt');
+    }
+    set EventUpdatedAt(value: Date | null) {
+        this.Set('EventUpdatedAt', value);
+    }
+}
+
+
+/**
  * Abstract Status - strongly typed entity sub-class
  * * Schema: dbo
  * * Base Table: AbstractStatus
@@ -783,6 +1203,194 @@ export class AbstractEntity extends BaseEntity<AbstractEntityType> {
     */
     get User(): string {
         return this.Get('User');
+    }
+
+    /**
+    * * Field Name: FirstName
+    * * Display Name: First Name
+    * * SQL Data Type: nvarchar(50)
+    */
+    get FirstName(): string | null {
+        return this.Get('FirstName');
+    }
+
+    /**
+    * * Field Name: LastName
+    * * Display Name: Last Name
+    * * SQL Data Type: nvarchar(50)
+    */
+    get LastName(): string | null {
+        return this.Get('LastName');
+    }
+
+    /**
+    * * Field Name: EventID
+    * * Display Name: Event ID
+    * * SQL Data Type: uniqueidentifier
+    */
+    get EventID(): string {
+        return this.Get('EventID');
+    }
+
+    /**
+    * * Field Name: Expr1
+    * * Display Name: Expr 1
+    * * SQL Data Type: uniqueidentifier
+    */
+    get Expr1(): string {
+        return this.Get('Expr1');
+    }
+
+    /**
+    * * Field Name: EventName
+    * * Display Name: Event Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get EventName(): string {
+        return this.Get('EventName');
+    }
+
+    /**
+    * * Field Name: EventStartDate
+    * * Display Name: Event Start Date
+    * * SQL Data Type: datetime
+    */
+    get EventStartDate(): Date | null {
+        return this.Get('EventStartDate');
+    }
+
+    /**
+    * * Field Name: EventEndDate
+    * * Display Name: Event End Date
+    * * SQL Data Type: datetime
+    */
+    get EventEndDate(): Date | null {
+        return this.Get('EventEndDate');
+    }
+
+    /**
+    * * Field Name: Description
+    * * Display Name: Description
+    * * SQL Data Type: nvarchar(255)
+    */
+    get Description(): string | null {
+        return this.Get('Description');
+    }
+
+    /**
+    * * Field Name: EventCreatedAt
+    * * Display Name: Event Created At
+    * * SQL Data Type: datetimeoffset
+    */
+    get EventCreatedAt(): Date {
+        return this.Get('EventCreatedAt');
+    }
+
+    /**
+    * * Field Name: EventUpdatedAt
+    * * Display Name: Event Updated At
+    * * SQL Data Type: datetimeoffset
+    */
+    get EventUpdatedAt(): Date {
+        return this.Get('EventUpdatedAt');
+    }
+}
+
+
+/**
+ * Email Templates - strongly typed entity sub-class
+ * * Schema: dbo
+ * * Base Table: EmailTemplate
+ * * Base View: vwEmailTemplates
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'Email Templates')
+export class EmailTemplateEntity extends BaseEntity<EmailTemplateEntityType> {
+    /**
+    * Loads the Email Templates record from the database
+    * @param ID: string - primary key value to load the Email Templates record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof EmailTemplateEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: string, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: uniqueidentifier
+    * * Default Value: newid()
+    */
+    get ID(): string {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: Subject
+    * * Display Name: Subject
+    * * SQL Data Type: nvarchar(255)
+    */
+    get Subject(): string {
+        return this.Get('Subject');
+    }
+    set Subject(value: string) {
+        this.Set('Subject', value);
+    }
+
+    /**
+    * * Field Name: Body
+    * * Display Name: Body
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get Body(): string {
+        return this.Get('Body');
+    }
+    set Body(value: string) {
+        this.Set('Body', value);
+    }
+
+    /**
+    * * Field Name: CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetime
+    * * Default Value: getdate()
+    */
+    get CreatedAt(): Date | null {
+        return this.Get('CreatedAt');
+    }
+    set CreatedAt(value: Date | null) {
+        this.Set('CreatedAt', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
     }
 }
 

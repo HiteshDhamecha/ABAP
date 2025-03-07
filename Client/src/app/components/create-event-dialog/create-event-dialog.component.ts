@@ -20,7 +20,7 @@ export class CreateEventDialogComponent implements OnInit {
       name: this.eventEntity.Name,
       startDate: this.eventEntity.EventStartDate,
       endDate: this.eventEntity.EventEndDate,
-      description: this.eventEntity.Description
+      // description: this.eventEntity.Description
     });
   }
 
@@ -32,7 +32,7 @@ export class CreateEventDialogComponent implements OnInit {
       name: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      description: ['', Validators.required]
+      // description: ['', Validators.required]
     });
   }
 
@@ -42,7 +42,7 @@ export class CreateEventDialogComponent implements OnInit {
       this.eventEntity.Name = this.eventForm.value.name;
       this.eventEntity.EventStartDate = this.eventForm.value.startDate;
       this.eventEntity.EventEndDate = this.eventForm.value.endDate;
-      this.eventEntity.Description = this.eventForm.value.description;
+      // this.eventEntity.Description = this.eventForm.value.description;
 
       // Log the event entity values
       console.log('Saving event:', this.eventEntity);
@@ -52,21 +52,16 @@ export class CreateEventDialogComponent implements OnInit {
         const saveResult: boolean = await this.eventEntity.Save();
         if (!saveResult) {
           LogError('Error saving event entity:', undefined, this.eventEntity.LatestResult.Message);
-          alert(`Failed to save event: ${this.eventEntity.LatestResult.Message}`);
         } else {
-          alert("Event Added");
-          //refresh the page
           window.location.reload();
-          this.dialogRef.close(this.eventForm.value);
-        
+          this.dialogRef.close(this.eventForm.value);       
         }
       } catch (error) {
-        LogError('Error saving event:', error);
-        LogStatus('Failed to save event');
-        alert("Failed to save event");
+        LogStatus('Failed to save event', error);
       }
     } else {
       alert("Form is invalid");
+      LogStatus('Form is invalid');
     }
   }
 }

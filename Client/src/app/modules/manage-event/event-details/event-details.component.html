@@ -1,0 +1,58 @@
+<div class="event-details-container">
+  <h2>Event Details</h2>
+  <div *ngIf="event">
+    <form [formGroup]="eventForm">
+      <div *ngIf="!editMode">
+        <div class="form-group">
+          <label for="name">Event Name:</label>
+          <p>{{ event.Name }}</p>
+        </div>
+        <div class="form-group">
+          <label for="startDate">Event Date:</label>
+          <p>{{ event.EventStartDate | date:'MM/dd/yyyy' }}</p>
+        </div>
+        <div class="form-group">
+          <label for="endDate">Event End Date:</label>
+          <p>{{ event.EventEndDate | date:'MM/dd/yyyy' }}</p>
+        </div>
+        <!-- <div class="form-group">
+          <label for="description">Description:</label>
+          <p>{{ event.Description }}</p>
+        </div> -->
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <p>{{ getEventStatus(event.EventStartDate, event.EventEndDate) }}</p>
+        </div>
+      </div>
+      <div *ngIf="editMode">
+        <div class="form-group">
+          <label for="name">Event Name:</label>
+          <input type="text" id="name" formControlName="name" class="input-field">
+        </div>
+        <div class="form-group">
+          <label for="startDate">Event Date:</label>
+          <input type="date" id="startDate" formControlName="startDate" class="input-field">
+        </div>
+        <div class="form-group">
+          <label for="endDate">Event End Date:</label>
+          <input type="date" id="endDate" formControlName="endDate" class="input-field">
+        </div>
+        <!-- <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" formControlName="description" class="input-field"></textarea>
+        </div> -->
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <input type="text" id="status" [value]="getEventStatus(event.EventStartDate, event.EventEndDate)" class="input-field" readonly>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="!event">
+    <p>Loading event details...</p>
+  </div>
+</div>
+<div class="event-details-actions">
+  <button mat-raised-button color="primary" *ngIf="!editMode" (click)="onEditEvent()">Edit</button>
+  <button mat-raised-button color="primary" *ngIf="editMode" (click)="onSaveEvent()">Save</button>
+</div>
