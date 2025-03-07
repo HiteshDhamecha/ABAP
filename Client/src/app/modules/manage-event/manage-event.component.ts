@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEventDialogComponent } from '../../components/create-event-dialog/create-event-dialog.component';
 import { EventEntity } from 'mj_generatedentities';
 import { LogStatus, Metadata, RunView } from '@memberjunction/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-manage-event',
@@ -16,32 +18,40 @@ export class ManageEventComponent implements OnInit {
   public selectedTab: string = 'event-settings';
   public displayedColumns: string[] = ['name', 'date', 'status'];
   public events: any[] = [];
+  public selectedEvent: any;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private router: Router) {}
 
   async ngOnInit() {
     console.log('ManageEventComponent: ngOnInit');
     await this.loadEvent();
   }
-
+  selectEvent(event: any) {
+    this.selectedEvent = event;
+  }
   async loadEvent() {
     this.eventEntity = await this.getEventEntity();
-    const today = new Date();
-    this.events = this.eventEntity.map(event => {
-      let status = 'Upcoming';
-      if (event.EventEndDate && new Date(event.EventEndDate) < today) {
-        status = 'Completed';
-      } else if (event.EventStartDate && new Date(event.EventStartDate) <= today && (!event.EventEndDate || new Date(event.EventEndDate) >= today)) {
-        status = 'Live';
-      }
-      return {
-        name: event.Name,
-        date: event.EventStartDate,
-        status: status
-      };
-    });
+    this.events = this.eventEntity.map(event => ({
+      id: event.ID, // Ensure you have an ID field
+      name: event.Name,
+      date: event.EventStartDate,
+      status: this.getEventStatus(event)
+    }));
   }
 
+  getEventStatus(event: any): string {
+    const today = new Date();
+    if (event.EventEndDate && new Date(event.EventEndDate) < today) {
+      return 'Completed';
+    } else if (event.EventStartDate && new Date(event.EventStartDate) <= today && (!event.EventEndDate || new Date(event.EventEndDate) >= today)) {
+      return 'Live';
+    }
+    return 'Upcoming';
+  }
+
+  viewEventDetails(event: any) {
+    this.router.navigate(['/event-details', event.id]);
+  }
   async getEventEntity() {
     try {
       const rv = new RunView();
