@@ -14,7 +14,7 @@
     <div class="tab" style="  border-top-right-radius: 8px; border-bottom-right-radius: 8px;"
       [class.active]="selectedTab === 'publish-preview'" (click)="selectTab('publish-preview')">
       <i class="fa fa-user"></i>&nbsp;
-      <span class="tab-title">Publish & Preview</span>
+      <span class="tab-title">Preview & Publish</span>
     </div>
   </div>
 
@@ -49,8 +49,63 @@
       </tr>      
     </table>
     </div>
-    <div *ngIf="selectedTab === 'publish-preview'">
-      <p>Hello from Publish and Preview</p>
+    <!-- Publish & Preview Tab -->
+<div *ngIf="selectedTab === 'publish-preview'" class="publish-preview-container">
+  <h3>Personal Details</h3>
+  <div class="publish-preview-form">
+    <div class="publish-preview-group">
+      <label>First Name</label>
+      <input type="text" placeholder="Enter">
     </div>
+    <div class="publish-preview-group">
+      <label>Last Name</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Email</label>
+      <input type="email" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Affiliation</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Job Title</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Phone Number</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group full-width">
+      <label>Social Media Links</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group full-width">
+      <label>Previous Speaking Experiences</label>
+      <textarea placeholder="Autosize height based on content lines"></textarea>
+    </div>
+  </div>
+
+  <h3>Submission Details</h3>
+  <div class="publish-preview-form">
+    <div class="publish-preview-group full-width">
+      <label>Topic</label>
+      <input type="text" placeholder="Enter topic">
+    </div>
+    <div class="publish-preview-group full-width">
+      <label>Summary</label>
+      <textarea placeholder="Autosize height based on content lines"></textarea>
+    </div>
+    <div class="publish-preview-group full-width">
+      <label>Attachment</label>
+      <div class="publish-preview-upload">
+        <i class="fa fa-cloud-upload"></i>
+        <span>Upload</span>
+      </div>
+    </div>
+  </div>
+  <button class="publish-preview-btn">Make Live</button>
+</div>
   </div>
 </div>

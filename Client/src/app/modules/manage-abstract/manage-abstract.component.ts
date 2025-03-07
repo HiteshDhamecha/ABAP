@@ -9,40 +9,35 @@ import { AbstractEntity } from 'mj_generatedentities';
   styleUrls: ['./manage-abstract.component.css']
 })
 export class ManageAbstractComponent {
-  abstracts = [
-    { speaker: 'Tyler Durden', event: 'ET Anniversary', session: 'R&R', date: '18/02/2025', status: 'Selected' },
-    { speaker: 'Chandler Bing', event: '', session: '', date: '10/02/2025', status: 'Rejected' },
-    { speaker: 'Sheldon Cooper', event: '', session: '', date: '10/02/2025', status: 'Rejected' },
-    { speaker: 'George Constanza', event: '', session: '', date: '02/02/2025', status: 'Rejected' },
-    { speaker: 'Joey Tribbiani', event: '', session: '', date: '10/02/2025', status: 'Rejected' }
-  ];
-  abstractEntity: AbstractEntity[] = [];
+  abstracts: any[] = []; // Replacing hardcoded values with dynamic data
   md = new Metadata();
+
   constructor(private router: Router) {}
 
-  async ngOnInit(){
+  async ngOnInit() {
     console.log('ManageAbstractComponent: ngOnInit');
     await this.loadEvent();
   }
 
-  async loadEvent(){
-    this.abstractEntity = await this.getAbstractEntity();
-  }
-
-  async getAbstractEntity(){
-    try{
+  async loadEvent() {
+    try {
       const rv = new RunView();
       const result = await rv.RunView({
-        // EntityName: 'Abstracts'
-        EntityName: 'vwAbstracts'  // Calling the view instead of the entity
-      })
-      if(result.Success){
-        return result.Results;
+        EntityName: 'Abstracts' 
+      });
+
+      if (result.Success) {
+        this.abstracts = result.Results.map(item => ({
+          speaker: item.FirstName + ' ' + item.LastName, 
+          event: item.EventName,
+          session: item.Session || '-',
+          date: new Date(item.EventStartDate).toLocaleDateString(),
+          status: 'Selected' // Adjust based on real status property
+        }));
       }
-    } catch (error){
-      LogStatus('Error getting event entity:', error)
+    } catch (error) {
+      LogStatus('Error getting event entity:', error);
     }
-    return [];
   }
 
   viewDetails(speaker: string) {

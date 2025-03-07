@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Metadata, RunView, LogStatus } from '@memberjunction/core';
 
 interface AbstractDetails {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -24,62 +25,114 @@ interface AbstractDetails {
 })
 export class ManageAbstractDetailsComponent implements OnInit {
   abstractDetails: AbstractDetails | undefined;
-  abstractList: AbstractDetails[] = [
-    {
-      id: 1,
-      firstName: 'Tyler',
-      lastName: 'Durden',
-      email: 'tylerdurden@gmail.com',
-      affiliation: 'IBM Software',
-      jobTitle: 'Solution Architect',
-      phoneNumber: '+91 9876543210',
-      socialLinks: '+91 9876543210',
-      summary: `I am a dynamic and thought-provoking speaker with a passion for challenging conventional thinking and inspiring transformative change...`,
-      speakingExperiences: [
-        {
-          title: 'Disruptive Leadership Summit (2024)',
-          description: 'Keynote: “Breaking the Mold: Leading with Chaos and Creativity” At this summit, I explored how leaders can embrace unpredictability, challenge norms, and foster innovation by thinking outside the traditional corporate structure. The session sparked deep discussions on redefining success in today’s fast-changing world'
-        },
-        {
-          title: 'The Rebellion Conference (2023)',
-          description: 'Panel Discussion: "Unlearning the Rules: A New Approach to Personal Growth"'
-        },
-        {
-          title: 'Mindset Shift Workshop (2023)',
-          description: 'Workshop: "From Fear to Freedom: Rewiring the Mind for Radical Change"'
-        }
-      ]
-    },
-    {
-      id: 2, 
-      firstName: 'Chandler',
-      lastName: 'Bing',
-      email: 'johndoe@example.com',
-      affiliation: 'Google',
-      jobTitle: 'AI Researcher',
-      phoneNumber: '+1 123 456 7890',
-      socialLinks: '@johndoe',
-      summary: `An AI expert focused on ethics, fairness, and the future of machine learning...`,
-      speakingExperiences: [
-        {
-          title: 'AI Ethics Summit (2024)',
-          description: 'Keynote: "Balancing Innovation and Responsibility in AI"'
-        }
-      ]
-    }
-  ];
 
   constructor(private route: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const speakerName = params.get('speaker');
+  async ngOnInit() {
+    this.route.paramMap.subscribe(async params => {
+      let speakerName = params.get('speaker');
+      console.log("🔹 Speaker Name from URL:", speakerName);
+
       if (speakerName) {
-        const decodedSpeakerName = decodeURIComponent(speakerName);
-        this.abstractDetails = this.abstractList.find(
-          abstract => `${abstract.firstName} ${abstract.lastName}` === decodedSpeakerName
-        );
-      }  
+        // Decode and remove duplicates
+        let decodedSpeakerName = decodeURIComponent(speakerName).trim();
+        let cleanedSpeakerName = [...new Set(decodedSpeakerName.split(' '))].join(' ');
+
+        console.log("🔹 Decoded Speaker Name (Cleaned):", cleanedSpeakerName);
+
+        await this.loadAbstractDetails(cleanedSpeakerName);
+      }
     });
+  }
+
+  async loadAbstractDetails(speakerName: string) {
+    try {
+      console.log("🔹 Fetching Abstract Details...");
+      const rv = new RunView();
+      const result = await rv.RunView({
+        EntityName: 'Abstracts'
+      });
+
+      console.log("🔹 API Response:", result);
+
+      if (result.Success) {
+        // Debugging: Log each record in API response
+        result.Results.forEach((item: any) => {
+          console.log(`🔍 Checking: ${item.FirstName} ${item.LastName} | ${item.Email}`);
+        });
+
+        // Find a matching abstract
+        const matchingAbstract = result.Results.find(
+          (item: any) => 
+            item?.FirstName?.trim().toLowerCase() === speakerName.toLowerCase() || 
+            item?.LastName?.trim().toLowerCase() === speakerName.toLowerCase() || 
+            item?.Email?.trim().toLowerCase() === speakerName.toLowerCase() ||
+            `${item?.FirstName} ${item?.LastName}`.trim().toLowerCase() === speakerName.toLowerCase()
+        );
+
+        console.log("🔹 Matching Abstract:", matchingAbstract);
+
+        if (matchingAbstract) {
+          const parsedDetails = this.parseAbstractText(matchingAbstract.AbstractText);
+          console.log("🔹 Parsed Details:", parsedDetails);
+
+          this.abstractDetails = {
+            id: matchingAbstract.ID || '',
+            firstName: matchingAbstract.FirstName || '',
+            lastName: matchingAbstract.LastName || '',
+            email: matchingAbstract.Email || '',
+            affiliation: matchingAbstract.Affiliation || '-',
+            jobTitle: matchingAbstract.JobTitle || '-',
+            phoneNumber: matchingAbstract.PhoneNumber || '-',
+            socialLinks: matchingAbstract.SocialLinks || '-',
+            summary: parsedDetails.summary || 'No summary available.',
+            speakingExperiences: parsedDetails.speakingExperiences
+          };
+
+          console.log("✅ Abstract Details Set:", this.abstractDetails);
+        } else {
+          console.log("⚠️ No matching abstract found for speaker:", speakerName);
+        }
+      } else {
+        console.log("⚠️ API Call Failed.");
+      }
+    } catch (error) {
+      console.error("❌ Error fetching abstract details:", error);
+    }
+  }
+
+  parseAbstractText(abstractText: string) {
+    if (!abstractText) {
+      return { summary: 'No summary available.', speakingExperiences: [] };
+    }
+
+    console.log("🔹 Raw Abstract Text:", abstractText);
+
+    const sections = abstractText.split('Previous Speaking Experiences –');
+    const summary = sections[0]?.trim() || '';
+
+    const speakingExperiences: { title: string; description: string }[] = [];
+    if (sections[1]) {
+      const experiences = sections[1]
+        .split(/\d+\./) // Splitting on numbered points (e.g., "1.", "2.", etc.)
+        .map(exp => exp.trim())
+        .filter(exp => exp.length > 0);
+
+      experiences.forEach(exp => {
+        const firstLineEndIndex = exp.indexOf('\n');
+        if (firstLineEndIndex !== -1) {
+          const title = exp.substring(0, firstLineEndIndex).trim();
+          const description = exp.substring(firstLineEndIndex + 1).trim();
+          speakingExperiences.push({ title, description });
+        } else {
+          speakingExperiences.push({ title: exp, description: '' });
+        }
+      });
+    }
+
+    console.log("🔹 Parsed Summary:", summary);
+    console.log("🔹 Parsed Speaking Experiences:", speakingExperiences);
+
+    return { summary, speakingExperiences };
   }
 }

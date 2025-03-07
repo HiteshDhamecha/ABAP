@@ -55,7 +55,7 @@ import { ManageAbstractDetailsComponent } from './modules/manage-abstract-detail
     SidebarComponent,
     ManageAbstractComponent,
     CreateEventDialogComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
     ManageAbstractDetailsComponent
   ],
   imports: [
