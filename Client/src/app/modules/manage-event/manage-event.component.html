@@ -43,8 +43,11 @@
           }"> {{event.status}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+        <tr mat-row *matRowDef="let event; columns: displayedColumns;"
+        (click)="viewEventDetails(event)"
+        style="cursor: pointer;">
+      </tr>      
+    </table>
     </div>
     <div *ngIf="selectedTab === 'publish-preview'">
       <p>Hello from Publish and Preview</p>
