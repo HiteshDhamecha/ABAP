@@ -144,21 +144,24 @@
    =========================== */
 
    .publish-preview-container {
-    padding: 20px;
+    /* padding: 20px; */
     background: #fff;
     border-radius: 8px;
   }
+
   
   .publish-preview-container h3 {
     font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 10px;
+   
   }
   
   .publish-preview-form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 20px;
   }
   
   .publish-preview-group {
@@ -171,7 +174,8 @@
   }
   
   .publish-preview-group label {
-    font-weight: 600;
+    font-family: Roboto;
+    font-weight: 400;
     margin-bottom: 5px;
   }
   
