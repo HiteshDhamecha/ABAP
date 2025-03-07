@@ -138,3 +138,88 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ===========================
+   Publish & Preview Tab Styles
+   =========================== */
+
+   .publish-preview-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+  }
+  
+  .publish-preview-container h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .publish-preview-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .publish-preview-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .publish-preview-group.full-width {
+    grid-column: span 2;
+  }
+  
+  .publish-preview-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .publish-preview-group input,
+  .publish-preview-group textarea {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .publish-preview-group textarea {
+    min-height: 80px;
+    resize: none;
+  }
+  
+  /* Upload Box */
+  .publish-preview-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .publish-preview-upload i {
+    font-size: 24px;
+    color: #767CFF;
+  }
+  
+  .publish-preview-upload span {
+    display: block;
+    font-size: 14px;
+    color: #767CFF;
+  }
+  
+  /* Make Live Button */
+  .publish-preview-btn {
+    background-color: #767CFF;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+  }
+  
