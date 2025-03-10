@@ -378,6 +378,82 @@ type AIResultCache_ {
   _mj__UpdatedAt: Timestamp!
 }
 
+type AbstractLogs_ {
+  AIAgentId: String!
+  AIAgentId_Virtual: String
+  AbstractResultId: String!
+  ActionDescription: String
+  ID: String!
+  UpdatedOn: Timestamp
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type AbstractResult_ {
+  AbstractID: String!
+  AbstractLogs_AbstractResultIdArray: [AbstractLogs_!]!
+  AbstractStatusId: String!
+  AbstractStatusId_Virtual: String!
+  ID: String!
+  Score: Float
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type AbstractStaging_ {
+  AbstractText: String
+  Description: String
+  EventCreatedAt: Timestamp
+  EventEndDate: Timestamp
+  EventID: String!
+  EventName: String!
+  EventStartDate: Timestamp
+  EventUpdatedAt: Timestamp
+  FirstName: String
+  ID: String!
+  LastName: String
+  Session: String!
+  SessionID: String!
+  UploadUrl: String
+  User: String!
+  UserID: String!
+  YearOfExp: Int
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type AbstractStatus_ {
+  AbstractResults_AbstractStatusIdArray: [AbstractResult_!]!
+  ID: String!
+  Name: String!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type Abstract_ {
+  AbstractResults_AbstractIDArray: [AbstractResult_!]!
+  AbstractText: String
+  Description: String
+  EventCreatedAt: Timestamp!
+  EventEndDate: Timestamp
+  EventID: String!
+  EventName: String!
+  EventStartDate: Timestamp
+  EventUpdatedAt: Timestamp!
+  Expr1: String!
+  FirstName: String
+  ID: String!
+  LastName: String
+  Session: String!
+  SessionID: String!
+  UploadUrl: String
+  User: String!
+  UserID: String!
+  YearOfExp: Int
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
 """
 Links actions to authorizations, one or more of these must be possessed by a user in order to execute the action.
 """
@@ -1348,6 +1424,50 @@ input CreateAIResultCacheInput {
   Status: String!
 }
 
+input CreateAbstractInput {
+  AbstractText: String
+  SessionID: String
+  UploadUrl: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input CreateAbstractLogsInput {
+  AIAgentId: String
+  AbstractResultId: String
+  ActionDescription: String
+  UpdatedOn: Timestamp
+}
+
+input CreateAbstractResultInput {
+  AbstractID: String
+  AbstractStatusId: String
+  Score: Float
+}
+
+input CreateAbstractStagingInput {
+  AbstractText: String
+  Description: String
+  EventCreatedAt: Timestamp
+  EventEndDate: Timestamp
+  EventID: String
+  EventName: String
+  EventStartDate: Timestamp
+  EventUpdatedAt: Timestamp
+  FirstName: String
+  LastName: String
+  Session: String
+  SessionID: String
+  UploadUrl: String
+  User: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input CreateAbstractStatusInput {
+  Name: String
+}
+
 input CreateActionAuthorizationInput {
   ActionID: String!
   AuthorizationID: String!
@@ -1729,6 +1849,12 @@ input CreateDuplicateRunInput {
   StartedByUserID: String!
 }
 
+input CreateEmailTemplateInput {
+  Body: String
+  CreatedAt: Timestamp
+  Subject: String
+}
+
 input CreateEmployeeInput {
   Active: Boolean!
   CompanyID: String!
@@ -1981,6 +2107,13 @@ input CreateErrorLogInput {
   Details: String
   Message: String
   Status: String
+}
+
+input CreateEventInput {
+  Description: String
+  EventEndDate: Timestamp
+  EventStartDate: Timestamp
+  Name: String
 }
 
 input CreateExplorerNavigationItemInput {
@@ -2312,6 +2445,26 @@ input CreateSchemaInfoInput {
   EntityIDMax: Int!
   EntityIDMin: Int!
   SchemaName: String!
+}
+
+input CreateScoreBoardInput {
+  Criteria: String
+  Description: String
+  Name: String
+  Weightage: Float
+}
+
+input CreateSessionInput {
+  EventID: String
+  Name: String
+  SessionEndDate: Timestamp
+  SessionStartDate: Timestamp
+}
+
+input CreateSessionScoreBoardInput {
+  ScoreBoardId: String
+  SessionId: String
+  WeightedScore: Float
 }
 
 input CreateTemplateCategoryInput {
@@ -2709,6 +2862,15 @@ type DuplicateRun_ {
   StartedAt: Timestamp!
   StartedByUser: String!
   StartedByUserID: String!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type EmailTemplate_ {
+  Body: String!
+  CreatedAt: Timestamp
+  ID: String!
+  Subject: String!
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
 }
@@ -3527,6 +3689,17 @@ type ErrorLog_ {
   _mj__UpdatedAt: Timestamp!
 }
 
+type Event_ {
+  Description: String
+  EventEndDate: Timestamp
+  EventStartDate: Timestamp
+  ID: String!
+  Name: String!
+  Sessions_EventIDArray: [Session_!]!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
 """Table to store navigation items for MemberJunction Explorer"""
 type ExplorerNavigationItem_ {
   """Administrator comments, not shown to the end user in MJ Explorer app"""
@@ -3831,6 +4004,11 @@ type Mutation {
   CreateAIPromptCategory(input: CreateAIPromptCategoryInput!): AIPromptCategory_!
   CreateAIPromptType(input: CreateAIPromptTypeInput!): AIPromptType_!
   CreateAIResultCache(input: CreateAIResultCacheInput!): AIResultCache_!
+  CreateAbstract(input: CreateAbstractInput!): Abstract_!
+  CreateAbstractLogs(input: CreateAbstractLogsInput!): AbstractLogs_!
+  CreateAbstractResult(input: CreateAbstractResultInput!): AbstractResult_!
+  CreateAbstractStaging(input: CreateAbstractStagingInput!): AbstractStaging_!
+  CreateAbstractStatus(input: CreateAbstractStatusInput!): AbstractStatus_!
   CreateAction(input: CreateActionInput!): Action_!
   CreateActionAuthorization(input: CreateActionAuthorizationInput!): ActionAuthorization_!
   CreateActionCategory(input: CreateActionCategoryInput!): ActionCategory_!
@@ -3875,6 +4053,7 @@ type Mutation {
   CreateDuplicateRun(input: CreateDuplicateRunInput!): DuplicateRun_!
   CreateDuplicateRunDetail(input: CreateDuplicateRunDetailInput!): DuplicateRunDetail_!
   CreateDuplicateRunDetailMatch(input: CreateDuplicateRunDetailMatchInput!): DuplicateRunDetailMatch_!
+  CreateEmailTemplate(input: CreateEmailTemplateInput!): EmailTemplate_!
   CreateEmployee(input: CreateEmployeeInput!): Employee_!
   CreateEntity(input: CreateEntityInput!): Entity_!
   CreateEntityAIAction(input: CreateEntityAIActionInput!): EntityAIAction_!
@@ -3896,6 +4075,7 @@ type Mutation {
   CreateEntityRelationshipDisplayComponent(input: CreateEntityRelationshipDisplayComponentInput!): EntityRelationshipDisplayComponent_!
   CreateEntitySetting(input: CreateEntitySettingInput!): EntitySetting_!
   CreateErrorLog(input: CreateErrorLogInput!): ErrorLog_!
+  CreateEvent(input: CreateEventInput!): Event_!
   CreateExplorerNavigationItem(input: CreateExplorerNavigationItemInput!): ExplorerNavigationItem_!
   CreateFile(input: CreateFileInput!): CreateFilePayload!
   CreateFileCategory(input: CreateFileCategoryInput!): FileCategory_!
@@ -3931,6 +4111,9 @@ type Mutation {
   CreateScheduledAction(input: CreateScheduledActionInput!): ScheduledAction_!
   CreateScheduledActionParam(input: CreateScheduledActionParamInput!): ScheduledActionParam_!
   CreateSchemaInfo(input: CreateSchemaInfoInput!): SchemaInfo_!
+  CreateScoreBoard(input: CreateScoreBoardInput!): ScoreBoard_!
+  CreateSession(input: CreateSessionInput!): Session_!
+  CreateSessionScoreBoard(input: CreateSessionScoreBoardInput!): SessionScoreBoard_!
   CreateTemplate(input: CreateTemplateInput!): Template_!
   CreateTemplateCategory(input: CreateTemplateCategoryInput!): TemplateCategory_!
   CreateTemplateContent(input: CreateTemplateContentInput!): TemplateContent_!
@@ -3967,6 +4150,11 @@ type Mutation {
   DeleteAIPromptCategory(ID: String!, options___: DeleteOptionsInput!): AIPromptCategory_!
   DeleteAIPromptType(ID: String!, options___: DeleteOptionsInput!): AIPromptType_!
   DeleteAIResultCache(ID: String!, options___: DeleteOptionsInput!): AIResultCache_!
+  DeleteAbstract(ID: String!, options___: DeleteOptionsInput!): Abstract_!
+  DeleteAbstractLogs(ID: String!, options___: DeleteOptionsInput!): AbstractLogs_!
+  DeleteAbstractResult(ID: String!, options___: DeleteOptionsInput!): AbstractResult_!
+  DeleteAbstractStaging(ID: String!, options___: DeleteOptionsInput!): AbstractStaging_!
+  DeleteAbstractStatus(ID: String!, options___: DeleteOptionsInput!): AbstractStatus_!
   DeleteAction(ID: String!, options___: DeleteOptionsInput!): Action_!
   DeleteActionAuthorization(ID: String!, options___: DeleteOptionsInput!): ActionAuthorization_!
   DeleteActionCategory(ID: String!, options___: DeleteOptionsInput!): ActionCategory_!
@@ -4002,6 +4190,7 @@ type Mutation {
   DeleteDashboardCategory(ID: String!, options___: DeleteOptionsInput!): DashboardCategory_!
   DeleteDataContext(ID: String!, options___: DeleteOptionsInput!): DataContext_!
   DeleteDataContextItem(ID: String!, options___: DeleteOptionsInput!): DataContextItem_!
+  DeleteEmailTemplate(ID: String!, options___: DeleteOptionsInput!): EmailTemplate_!
   DeleteEmployee(ID: String!, options___: DeleteOptionsInput!): Employee_!
   DeleteEmployeeRole(ID: String!, options___: DeleteOptionsInput!): EmployeeRole_!
   DeleteEmployeeSkill(ID: String!, options___: DeleteOptionsInput!): EmployeeSkill_!
@@ -4020,6 +4209,7 @@ type Mutation {
   DeleteEntityPermission(ID: String!, options___: DeleteOptionsInput!): EntityPermission_!
   DeleteEntityRelationship(ID: String!, options___: DeleteOptionsInput!): EntityRelationship_!
   DeleteEntitySetting(ID: String!, options___: DeleteOptionsInput!): EntitySetting_!
+  DeleteEvent(ID: String!, options___: DeleteOptionsInput!): Event_!
   DeleteExplorerNavigationItem(ID: String!, options___: DeleteOptionsInput!): ExplorerNavigationItem_!
   DeleteFile(ID: String!, options___: DeleteOptionsInput!): File_!
   DeleteFileCategory(ID: String!, options___: DeleteOptionsInput!): FileCategory_!
@@ -4046,6 +4236,9 @@ type Mutation {
   DeleteRole(ID: String!, options___: DeleteOptionsInput!): Role_!
   DeleteScheduledAction(ID: String!, options___: DeleteOptionsInput!): ScheduledAction_!
   DeleteScheduledActionParam(ID: String!, options___: DeleteOptionsInput!): ScheduledActionParam_!
+  DeleteScoreBoard(ID: String!, options___: DeleteOptionsInput!): ScoreBoard_!
+  DeleteSession(ID: String!, options___: DeleteOptionsInput!): Session_!
+  DeleteSessionScoreBoard(ID: String!, options___: DeleteOptionsInput!): SessionScoreBoard_!
   DeleteTemplate(ID: String!, options___: DeleteOptionsInput!): Template_!
   DeleteTemplateCategory(ID: String!, options___: DeleteOptionsInput!): TemplateCategory_!
   DeleteTemplateContent(ID: String!, options___: DeleteOptionsInput!): TemplateContent_!
@@ -4087,6 +4280,11 @@ type Mutation {
   UpdateAIPromptCategory(input: UpdateAIPromptCategoryInput!): AIPromptCategory_!
   UpdateAIPromptType(input: UpdateAIPromptTypeInput!): AIPromptType_!
   UpdateAIResultCache(input: UpdateAIResultCacheInput!): AIResultCache_!
+  UpdateAbstract(input: UpdateAbstractInput!): Abstract_!
+  UpdateAbstractLogs(input: UpdateAbstractLogsInput!): AbstractLogs_!
+  UpdateAbstractResult(input: UpdateAbstractResultInput!): AbstractResult_!
+  UpdateAbstractStaging(input: UpdateAbstractStagingInput!): AbstractStaging_!
+  UpdateAbstractStatus(input: UpdateAbstractStatusInput!): AbstractStatus_!
   UpdateAction(input: UpdateActionInput!): Action_!
   UpdateActionAuthorization(input: UpdateActionAuthorizationInput!): ActionAuthorization_!
   UpdateActionCategory(input: UpdateActionCategoryInput!): ActionCategory_!
@@ -4132,6 +4330,7 @@ type Mutation {
   UpdateDuplicateRun(input: UpdateDuplicateRunInput!): DuplicateRun_!
   UpdateDuplicateRunDetail(input: UpdateDuplicateRunDetailInput!): DuplicateRunDetail_!
   UpdateDuplicateRunDetailMatch(input: UpdateDuplicateRunDetailMatchInput!): DuplicateRunDetailMatch_!
+  UpdateEmailTemplate(input: UpdateEmailTemplateInput!): EmailTemplate_!
   UpdateEmployee(input: UpdateEmployeeInput!): Employee_!
   UpdateEmployeeCompanyIntegration(input: UpdateEmployeeCompanyIntegrationInput!): EmployeeCompanyIntegration_!
   UpdateEmployeeRole(input: UpdateEmployeeRoleInput!): EmployeeRole_!
@@ -4157,6 +4356,7 @@ type Mutation {
   UpdateEntityRelationshipDisplayComponent(input: UpdateEntityRelationshipDisplayComponentInput!): EntityRelationshipDisplayComponent_!
   UpdateEntitySetting(input: UpdateEntitySettingInput!): EntitySetting_!
   UpdateErrorLog(input: UpdateErrorLogInput!): ErrorLog_!
+  UpdateEvent(input: UpdateEventInput!): Event_!
   UpdateExplorerNavigationItem(input: UpdateExplorerNavigationItemInput!): ExplorerNavigationItem_!
   UpdateFile(input: UpdateFileInput!): File_!
   UpdateFileCategory(input: UpdateFileCategoryInput!): FileCategory_!
@@ -4193,6 +4393,9 @@ type Mutation {
   UpdateScheduledAction(input: UpdateScheduledActionInput!): ScheduledAction_!
   UpdateScheduledActionParam(input: UpdateScheduledActionParamInput!): ScheduledActionParam_!
   UpdateSchemaInfo(input: UpdateSchemaInfoInput!): SchemaInfo_!
+  UpdateScoreBoard(input: UpdateScoreBoardInput!): ScoreBoard_!
+  UpdateSession(input: UpdateSessionInput!): Session_!
+  UpdateSessionScoreBoard(input: UpdateSessionScoreBoardInput!): SessionScoreBoard_!
   UpdateTemplate(input: UpdateTemplateInput!): Template_!
   UpdateTemplateCategory(input: UpdateTemplateCategoryInput!): TemplateCategory_!
   UpdateTemplateContent(input: UpdateTemplateContentInput!): TemplateContent_!
@@ -4295,6 +4498,11 @@ type Query {
   AIPromptCategory(ID: String!): AIPromptCategory_
   AIPromptType(ID: String!): AIPromptType_
   AIResultCache(ID: String!): AIResultCache_
+  Abstract(ID: String!): Abstract_
+  AbstractLogs(ID: String!): AbstractLogs_
+  AbstractResult(ID: String!): AbstractResult_
+  AbstractStaging(ID: String!): AbstractStaging_
+  AbstractStatus(ID: String!): AbstractStatus_
   Action(ID: String!): Action_
   ActionAuthorization(ID: String!): ActionAuthorization_
   ActionCategory(ID: String!): ActionCategory_
@@ -4373,6 +4581,7 @@ type Query {
   DuplicateRun(ID: String!): DuplicateRun_
   DuplicateRunDetail(ID: String!): DuplicateRunDetail_
   DuplicateRunDetailMatch(ID: String!): DuplicateRunDetailMatch_
+  EmailTemplate(ID: String!): EmailTemplate_
   Employee(ID: String!): Employee_
   EmployeeCompanyIntegration(ID: String!): EmployeeCompanyIntegration_
   EmployeeRole(ID: String!): EmployeeRole_
@@ -4399,6 +4608,7 @@ type Query {
   EntityRelationshipDisplayComponent(ID: String!): EntityRelationshipDisplayComponent_
   EntitySetting(ID: String!): EntitySetting_
   ErrorLog(ID: String!): ErrorLog_
+  Event(ID: String!): Event_
   ExecuteAskSkipAnalysisQuery(ConversationId: String!, DataContextId: String, ForceEntityRefresh: Boolean, UserQuestion: String!): AskSkipResultType!
   ExecuteAskSkipRecordChat(CompositeKey: CompositeKeyInputType!, ConversationId: String!, EntityName: String!, UserQuestion: String!): AskSkipResultType!
   ExecuteAskSkipRunScript(DataContextId: String!, ScriptText: String!): AskSkipResultType!
@@ -4499,6 +4709,21 @@ type Query {
   RunAIResultCacheDynamicView(input: RunDynamicViewInput!): RunAIResultCacheViewResult!
   RunAIResultCacheViewByID(input: RunViewByIDInput!): RunAIResultCacheViewResult!
   RunAIResultCacheViewByName(input: RunViewByNameInput!): RunAIResultCacheViewResult!
+  RunAbstractDynamicView(input: RunDynamicViewInput!): RunAbstractViewResult!
+  RunAbstractLogsDynamicView(input: RunDynamicViewInput!): RunAbstractLogsViewResult!
+  RunAbstractLogsViewByID(input: RunViewByIDInput!): RunAbstractLogsViewResult!
+  RunAbstractLogsViewByName(input: RunViewByNameInput!): RunAbstractLogsViewResult!
+  RunAbstractResultDynamicView(input: RunDynamicViewInput!): RunAbstractResultViewResult!
+  RunAbstractResultViewByID(input: RunViewByIDInput!): RunAbstractResultViewResult!
+  RunAbstractResultViewByName(input: RunViewByNameInput!): RunAbstractResultViewResult!
+  RunAbstractStagingDynamicView(input: RunDynamicViewInput!): RunAbstractStagingViewResult!
+  RunAbstractStagingViewByID(input: RunViewByIDInput!): RunAbstractStagingViewResult!
+  RunAbstractStagingViewByName(input: RunViewByNameInput!): RunAbstractStagingViewResult!
+  RunAbstractStatusDynamicView(input: RunDynamicViewInput!): RunAbstractStatusViewResult!
+  RunAbstractStatusViewByID(input: RunViewByIDInput!): RunAbstractStatusViewResult!
+  RunAbstractStatusViewByName(input: RunViewByNameInput!): RunAbstractStatusViewResult!
+  RunAbstractViewByID(input: RunViewByIDInput!): RunAbstractViewResult!
+  RunAbstractViewByName(input: RunViewByNameInput!): RunAbstractViewResult!
   RunActionAuthorizationDynamicView(input: RunDynamicViewInput!): RunActionAuthorizationViewResult!
   RunActionAuthorizationViewByID(input: RunViewByIDInput!): RunActionAuthorizationViewResult!
   RunActionAuthorizationViewByName(input: RunViewByNameInput!): RunActionAuthorizationViewResult!
@@ -4650,6 +4875,9 @@ type Query {
   RunDuplicateRunViewByID(input: RunViewByIDInput!): RunDuplicateRunViewResult!
   RunDuplicateRunViewByName(input: RunViewByNameInput!): RunDuplicateRunViewResult!
   RunDynamicView(input: RunDynamicViewInput!): RunViewResult!
+  RunEmailTemplateDynamicView(input: RunDynamicViewInput!): RunEmailTemplateViewResult!
+  RunEmailTemplateViewByID(input: RunViewByIDInput!): RunEmailTemplateViewResult!
+  RunEmailTemplateViewByName(input: RunViewByNameInput!): RunEmailTemplateViewResult!
   RunEmployeeCompanyIntegrationDynamicView(input: RunDynamicViewInput!): RunEmployeeCompanyIntegrationViewResult!
   RunEmployeeCompanyIntegrationViewByID(input: RunViewByIDInput!): RunEmployeeCompanyIntegrationViewResult!
   RunEmployeeCompanyIntegrationViewByName(input: RunViewByNameInput!): RunEmployeeCompanyIntegrationViewResult!
@@ -4726,6 +4954,9 @@ type Query {
   RunErrorLogDynamicView(input: RunDynamicViewInput!): RunErrorLogViewResult!
   RunErrorLogViewByID(input: RunViewByIDInput!): RunErrorLogViewResult!
   RunErrorLogViewByName(input: RunViewByNameInput!): RunErrorLogViewResult!
+  RunEventDynamicView(input: RunDynamicViewInput!): RunEventViewResult!
+  RunEventViewByID(input: RunViewByIDInput!): RunEventViewResult!
+  RunEventViewByName(input: RunViewByNameInput!): RunEventViewResult!
   RunExplorerNavigationItemDynamicView(input: RunDynamicViewInput!): RunExplorerNavigationItemViewResult!
   RunExplorerNavigationItemViewByID(input: RunViewByIDInput!): RunExplorerNavigationItemViewResult!
   RunExplorerNavigationItemViewByName(input: RunViewByNameInput!): RunExplorerNavigationItemViewResult!
@@ -4852,6 +5083,15 @@ type Query {
   RunSchemaInfoDynamicView(input: RunDynamicViewInput!): RunSchemaInfoViewResult!
   RunSchemaInfoViewByID(input: RunViewByIDInput!): RunSchemaInfoViewResult!
   RunSchemaInfoViewByName(input: RunViewByNameInput!): RunSchemaInfoViewResult!
+  RunScoreBoardDynamicView(input: RunDynamicViewInput!): RunScoreBoardViewResult!
+  RunScoreBoardViewByID(input: RunViewByIDInput!): RunScoreBoardViewResult!
+  RunScoreBoardViewByName(input: RunViewByNameInput!): RunScoreBoardViewResult!
+  RunSessionDynamicView(input: RunDynamicViewInput!): RunSessionViewResult!
+  RunSessionScoreBoardDynamicView(input: RunDynamicViewInput!): RunSessionScoreBoardViewResult!
+  RunSessionScoreBoardViewByID(input: RunViewByIDInput!): RunSessionScoreBoardViewResult!
+  RunSessionScoreBoardViewByName(input: RunViewByNameInput!): RunSessionScoreBoardViewResult!
+  RunSessionViewByID(input: RunViewByIDInput!): RunSessionViewResult!
+  RunSessionViewByName(input: RunViewByNameInput!): RunSessionViewResult!
   RunSkillDynamicView(input: RunDynamicViewInput!): RunSkillViewResult!
   RunSkillViewByID(input: RunViewByIDInput!): RunSkillViewResult!
   RunSkillViewByName(input: RunViewByNameInput!): RunSkillViewResult!
@@ -4942,6 +5182,9 @@ type Query {
   ScheduledAction(ID: String!): ScheduledAction_
   ScheduledActionParam(ID: String!): ScheduledActionParam_
   SchemaInfo(ID: String!): SchemaInfo_
+  ScoreBoard(ID: String!): ScoreBoard_
+  Session(ID: String!): Session_
+  SessionScoreBoard(ID: String!): SessionScoreBoard_
   Skill(ID: String!): Skill_
   Tag(ID: String!): Tag_
   TaggedItem(ID: String!): TaggedItem_
@@ -5678,6 +5921,56 @@ type RunAIResultCacheViewResult {
   UserViewRunID: String
 }
 
+type RunAbstractLogsViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [AbstractLogs_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunAbstractResultViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [AbstractResult_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunAbstractStagingViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [AbstractStaging_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunAbstractStatusViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [AbstractStatus_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunAbstractViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [Abstract_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
 type RunActionAuthorizationViewResult {
   ErrorMessage: String
   ExecutionTime: Int
@@ -6237,6 +6530,16 @@ input RunDynamicViewInput {
   UserSearchString: String
 }
 
+type RunEmailTemplateViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [EmailTemplate_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
 type RunEmployeeCompanyIntegrationViewResult {
   ErrorMessage: String
   ExecutionTime: Int
@@ -6487,6 +6790,16 @@ type RunErrorLogViewResult {
   ErrorMessage: String
   ExecutionTime: Int
   Results: [ErrorLog_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunEventViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [Event_!]!
   RowCount: Int
   Success: Boolean!
   TotalRowCount: Int
@@ -6925,6 +7238,36 @@ type RunSchemaInfoViewResult {
   ErrorMessage: String
   ExecutionTime: Int
   Results: [SchemaInfo_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunScoreBoardViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [ScoreBoard_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunSessionScoreBoardViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [SessionScoreBoard_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunSessionViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [Session_!]!
   RowCount: Int
   Success: Boolean!
   TotalRowCount: Int
@@ -7517,6 +7860,41 @@ type SchemaInfo_ {
   _mj__UpdatedAt: Timestamp!
 }
 
+type ScoreBoard_ {
+  Criteria: String
+  Description: String
+  ID: String!
+  Name: String
+  SessionScoreBoards_ScoreBoardIdArray: [SessionScoreBoard_!]!
+  Weightage: Float
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type SessionScoreBoard_ {
+  ID: String!
+  ScoreBoardId: String!
+  ScoreBoardId_Virtual: String
+  SessionId: String!
+  SessionId_Virtual: String!
+  WeightedScore: Float
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type Session_ {
+  Abstracts_SessionIDArray: [Abstract_!]!
+  Event: String!
+  EventID: String!
+  ID: String!
+  Name: String!
+  SessionEndDate: Timestamp
+  SessionScoreBoards_SessionIdArray: [SessionScoreBoard_!]!
+  SessionStartDate: Timestamp
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
 type SimpleEntityFieldOutputType {
   AllowsNull: Boolean!
   Description: String
@@ -7983,6 +8361,60 @@ input UpdateAIResultCacheInput {
   ResultText: String
   RunAt: Timestamp!
   Status: String!
+}
+
+input UpdateAbstractInput {
+  AbstractText: String
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  SessionID: String
+  UploadUrl: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input UpdateAbstractLogsInput {
+  AIAgentId: String
+  AbstractResultId: String
+  ActionDescription: String
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  UpdatedOn: Timestamp
+}
+
+input UpdateAbstractResultInput {
+  AbstractID: String
+  AbstractStatusId: String
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  Score: Float
+}
+
+input UpdateAbstractStagingInput {
+  AbstractText: String
+  Description: String
+  EventCreatedAt: Timestamp
+  EventEndDate: Timestamp
+  EventID: String
+  EventName: String
+  EventStartDate: Timestamp
+  EventUpdatedAt: Timestamp
+  FirstName: String
+  ID: String!
+  LastName: String
+  OldValues___: [KeyValuePairInput!]
+  Session: String
+  SessionID: String
+  UploadUrl: String
+  User: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input UpdateAbstractStatusInput {
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
 }
 
 input UpdateActionAuthorizationInput {
@@ -8471,6 +8903,14 @@ input UpdateDuplicateRunInput {
   StartedByUserID: String!
 }
 
+input UpdateEmailTemplateInput {
+  Body: String
+  CreatedAt: Timestamp
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  Subject: String
+}
+
 input UpdateEmployeeCompanyIntegrationInput {
   CompanyIntegrationID: String!
   EmployeeID: String!
@@ -8798,6 +9238,15 @@ input UpdateErrorLogInput {
   Message: String
   OldValues___: [KeyValuePairInput!]
   Status: String
+}
+
+input UpdateEventInput {
+  Description: String
+  EventEndDate: Timestamp
+  EventStartDate: Timestamp
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
 }
 
 input UpdateExplorerNavigationItemInput {
@@ -9205,6 +9654,32 @@ input UpdateSchemaInfoInput {
   ID: String!
   OldValues___: [KeyValuePairInput!]
   SchemaName: String!
+}
+
+input UpdateScoreBoardInput {
+  Criteria: String
+  Description: String
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
+  Weightage: Float
+}
+
+input UpdateSessionInput {
+  EventID: String
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
+  SessionEndDate: Timestamp
+  SessionStartDate: Timestamp
+}
+
+input UpdateSessionScoreBoardInput {
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  ScoreBoardId: String
+  SessionId: String
+  WeightedScore: Float
 }
 
 input UpdateTemplateCategoryInput {
