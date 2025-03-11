@@ -1464,6 +1464,50 @@ input CreateAbstractStatusInput {
   Name: String
 }
 
+input CreateAbstractInput {
+  AbstractText: String
+  SessionID: String
+  UploadUrl: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input CreateAbstractLogsInput {
+  AIAgentId: String
+  AbstractResultId: String
+  ActionDescription: String
+  UpdatedOn: Timestamp
+}
+
+input CreateAbstractResultInput {
+  AbstractID: String
+  AbstractStatusId: String
+  Score: Float
+}
+
+input CreateAbstractStagingInput {
+  AbstractText: String
+  Description: String
+  EventCreatedAt: Timestamp
+  EventEndDate: Timestamp
+  EventID: String
+  EventName: String
+  EventStartDate: Timestamp
+  EventUpdatedAt: Timestamp
+  FirstName: String
+  LastName: String
+  Session: String
+  SessionID: String
+  UploadUrl: String
+  User: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input CreateAbstractStatusInput {
+  Name: String
+}
+
 input CreateActionAuthorizationInput {
   ActionID: String
   AuthorizationID: String
@@ -1844,6 +1888,12 @@ input CreateDuplicateRunInput {
   SourceListID: String
   StartedAt: Timestamp
   StartedByUserID: String
+}
+
+input CreateEmailTemplateInput {
+  Body: String
+  CreatedAt: Timestamp
+  Subject: String
 }
 
 input CreateEmailTemplateInput {
@@ -2449,6 +2499,26 @@ input CreateScoreBoardInput {
   Description: String
   Name: String
   SessionID: String
+  Weightage: Float
+}
+
+input CreateSessionInput {
+  EventID: String
+  Name: String
+  SessionEndDate: Timestamp
+  SessionStartDate: Timestamp
+}
+
+input CreateSessionScoreBoardInput {
+  ScoreBoardId: String
+  SessionId: String
+  WeightedScore: Float
+}
+
+input CreateScoreBoardInput {
+  Criteria: String
+  Description: String
+  Name: String
   Weightage: Float
 }
 
@@ -8414,6 +8484,60 @@ input UpdateAbstractStatusInput {
   OldValues___: [KeyValuePairInput!]
 }
 
+input UpdateAbstractInput {
+  AbstractText: String
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  SessionID: String
+  UploadUrl: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input UpdateAbstractLogsInput {
+  AIAgentId: String
+  AbstractResultId: String
+  ActionDescription: String
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  UpdatedOn: Timestamp
+}
+
+input UpdateAbstractResultInput {
+  AbstractID: String
+  AbstractStatusId: String
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  Score: Float
+}
+
+input UpdateAbstractStagingInput {
+  AbstractText: String
+  Description: String
+  EventCreatedAt: Timestamp
+  EventEndDate: Timestamp
+  EventID: String
+  EventName: String
+  EventStartDate: Timestamp
+  EventUpdatedAt: Timestamp
+  FirstName: String
+  ID: String!
+  LastName: String
+  OldValues___: [KeyValuePairInput!]
+  Session: String
+  SessionID: String
+  UploadUrl: String
+  User: String
+  UserID: String
+  YearOfExp: Int
+}
+
+input UpdateAbstractStatusInput {
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
+}
+
 input UpdateActionAuthorizationInput {
   ActionID: String
   AuthorizationID: String
@@ -8899,6 +9023,14 @@ input UpdateDuplicateRunInput {
   SourceListID: String
   StartedAt: Timestamp
   StartedByUserID: String
+}
+
+input UpdateEmailTemplateInput {
+  Body: String
+  CreatedAt: Timestamp
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  Subject: String
 }
 
 input UpdateEmailTemplateInput {
@@ -9661,6 +9793,32 @@ input UpdateScoreBoardInput {
   Name: String
   OldValues___: [KeyValuePairInput!]
   SessionID: String
+  Weightage: Float
+}
+
+input UpdateSessionInput {
+  EventID: String
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
+  SessionEndDate: Timestamp
+  SessionStartDate: Timestamp
+}
+
+input UpdateSessionScoreBoardInput {
+  ID: String!
+  OldValues___: [KeyValuePairInput!]
+  ScoreBoardId: String
+  SessionId: String
+  WeightedScore: Float
+}
+
+input UpdateScoreBoardInput {
+  Criteria: String
+  Description: String
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
   Weightage: Float
 }
 
