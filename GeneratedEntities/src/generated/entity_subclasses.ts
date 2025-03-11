@@ -255,51 +255,13 @@ export const AbstractSchema = z.object({
     Session: z.string().describe(`
         * * Field Name: Session
         * * Display Name: Session
-        * * SQL Data Type: nvarchar(255)`),
+        * * SQL Data Type: nvarchar(255)
+        * * Default Value: null`),
     User: z.string().describe(`
         * * Field Name: User
         * * Display Name: User
-        * * SQL Data Type: nvarchar(100)`),
-    FirstName: z.string().nullish().describe(`
-        * * Field Name: FirstName
-        * * Display Name: First Name
-        * * SQL Data Type: nvarchar(50)`),
-    LastName: z.string().nullish().describe(`
-        * * Field Name: LastName
-        * * Display Name: Last Name
-        * * SQL Data Type: nvarchar(50)`),
-    EventID: z.string().describe(`
-        * * Field Name: EventID
-        * * Display Name: Event ID
-        * * SQL Data Type: uniqueidentifier`),
-    Expr1: z.string().describe(`
-        * * Field Name: Expr1
-        * * Display Name: Expr 1
-        * * SQL Data Type: uniqueidentifier`),
-    EventName: z.string().describe(`
-        * * Field Name: EventName
-        * * Display Name: Event Name
-        * * SQL Data Type: nvarchar(255)`),
-    EventStartDate: z.date().nullish().describe(`
-        * * Field Name: EventStartDate
-        * * Display Name: Event Start Date
-        * * SQL Data Type: datetime`),
-    EventEndDate: z.date().nullish().describe(`
-        * * Field Name: EventEndDate
-        * * Display Name: Event End Date
-        * * SQL Data Type: datetime`),
-    Description: z.string().nullish().describe(`
-        * * Field Name: Description
-        * * Display Name: Description
-        * * SQL Data Type: nvarchar(255)`),
-    EventCreatedAt: z.date().describe(`
-        * * Field Name: EventCreatedAt
-        * * Display Name: Event Created At
-        * * SQL Data Type: datetimeoffset`),
-    EventUpdatedAt: z.date().describe(`
-        * * Field Name: EventUpdatedAt
-        * * Display Name: Event Updated At
-        * * SQL Data Type: datetimeoffset`),
+        * * SQL Data Type: nvarchar(100)
+        * * Default Value: null`),
 });
 
 export type AbstractEntityType = z.infer<typeof AbstractSchema>;
@@ -414,6 +376,15 @@ export const ScoreBoardSchema = z.object({
         * * Display Name: Updated At
         * * SQL Data Type: datetimeoffset
         * * Default Value: getutcdate()`),
+    SessionID: z.string().nullish().describe(`
+        * * Field Name: SessionID
+        * * Display Name: Session ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Sessions (vwSessions.ID)`),
+    Session: z.string().nullish().describe(`
+        * * Field Name: Session
+        * * Display Name: Session
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type ScoreBoardEntityType = z.infer<typeof ScoreBoardSchema>;
@@ -1191,6 +1162,7 @@ export class AbstractEntity extends BaseEntity<AbstractEntityType> {
     * * Field Name: Session
     * * Display Name: Session
     * * SQL Data Type: nvarchar(255)
+    * * Default Value: null
     */
     get Session(): string {
         return this.Get('Session');
@@ -1200,99 +1172,10 @@ export class AbstractEntity extends BaseEntity<AbstractEntityType> {
     * * Field Name: User
     * * Display Name: User
     * * SQL Data Type: nvarchar(100)
+    * * Default Value: null
     */
     get User(): string {
         return this.Get('User');
-    }
-
-    /**
-    * * Field Name: FirstName
-    * * Display Name: First Name
-    * * SQL Data Type: nvarchar(50)
-    */
-    get FirstName(): string | null {
-        return this.Get('FirstName');
-    }
-
-    /**
-    * * Field Name: LastName
-    * * Display Name: Last Name
-    * * SQL Data Type: nvarchar(50)
-    */
-    get LastName(): string | null {
-        return this.Get('LastName');
-    }
-
-    /**
-    * * Field Name: EventID
-    * * Display Name: Event ID
-    * * SQL Data Type: uniqueidentifier
-    */
-    get EventID(): string {
-        return this.Get('EventID');
-    }
-
-    /**
-    * * Field Name: Expr1
-    * * Display Name: Expr 1
-    * * SQL Data Type: uniqueidentifier
-    */
-    get Expr1(): string {
-        return this.Get('Expr1');
-    }
-
-    /**
-    * * Field Name: EventName
-    * * Display Name: Event Name
-    * * SQL Data Type: nvarchar(255)
-    */
-    get EventName(): string {
-        return this.Get('EventName');
-    }
-
-    /**
-    * * Field Name: EventStartDate
-    * * Display Name: Event Start Date
-    * * SQL Data Type: datetime
-    */
-    get EventStartDate(): Date | null {
-        return this.Get('EventStartDate');
-    }
-
-    /**
-    * * Field Name: EventEndDate
-    * * Display Name: Event End Date
-    * * SQL Data Type: datetime
-    */
-    get EventEndDate(): Date | null {
-        return this.Get('EventEndDate');
-    }
-
-    /**
-    * * Field Name: Description
-    * * Display Name: Description
-    * * SQL Data Type: nvarchar(255)
-    */
-    get Description(): string | null {
-        return this.Get('Description');
-    }
-
-    /**
-    * * Field Name: EventCreatedAt
-    * * Display Name: Event Created At
-    * * SQL Data Type: datetimeoffset
-    */
-    get EventCreatedAt(): Date {
-        return this.Get('EventCreatedAt');
-    }
-
-    /**
-    * * Field Name: EventUpdatedAt
-    * * Display Name: Event Updated At
-    * * SQL Data Type: datetimeoffset
-    */
-    get EventUpdatedAt(): Date {
-        return this.Get('EventUpdatedAt');
     }
 }
 
@@ -1609,6 +1492,28 @@ export class ScoreBoardEntity extends BaseEntity<ScoreBoardEntityType> {
     */
     get __mj_UpdatedAt(): Date {
         return this.Get('__mj_UpdatedAt');
+    }
+
+    /**
+    * * Field Name: SessionID
+    * * Display Name: Session ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Sessions (vwSessions.ID)
+    */
+    get SessionID(): string | null {
+        return this.Get('SessionID');
+    }
+    set SessionID(value: string | null) {
+        this.Set('SessionID', value);
+    }
+
+    /**
+    * * Field Name: Session
+    * * Display Name: Session
+    * * SQL Data Type: nvarchar(255)
+    */
+    get Session(): string | null {
+        return this.Get('Session');
     }
 }
 

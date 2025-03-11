@@ -1,17 +1,18 @@
 {
-  "name": "mj_api",
+  "name": "custom-server-entities",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Abstract Demo App - Custom Server Entities",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "private": true,
-  "type": "module",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
-    "start": "node --experimental-specifier-resolution=node --import ./register.js -r dotenv/config ./src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "check-types": "tsc -noEmit",
-    "zip": "zip -qr deploy.zip ./node_modules ./dist ./package.json ./config.json",
+    "start": "ts-node-dev src/index.ts",
     "build": "tsc",
-    "link": "npm link ../GeneratedEntities ../GeneratedActions ../CustomServerEntities"
+    "test": "echo \"Error: no test specified\" && exit 1",
+       "link": "npm link ../GeneratedEntities ../GeneratedActions"
   },
   "keywords": [],
   "author": "",

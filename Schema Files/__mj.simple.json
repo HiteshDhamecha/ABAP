@@ -329,7 +329,7 @@
             "Name": "Conversation Details",
             "Description": "",
             "BaseView": "vwConversationDetails", 
-            "Fields": ["ID","ConversationID","ExternalID","Role","Message","Error","HiddenToUser","__mj_CreatedAt","__mj_UpdatedAt","UserRating","Conversation","UserFeedback","ReflectionInsights","SummaryOfEarlierConversation"]
+            "Fields": ["ID","ConversationID","ExternalID","Role","Message","Error","HiddenToUser","__mj_CreatedAt","__mj_UpdatedAt","Conversation","UserRating","UserFeedback","ReflectionInsights","SummaryOfEarlierConversation"]
         },
         { 
             "Name": "Conversations",
@@ -419,7 +419,7 @@
             "Name": "Entities",
             "Description": "Catalog of all entities across all schemas",
             "BaseView": "vwEntities", 
-            "Fields": ["ID","ParentID","Name","NameSuffix","Description","AutoUpdateDescription","BaseTable","BaseView","BaseViewGenerated","SchemaName","VirtualEntity","TrackRecordChanges","AuditRecordAccess","AuditViewRuns","IncludeInAPI","AllowAllRowsAPI","AllowUpdateAPI","AllowCreateAPI","AllowDeleteAPI","CustomResolverAPI","AllowUserSearchAPI","FullTextSearchEnabled","FullTextCatalog","FullTextCatalogGenerated","FullTextIndex","FullTextIndexGenerated","FullTextSearchFunction","FullTextSearchFunctionGenerated","UserViewMaxRows","spCreate","spUpdate","spDelete","spCreateGenerated","spUpdateGenerated","spDeleteGenerated","CascadeDeletes","DeleteType","AllowRecordMerge","spMatch","RelationshipDefaultDisplayType","UserFormGenerated","EntityObjectSubclassName","EntityObjectSubclassImport","PreferredCommunicationField","Icon","__mj_CreatedAt","__mj_UpdatedAt","CodeName","ScopeDefault","ClassName","RowsToPackWithSchema","BaseTableCodeName","RowsToPackSampleMethod","RowsToPackSampleCount","ParentEntity","RowsToPackSampleOrder","ParentBaseTable","ParentBaseView"]
+            "Fields": ["ID","ParentID","Name","NameSuffix","Description","AutoUpdateDescription","BaseTable","BaseView","BaseViewGenerated","SchemaName","VirtualEntity","TrackRecordChanges","AuditRecordAccess","AuditViewRuns","IncludeInAPI","AllowAllRowsAPI","AllowUpdateAPI","AllowCreateAPI","AllowDeleteAPI","CustomResolverAPI","AllowUserSearchAPI","FullTextSearchEnabled","FullTextCatalog","FullTextCatalogGenerated","FullTextIndex","FullTextIndexGenerated","FullTextSearchFunction","FullTextSearchFunctionGenerated","UserViewMaxRows","spCreate","spUpdate","spDelete","spCreateGenerated","spUpdateGenerated","spDeleteGenerated","CascadeDeletes","DeleteType","AllowRecordMerge","spMatch","RelationshipDefaultDisplayType","UserFormGenerated","EntityObjectSubclassName","EntityObjectSubclassImport","PreferredCommunicationField","Icon","__mj_CreatedAt","__mj_UpdatedAt","CodeName","ScopeDefault","ClassName","RowsToPackWithSchema","BaseTableCodeName","RowsToPackSampleMethod","ParentEntity","RowsToPackSampleCount","RowsToPackSampleOrder","ParentBaseTable","ParentBaseView"]
         },
         { 
             "Name": "Entity Action Filters",
@@ -503,7 +503,7 @@
             "Name": "Entity Fields",
             "Description": "List of all fields within each entity with metadata about each field",
             "BaseView": "vwEntityFields", 
-            "Fields": ["ID","EntityID","Sequence","Name","DisplayName","Description","AutoUpdateDescription","IsPrimaryKey","IsUnique","Category","Type","Length","Precision","Scale","AllowsNull","DefaultValue","AutoIncrement","ValueListType","ExtendedType","CodeType","DefaultInView","ViewCellTemplate","DefaultColumnWidth","AllowUpdateAPI","AllowUpdateInView","IncludeInUserSearchAPI","FullTextSearchEnabled","UserSearchParamFormatAPI","IncludeInGeneratedForm","GeneratedFormSection","IsVirtual","IsNameField","RelatedEntityID","RelatedEntityFieldName","IncludeRelatedEntityNameFieldInBaseView","RelatedEntityNameFieldMap","RelatedEntityDisplayType","EntityIDFieldName","__mj_CreatedAt","__mj_UpdatedAt","Entity","ScopeDefault","AutoUpdateRelatedEntityInfo","SchemaName","ValuesToPackWithSchema","BaseTable","BaseView","EntityCodeName","EntityClassName","RelatedEntity","RelatedEntitySchemaName","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityCodeName","RelatedEntityClassName"]
+            "Fields": ["ID","EntityID","Sequence","Name","DisplayName","Description","AutoUpdateDescription","IsPrimaryKey","IsUnique","Category","Type","Length","Precision","Scale","AllowsNull","DefaultValue","AutoIncrement","ValueListType","ExtendedType","CodeType","DefaultInView","ViewCellTemplate","DefaultColumnWidth","AllowUpdateAPI","AllowUpdateInView","IncludeInUserSearchAPI","FullTextSearchEnabled","UserSearchParamFormatAPI","IncludeInGeneratedForm","GeneratedFormSection","IsVirtual","IsNameField","RelatedEntityID","RelatedEntityFieldName","IncludeRelatedEntityNameFieldInBaseView","RelatedEntityNameFieldMap","RelatedEntityDisplayType","EntityIDFieldName","__mj_CreatedAt","__mj_UpdatedAt","Entity","ScopeDefault","SchemaName","AutoUpdateRelatedEntityInfo","ValuesToPackWithSchema","BaseTable","BaseView","EntityCodeName","EntityClassName","RelatedEntity","RelatedEntitySchemaName","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityCodeName","RelatedEntityClassName"]
         },
         { 
             "Name": "Entity Permissions",
@@ -527,7 +527,7 @@
             "Name": "Entity Relationships",
             "Description": "Metadata about relationships between entities including display preferences for the UI",
             "BaseView": "vwEntityRelationships", 
-            "Fields": ["ID","EntityID","Sequence","RelatedEntityID","BundleInAPI","IncludeInParentAllQuery","Type","EntityKeyField","RelatedEntityJoinField","JoinView","JoinEntityJoinField","JoinEntityInverseJoinField","DisplayInForm","DisplayLocation","DisplayName","DisplayIconType","DisplayIcon","DisplayUserViewID","DisplayComponentID","DisplayComponentConfiguration","__mj_CreatedAt","__mj_UpdatedAt","Entity","AutoUpdateFromSchema","EntityBaseTable","EntityBaseView","RelatedEntity","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityClassName","RelatedEntityCodeName","RelatedEntityBaseTableCodeName","DisplayUserViewName"]
+            "Fields": ["ID","EntityID","Sequence","RelatedEntityID","BundleInAPI","IncludeInParentAllQuery","Type","EntityKeyField","RelatedEntityJoinField","JoinView","JoinEntityJoinField","JoinEntityInverseJoinField","DisplayInForm","DisplayLocation","DisplayName","DisplayIconType","DisplayIcon","DisplayUserViewID","DisplayComponentID","DisplayComponentConfiguration","__mj_CreatedAt","__mj_UpdatedAt","AutoUpdateFromSchema","Entity","EntityBaseTable","EntityBaseView","RelatedEntity","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityClassName","RelatedEntityCodeName","RelatedEntityBaseTableCodeName","DisplayUserViewName"]
         },
         { 
             "Name": "Entity Settings",
@@ -605,7 +605,7 @@
             "Name": "List Details",
             "Description": "Tracks the records within each list.",
             "BaseView": "vwListDetails", 
-            "Fields": ["ID","ListID","RecordID","Sequence","__mj_CreatedAt","__mj_UpdatedAt","List","Status","AdditionalData"]
+            "Fields": ["ID","ListID","RecordID","Sequence","__mj_CreatedAt","__mj_UpdatedAt","Status","List","AdditionalData"]
         },
         { 
             "Name": "Lists",

@@ -1,3 +1,0 @@
-/*
-Migration contents have been deleted as they introduced an unresolvable data conflict. This file has been left intact to preserve the migration history order.
- */

@@ -64,7 +64,7 @@ const codegenConfig = {
   customSQLScripts: [],
   dbSchemaJSONOutput: {
     excludeEntities: [],
-    excludeSchemas: ['sys', 'staging', 'dbo'],
+    excludeSchemas: ['sys', 'staging'],
     bundles: [
       {
         name: '_Core_Apps',

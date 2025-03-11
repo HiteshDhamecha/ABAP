@@ -3731,15 +3731,15 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "UserRating", 
-                    "Description": "This column is used to capture user feedback as a rating scale. The scale ranges from 1 to 10, where 1 might represent thumbs down, and 10 might represent thumbs up or the highest rating in a star-based scale.",  
-                    "Type": "int",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "Conversation", 
                     "Description": "",  
                     "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserRating", 
+                    "Description": "This column is used to capture user feedback as a rating scale. The scale ranges from 1 to 10, where 1 might represent thumbs down, and 10 might represent thumbs up or the highest rating in a star-based scale.",  
+                    "Type": "int",
                     "AllowsNull": true 
                 },         
                 {
@@ -5162,16 +5162,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "RowsToPackSampleCount", 
-                    "Description": "The number of rows to pack when RowsToPackWithSchema is set to Sample, based on the designated sampling method. Defaults to 0.",  
-                    "Type": "int",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "ParentEntity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "RowsToPackSampleCount", 
+                    "Description": "The number of rows to pack when RowsToPackWithSchema is set to Sample, based on the designated sampling method. Defaults to 0.",  
+                    "Type": "int",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "RowsToPackSampleOrder", 
@@ -6306,15 +6306,15 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "AutoUpdateRelatedEntityInfo", 
-                    "Description": "Indicates whether the related entity information should be automatically updated from the database schema. When set to 0, relationships not part of the database schema can be manually defined at the application and AI agent level. Defaults to 1.",  
-                    "Type": "bit",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "SchemaName", 
                     "Description": "",  
                     "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AutoUpdateRelatedEntityInfo", 
+                    "Description": "Indicates whether the related entity information should be automatically updated from the database schema. When set to 0, relationships not part of the database schema can be manually defined at the application and AI agent level. Defaults to 1.",  
+                    "Type": "bit",
                     "AllowsNull": false 
                 },         
                 {
@@ -6810,15 +6810,15 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "AutoUpdateFromSchema", 
                     "Description": "Indicates whether this relationship should be automatically updated by CodeGen. When set to 0, the record will not be modified by CodeGen. Defaults to 1.",  
                     "Type": "bit",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Entity", 
+                    "Description": "",  
+                    "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
@@ -7697,14 +7697,14 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "List", 
-                    "Description": "",  
+                    "Name": "Status", 
+                    "Description": "Tracks the status of each individual list detail row to enable processing of various types and the use of the status column for filtering list detail rows within a list that are in a particular state.",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Status", 
-                    "Description": "Tracks the status of each individual list detail row to enable processing of various types and the use of the status column for filtering list detail rows within a list that are in a particular state.",  
+                    "Name": "List", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         

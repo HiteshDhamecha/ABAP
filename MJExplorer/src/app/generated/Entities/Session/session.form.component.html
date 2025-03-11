@@ -16,6 +16,19 @@
                         </mj-form-section>
                     </mj-tab-body>
                     
+                    <mj-tab Name="Score Boards" [Visible]="record.IsSaved"> 
+                        Score Boards
+                    </mj-tab>
+                    <mj-tab-body>
+                        <mj-user-view-grid 
+                            [Params]="BuildRelationshipViewParamsByEntityName('Score Boards','SessionID')"  
+                            [NewRecordValues]="NewRecordValues('Score Boards')"
+                            [AllowLoad]="IsCurrentTab('Score Boards')"  
+                            [EditMode]="GridEditMode()"  
+                            [BottomMargin]="GridBottomMargin">
+                        </mj-user-view-grid>                    
+                    </mj-tab-body>
+
                     <mj-tab Name="Abstracts" [Visible]="record.IsSaved"> 
                         Abstracts
                     </mj-tab>

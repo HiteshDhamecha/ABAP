@@ -516,6 +516,14 @@ export class ScoreBoard_ {
     @MaxLength(10)
     _mj__UpdatedAt: Date;
         
+    @Field({nullable: true}) 
+    @MaxLength(16)
+    SessionID?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    Session?: string;
+        
     @Field(() => [SessionScoreBoard_])
     SessionScoreBoards_ScoreBoardIdArray: SessionScoreBoard_[]; // Link to SessionScoreBoards
     
@@ -537,6 +545,9 @@ export class CreateScoreBoardInput {
 
     @Field(() => Float, { nullable: true })
     Weightage: number | null;
+
+    @Field({ nullable: true })
+    SessionID: string | null;
 }
     
 
@@ -559,6 +570,9 @@ export class UpdateScoreBoardInput {
 
     @Field(() => Float, { nullable: true })
     Weightage?: number | null;
+
+    @Field({ nullable: true })
+    SessionID?: string | null;
 
     @Field(() => [KeyValuePairInput], { nullable: true })
     OldValues___?: KeyValuePairInput[];
@@ -1030,6 +1044,9 @@ export class Session_ {
     @MaxLength(510)
     Event: string;
         
+    @Field(() => [ScoreBoard_])
+    ScoreBoards_SessionIDArray: ScoreBoard_[]; // Link to ScoreBoards
+    
     @Field(() => [Abstract_])
     Abstracts_SessionIDArray: Abstract_[]; // Link to Abstracts
     
@@ -1137,6 +1154,15 @@ export class SessionResolver extends ResolverBase {
         return result;
     }
     
+    @FieldResolver(() => [ScoreBoard_])
+    async ScoreBoards_SessionIDArray(@Root() session_: Session_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Score Boards', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwScoreBoards] WHERE [SessionID]='${session_.ID}' ` + this.getRowLevelSecurityWhereClause('Score Boards', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Score Boards', await dataSource.query(sSQL));
+        return result;
+    }
+        
     @FieldResolver(() => [Abstract_])
     async Abstracts_SessionIDArray(@Root() session_: Session_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
         this.CheckUserReadPermissions('Abstracts', userPayload);
@@ -1672,46 +1698,6 @@ export class Abstract_ {
     @Field() 
     @MaxLength(200)
     User: string;
-        
-    @Field({nullable: true}) 
-    @MaxLength(100)
-    FirstName?: string;
-        
-    @Field({nullable: true}) 
-    @MaxLength(100)
-    LastName?: string;
-        
-    @Field() 
-    @MaxLength(16)
-    EventID: string;
-        
-    @Field() 
-    @MaxLength(16)
-    Expr1: string;
-        
-    @Field() 
-    @MaxLength(510)
-    EventName: string;
-        
-    @Field({nullable: true}) 
-    @MaxLength(8)
-    EventStartDate?: Date;
-        
-    @Field({nullable: true}) 
-    @MaxLength(8)
-    EventEndDate?: Date;
-        
-    @Field({nullable: true}) 
-    @MaxLength(510)
-    Description?: string;
-        
-    @Field() 
-    @MaxLength(10)
-    EventCreatedAt: Date;
-        
-    @Field() 
-    @MaxLength(10)
-    EventUpdatedAt: Date;
         
     @Field(() => [AbstractResult_])
     AbstractResults_AbstractIDArray: AbstractResult_[]; // Link to AbstractResults

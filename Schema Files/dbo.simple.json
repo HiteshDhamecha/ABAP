@@ -1,4 +1,4 @@
-[{
+{
         "schemaName": "dbo", 
         "entities": [
         { 
@@ -62,4 +62,4 @@
             "Fields": ["ID","EventID","Name","SessionStartDate","SessionEndDate","__mj_CreatedAt","__mj_UpdatedAt","Event"]
         }
         ]
-    }]
+    }
