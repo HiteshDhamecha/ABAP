@@ -3,7 +3,7 @@ import 'hammerjs'
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,6 +46,8 @@ import { CreateEventDialogComponent } from './components/create-event-dialog/cre
 import { EventDetailsComponent } from './modules/manage-event/event-details/event-details.component';
 
 import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
+import { ViewEventComponent } from './modules/view-event/view-event.component';
+
 
 
 @NgModule({
@@ -56,6 +58,7 @@ import { ManageAbstractDetailsComponent } from './modules/manage-abstract-detail
     ManageAbstractComponent,
     CreateEventDialogComponent,
     EventDetailsComponent,
+    ViewEventComponent,
     ManageAbstractDetailsComponent
   ],
   imports: [
@@ -77,7 +80,7 @@ import { ManageAbstractDetailsComponent } from './modules/manage-abstract-detail
       authorizationParams: {
         redirect_uri: window.location.origin
       },
-      cacheLocation: 'localstorage', 
+      cacheLocation: 'localstorage',
       useRefreshTokens: true
     }),
     DropDownsModule,
@@ -100,11 +103,11 @@ import { ManageAbstractDetailsComponent } from './modules/manage-abstract-detail
     MarkdownModule.forRoot(),
   ],
   providers: [
-    CurrencyPipe, 
+    CurrencyPipe,
     DecimalPipe
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { 
+export class AppModule {
 }
