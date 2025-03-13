@@ -15,7 +15,7 @@ export class ViewEventComponent implements OnInit {
   eventEntity: EventEntity[] = [];
   md = new Metadata();
 
-//   public selectedTab: string = 'event-settings';
+  public selectedTab: string = 'event-settings';
   public displayedColumns: string[] = ['name', 'date', 'status'];
   public events: any[] = [];
 
@@ -47,16 +47,21 @@ export class ViewEventComponent implements OnInit {
   }
 
   viewEventDetails(event: any) {
-    this.router.navigate(['/event-details', event.id]);
+    this.router.navigate(['/view-details', event.id]);
   }
 
   async getEventEntity() {
     try {
-      const rv = new RunView();
-      const result = await rv.RunView({
-        EntityName: 'Events'
-      });
+        const rv = new RunView()
+        const result=  await rv.RunView<EventEntity>({
+          EntityName: 'Events',
+
+        } );
+
+    //   const rv = new RunView();
+
       if (result.Success) {
+        console.log('Result' ,result) ;
         return result.Results;
       }
     } catch (error) {

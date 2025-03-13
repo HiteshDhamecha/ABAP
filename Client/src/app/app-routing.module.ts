@@ -9,6 +9,7 @@ import { ManageScorecardComponent } from './modules/manage-scorecard/manage-scor
 import { EventDetailsComponent } from './modules/manage-event/event-details/event-details.component';
 import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
 import { ViewEventComponent } from './modules/view-event/view-event.component'; // Add this import
+import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component'; // Corrected import path
 
 const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
   if (!Metadata.Provider) {
@@ -55,7 +56,12 @@ const routes: Routes = [
   {
     path: 'view-event',
     component: ViewEventComponent,
-    // canActivate: [AuthGuard, MJProviderSet]
+    canActivate: [AuthGuard, MJProviderSet]
+  },
+  {
+    path: 'view-details/:id',
+    component: ViewDetailsComponent,
+    canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
   },
 
   {
