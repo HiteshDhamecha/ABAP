@@ -395,6 +395,7 @@ type AbstractResult_ {
   AbstractStatusId: String!
   AbstractStatusId_Virtual: String!
   ID: String!
+  ReviewComments: String
   Score: Float
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
@@ -434,10 +435,8 @@ type Abstract_ {
   AbstractResults_AbstractIDArray: [AbstractResult_!]!
   AbstractText: String
   ID: String!
-  Session: String!
   SessionID: String!
   UploadUrl: String
-  User: String!
   UserID: String!
   YearOfExp: Int
   _mj__CreatedAt: Timestamp!
@@ -1438,50 +1437,7 @@ input CreateAbstractLogsInput {
 input CreateAbstractResultInput {
   AbstractID: String
   AbstractStatusId: String
-  Score: Float
-}
-
-input CreateAbstractStagingInput {
-  AbstractText: String
-  Description: String
-  EventCreatedAt: Timestamp
-  EventEndDate: Timestamp
-  EventID: String
-  EventName: String
-  EventStartDate: Timestamp
-  EventUpdatedAt: Timestamp
-  FirstName: String
-  LastName: String
-  Session: String
-  SessionID: String
-  UploadUrl: String
-  User: String
-  UserID: String
-  YearOfExp: Int
-}
-
-input CreateAbstractStatusInput {
-  Name: String
-}
-
-input CreateAbstractInput {
-  AbstractText: String
-  SessionID: String
-  UploadUrl: String
-  UserID: String
-  YearOfExp: Int
-}
-
-input CreateAbstractLogsInput {
-  AIAgentId: String
-  AbstractResultId: String
-  ActionDescription: String
-  UpdatedOn: Timestamp
-}
-
-input CreateAbstractResultInput {
-  AbstractID: String
-  AbstractStatusId: String
+  ReviewComments: String
   Score: Float
 }
 
@@ -1888,12 +1844,6 @@ input CreateDuplicateRunInput {
   SourceListID: String
   StartedAt: Timestamp
   StartedByUserID: String
-}
-
-input CreateEmailTemplateInput {
-  Body: String
-  CreatedAt: Timestamp
-  Subject: String
 }
 
 input CreateEmailTemplateInput {
@@ -2507,26 +2457,8 @@ input CreateSessionInput {
   Name: String
   SessionEndDate: Timestamp
   SessionStartDate: Timestamp
-}
-
-input CreateSessionScoreBoardInput {
-  ScoreBoardId: String
-  SessionId: String
+  Title: String
   WeightedScore: Float
-}
-
-input CreateScoreBoardInput {
-  Criteria: String
-  Description: String
-  Name: String
-  Weightage: Float
-}
-
-input CreateSessionInput {
-  EventID: String
-  Name: String
-  SessionEndDate: Timestamp
-  SessionStartDate: Timestamp
 }
 
 input CreateSessionScoreBoardInput {
@@ -7958,6 +7890,8 @@ type Session_ {
   SessionEndDate: Timestamp
   SessionScoreBoards_SessionIdArray: [SessionScoreBoard_!]!
   SessionStartDate: Timestamp
+  Title: String
+  WeightedScore: Float
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
 }
@@ -8454,60 +8388,7 @@ input UpdateAbstractResultInput {
   AbstractStatusId: String
   ID: String!
   OldValues___: [KeyValuePairInput!]
-  Score: Float
-}
-
-input UpdateAbstractStagingInput {
-  AbstractText: String
-  Description: String
-  EventCreatedAt: Timestamp
-  EventEndDate: Timestamp
-  EventID: String
-  EventName: String
-  EventStartDate: Timestamp
-  EventUpdatedAt: Timestamp
-  FirstName: String
-  ID: String!
-  LastName: String
-  OldValues___: [KeyValuePairInput!]
-  Session: String
-  SessionID: String
-  UploadUrl: String
-  User: String
-  UserID: String
-  YearOfExp: Int
-}
-
-input UpdateAbstractStatusInput {
-  ID: String!
-  Name: String
-  OldValues___: [KeyValuePairInput!]
-}
-
-input UpdateAbstractInput {
-  AbstractText: String
-  ID: String!
-  OldValues___: [KeyValuePairInput!]
-  SessionID: String
-  UploadUrl: String
-  UserID: String
-  YearOfExp: Int
-}
-
-input UpdateAbstractLogsInput {
-  AIAgentId: String
-  AbstractResultId: String
-  ActionDescription: String
-  ID: String!
-  OldValues___: [KeyValuePairInput!]
-  UpdatedOn: Timestamp
-}
-
-input UpdateAbstractResultInput {
-  AbstractID: String
-  AbstractStatusId: String
-  ID: String!
-  OldValues___: [KeyValuePairInput!]
+  ReviewComments: String
   Score: Float
 }
 
@@ -9023,14 +8904,6 @@ input UpdateDuplicateRunInput {
   SourceListID: String
   StartedAt: Timestamp
   StartedByUserID: String
-}
-
-input UpdateEmailTemplateInput {
-  Body: String
-  CreatedAt: Timestamp
-  ID: String!
-  OldValues___: [KeyValuePairInput!]
-  Subject: String
 }
 
 input UpdateEmailTemplateInput {
@@ -9803,32 +9676,8 @@ input UpdateSessionInput {
   OldValues___: [KeyValuePairInput!]
   SessionEndDate: Timestamp
   SessionStartDate: Timestamp
-}
-
-input UpdateSessionScoreBoardInput {
-  ID: String!
-  OldValues___: [KeyValuePairInput!]
-  ScoreBoardId: String
-  SessionId: String
+  Title: String
   WeightedScore: Float
-}
-
-input UpdateScoreBoardInput {
-  Criteria: String
-  Description: String
-  ID: String!
-  Name: String
-  OldValues___: [KeyValuePairInput!]
-  Weightage: Float
-}
-
-input UpdateSessionInput {
-  EventID: String
-  ID: String!
-  Name: String
-  OldValues___: [KeyValuePairInput!]
-  SessionEndDate: Timestamp
-  SessionStartDate: Timestamp
 }
 
 input UpdateSessionScoreBoardInput {

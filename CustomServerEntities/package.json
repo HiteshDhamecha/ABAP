@@ -12,30 +12,34 @@
     "start": "ts-node-dev src/index.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-       "link": "npm link ../GeneratedEntities ../GeneratedActions"
+    "link": "npm link ../GeneratedEntities ../GeneratedActions"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "dotenv": "16.4.5",
+    "@types/node": "^22.13.10",
+    "dotenv": "^16.4.7",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@langchain/openai": "^0.4.4",
     "@memberjunction/ai": "2.28.0",
+    "@memberjunction/communication-sendgrid": "2.28.0",
     "@memberjunction/core": "2.28.0",
     "@memberjunction/global": "2.28.0",
     "@memberjunction/server": "2.28.0",
-    "@memberjunction/templates": "2.28.0",
     "@memberjunction/sqlserver-dataprovider": "2.28.0",
-    "@memberjunction/communication-sendgrid": "2.28.0",
+    "@memberjunction/templates": "2.28.0",
     "axios": "^1.6.7",
     "class-validator": "^0.14.0",
-    "mj_generatedentities": "file:../GeneratedEntities",
-    "mj_generatedactions": "file:../GeneratedActions",
     "custom-server-entities": "file:../CustomServerEntities",
+    "mammoth": "^1.9.0",
+    "mj_generatedactions": "file:../GeneratedActions",
+    "mj_generatedentities": "file:../GeneratedEntities",
+    "nodemailer": "^6.10.0",
     "typeorm": "^0.3.20"
   }
 }
