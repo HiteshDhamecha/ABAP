@@ -1,0 +1,84 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Deploy MJAPI-ABPA using Develop Branch
+
+on:
+  push:
+    paths:
+      - 'GeneratedEntities/**'
+      - 'GeneratedActions/**'
+      - 'CustomServerEntities/**'
+      - 'MJAPI/**'
+    branches:
+      - Develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Build GeneratedEntities
+        run: |
+          cd GeneratedEntities
+          npm install
+          npm run build
+    
+      - name: Build GeneratedActions
+        run: |
+          cd GeneratedActions
+          npm install
+          npm run build
+
+      - name: Build CustomServerEntities
+        run: |
+          cd CustomServerEntities
+          npm install
+          npm run build
+
+      - name: Build MJAPI
+        run: |
+          cd MJAPI
+          npm link ../GeneratedEntities ../GeneratedActions ../CustomServerEntities
+          npm run build
+
+      - name: Zip artifact for MJAPI deployment
+        run: |
+          cd MJAPI
+          zip abpa-dev-mjapi-release.zip ./* -r
+
+      - name: Upload artifact for MJAPI deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: abpa-dev-mjapi-app
+          path: MJAPI/abpa-dev-mjapi-release.zip          
+
+  deploy-mjapi:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: abpa-dev-mjapi
+      
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-abpa-dev-mjapi
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'et-ci-dev-abpa-api'
+          slot-name: 'Production'
+          package: abpa-dev-mjapi-release.zip
+          publish-profile: ${{ secrets.AZURE_WEBAPP_DEV_MJAPI_PUBLISH_PROFILE }}
