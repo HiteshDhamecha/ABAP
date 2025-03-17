@@ -35,7 +35,6 @@
     "@memberjunction/templates": "2.28.0",
     "axios": "^1.6.7",
     "class-validator": "^0.14.0",
-    "custom-server-entities": "file:../CustomServerEntities",
     "mammoth": "^1.9.0",
     "mj_generatedactions": "file:../GeneratedActions",
     "mj_generatedentities": "file:../GeneratedEntities",
