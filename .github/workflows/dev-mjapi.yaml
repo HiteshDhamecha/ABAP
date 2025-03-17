@@ -48,7 +48,6 @@ jobs:
         run: |
           cd MJAPI
           npm link ../GeneratedEntities ../GeneratedActions ../CustomServerEntities
-          npm run build
 
       - name: Zip artifact for MJAPI deployment
         run: |
