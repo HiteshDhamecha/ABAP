@@ -58,3 +58,29 @@
     <p>Loading event details...</p>
   </div>
 </div>
+<div class="session-details-container event-details-container" *ngIf="sessions.length > 0">
+  <table mat-table [dataSource]="sessions" class="table-main">
+    <ng-container matColumnDef="serialNumber">
+      <th mat-header-cell *matHeaderCellDef class="session-header"> Sr No</th>
+      <td mat-cell *matCellDef="let session; let i = index" class="session-cell"> {{i + 1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef class="session-header"> Session Name </th>
+      <td mat-cell *matCellDef="let session" class="session-cell"> {{session.Name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sessionTime">
+      <th mat-header-cell *matHeaderCellDef class="time-header"> Session Time </th>
+      <td mat-cell *matCellDef="let session" class="time-cell"> {{session.SessionStartDate | date:'shortTime'}} - {{session.SessionEndDate | date:'shortTime'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef class="topic-header"> Session Topic </th>
+      <td mat-cell *matCellDef="let session" class="topic-cell"> {{session.Title}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['serialNumber', 'name', 'sessionTime', 'title']"></tr>
+    <tr mat-row *matRowDef="let session; columns: ['serialNumber', 'name', 'sessionTime', 'title'];"></tr>
+  </table>
+</div>
