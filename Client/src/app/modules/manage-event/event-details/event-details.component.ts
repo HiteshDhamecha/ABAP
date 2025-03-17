@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LogStatus, Metadata, RunView, RunViewResult } from '@memberjunction/core';
-import { EventEntity } from 'mj_generatedentities';
+import { EventEntity, SessionEntityType } from 'mj_generatedentities';
 
 @Component({
   selector: 'app-event-details',
@@ -12,6 +12,7 @@ import { EventEntity } from 'mj_generatedentities';
 export class EventDetailsComponent implements OnInit {
   eventId: string | null = null;
   event!: EventEntity;
+  sessions: SessionEntityType[] = [];
   editMode: boolean = false;
   eventForm: FormGroup;
   md = new Metadata();
@@ -31,6 +32,7 @@ export class EventDetailsComponent implements OnInit {
 
     if (this.eventId) {
       await this.loadEventDetails();
+      await this.loadSessionDetails();
     }
   }
 
@@ -48,6 +50,32 @@ export class EventDetailsComponent implements OnInit {
       console.log('Loaded event:', this.event); // Log the loaded event
     } else {
       console.error('Event not found');
+    }
+  }
+
+  async loadSessionDetails() {
+    console.log('Loading session details...'); // Log the start of the method
+    const sessionEntities = await this.getSessionEntity(this.eventId);
+    if (sessionEntities) {
+      this.sessions = sessionEntities;
+      console.log('Loaded sessions:', this.sessions); // Log the loaded sessions
+    } else {
+      console.error('Sessions not found');
+    }
+  }
+ async getSessionEntity(eventId: string): Promise<SessionEntityType[] | null> {
+    try {
+      const rv = new RunView();
+      const result: RunViewResult<SessionEntityType> = await rv.RunView<SessionEntityType>({
+        EntityName: 'Sessions',
+        Fields: ['ID', 'EventID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title'],
+        ExtraFilter: `EventID = '${eventId}'`
+      });
+      console.log('RunView result:', result); // Log the result of RunView
+      return result.Success ? result.Results : null;
+    } catch (error) {
+      LogStatus(error);
+      return null;
     }
   }
   getEventStatus(startDate: any, endDate: any): string {
