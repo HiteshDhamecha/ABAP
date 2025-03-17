@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LogStatus, Metadata, RunView, RunViewResult } from '@memberjunction/core';
 import { EventEntity, SessionEntityType } from 'mj_generatedentities';
 
@@ -18,7 +18,7 @@ export class EventDetailsComponent implements OnInit {
   md = new Metadata();
 
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
     this.eventForm = this.fb.group({
       name: ['', Validators.required],
       startDate: ['', Validators.required],
@@ -35,7 +35,9 @@ export class EventDetailsComponent implements OnInit {
       await this.loadSessionDetails();
     }
   }
-
+  viewSessionDetails(session: any) {
+    this.router.navigate(['/session-details', session.ID]);
+  }
   async loadEventDetails() {
     console.log('Loading event details...'); // Log the start of the method
     const eventEntity = await this.getEventEntity(this.eventId);

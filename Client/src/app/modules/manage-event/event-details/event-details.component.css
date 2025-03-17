@@ -32,7 +32,9 @@
   letter-spacing: 0%;
   text-align: center;
 }
-
+.add-new-session-btn{
+  margin-left: 20px;
+}
 .event-details-container {
   padding: 20px;
   background: #fff;
