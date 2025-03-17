@@ -41,7 +41,7 @@ jobs:
       - name: Build CustomServerEntities
         run: |
           cd CustomServerEntities
-          npm install
+          npm link ../GeneratedEntities ../GeneratedActions
           npm run build
 
       - name: Build MJAPI
