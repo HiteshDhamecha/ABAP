@@ -22,10 +22,10 @@
           <label for="endDate">Event End Date:</label>
           <p>{{ event.EventEndDate | date:'MM/dd/yyyy' }}</p>
         </div>
-        <!-- <div class="form-group">
+        <div class="form-group">
           <label for="description">Description:</label>
           <p>{{ event.Description }}</p>
-        </div> -->
+        </div>
         <div class="form-group">
           <label for="status">Status:</label>
           <p>{{ getEventStatus(event.EventStartDate, event.EventEndDate) }}</p>
@@ -44,10 +44,10 @@
           <label for="endDate">Event End Date:</label>
           <input type="date" id="endDate" formControlName="endDate" class="input-field">
         </div>
-        <!-- <div class="form-group">
+        <div class="form-group">
           <label for="description">Description:</label>
           <textarea id="description" formControlName="description" class="input-field"></textarea>
-        </div> -->
+        </div>
         <div class="form-group">
           <label for="status">Status:</label>
           <input type="text" id="status" [value]="getEventStatus(event.EventStartDate, event.EventEndDate)" class="input-field" readonly>

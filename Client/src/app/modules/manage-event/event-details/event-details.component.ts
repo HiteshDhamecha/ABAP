@@ -22,7 +22,8 @@ export class EventDetailsComponent implements OnInit {
     this.eventForm = this.fb.group({
       name: ['', Validators.required],
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required]    
+      endDate: ['', Validators.required],
+      description: ['', Validators.required]    
     });
   }
 
@@ -47,7 +48,7 @@ export class EventDetailsComponent implements OnInit {
         name: this.event.Name,
         startDate: this.event.EventStartDate,
         endDate: this.event.EventEndDate,
-        // description: this.event.Description
+        description: this.event.Description
       });
       console.log('Loaded event:', this.event); // Log the loaded event
     } else {
@@ -97,7 +98,7 @@ export class EventDetailsComponent implements OnInit {
       const rv = new RunView();
       const result: RunViewResult<EventEntity> = await rv.RunView<EventEntity>({
         EntityName: 'Events',
-        Fields: ['ID', 'Name', 'EventStartDate', 'EventEndDate'],
+        Fields: ['ID', 'Name', 'EventStartDate', 'EventEndDate', 'Description'],
         ExtraFilter: `ID = '${eventId}'`,
         MaxRows: 1
       });
@@ -123,7 +124,7 @@ export class EventDetailsComponent implements OnInit {
       eventEntity.Name = this.eventForm.value.name;
       eventEntity.EventStartDate = this.eventForm.value.startDate;
       eventEntity.EventEndDate = this.eventForm.value.endDate;
-      // this.event.Description = this.eventForm.value.description;
+      eventEntity.Description = this.eventForm.value.description;
   
       // Log the event entity values
       console.log('Saving event:', eventEntity);
