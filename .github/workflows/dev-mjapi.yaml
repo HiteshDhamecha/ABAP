@@ -8,7 +8,6 @@ on:
     paths:
       - 'GeneratedEntities/**'
       - 'GeneratedActions/**'
-      - 'CustomServerEntities/**'
       - 'MJAPI/**'
     branches:
       - Develop
@@ -38,16 +37,10 @@ jobs:
           npm install
           npm run build
 
-      - name: Build CustomServerEntities
-        run: |
-          cd CustomServerEntities
-          npm link ../GeneratedEntities ../GeneratedActions
-          npm run build
-
       - name: Build MJAPI
         run: |
           cd MJAPI
-          npm link ../GeneratedEntities ../GeneratedActions ../CustomServerEntities
+          npm link ../GeneratedEntities ../GeneratedActions
 
       - name: Zip artifact for MJAPI deployment
         run: |
