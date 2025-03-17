@@ -115,3 +115,57 @@ button[mat-raised-button] {
   padding: 10px 20px;
   margin: 0 10px;
 }
+/* Session Tablevent-headere Styles */
+.session-details-container {
+  margin-top: 20px;
+}
+
+.table-main th,
+.table-main td {
+  color: #404D61;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24.2px;
+  letter-spacing: 0%;
+  border: none;
+}
+
+.table-main th {
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the table header */
+}
+
+.table-main tr:last-child td {
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the last table row */
+}
+.table-main tr {
+  display: block;
+  margin-bottom: 10px; /* Adds gap */
+}
+.table-main tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Adds row gap */
+}
+
+.table-main th, 
+.table-main td {
+  flex: 1; /* Ensures equal width distribution */
+  text-align: left;
+  padding: 10px;
+}
+
+/* Add max-width to status and event date columns */
+.table-main th.session-header,
+.table-main td.session-cell,
+.table-main th.topic-header,
+.table-main td.topic-cell,
+.table-main th.time-header,
+.table-main td.time-cell {
+  min-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
