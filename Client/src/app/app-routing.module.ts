@@ -8,8 +8,10 @@ import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstra
 import { ManageScorecardComponent } from './modules/manage-scorecard/manage-scorecard.component';
 import { EventDetailsComponent } from './modules/manage-event/event-details/event-details.component';
 import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
+import { ViewEventComponent } from './modules/view-event/view-event.component'; // Add this import
+import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component'; // Corrected import path
 
-const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => { 
+const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
   if (!Metadata.Provider) {
     console.log("MJProviderSet: Provider not set. Redirecting to login.");
     inject(Router).navigate(['/']);
@@ -24,7 +26,7 @@ const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: Rout
 };
 
 const routes: Routes = [
-  { path: '', 
+  { path: '',
     component: LoginComponent
   },
   {
@@ -52,6 +54,17 @@ const routes: Routes = [
     canActivate: [AuthGuard, MJProviderSet]
   },
   {
+    path: 'view-event',
+    component: ViewEventComponent,
+    canActivate: [AuthGuard, MJProviderSet]
+  },
+  {
+    path: 'view-details/:id',
+    component: ViewDetailsComponent,
+    canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
+  },
+
+  {
     path: '**',
     redirectTo: 'event-settings'
   }
@@ -62,6 +75,6 @@ const routes: Routes = [
     scrollPositionRestoration: 'enabled',
     anchorScrolling: 'enabled',
   })],
-  exports: [RouterModule] 
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
