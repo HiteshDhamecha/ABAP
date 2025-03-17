@@ -26,24 +26,24 @@ jobs:
           mkdir -p ./src/environments # Ensure the directory exists
           cat << EOF > ./src/environments/environment.ts
           export const environment = {
-           GRAPHQL_URI: '${{ secrets.GRAPHQL_URI }}'
-          GRAPHQL_WS_URI: '${{ secrets.GRAPHQL_WS_URI }}'
-          REDIRECT_URI: '${{ secrets.REDIRECT_URI }}'
-          CLIENT_ID: '${{ secrets.CLIENT_ID }}'
-          CLIENT_SECRET: '${{ secrets.CLIENT_SECRET }}'
-          CLIENT_AUTHORITY: '${{ secrets.CLIENT_AUTHORITY }}'
-          AUTH_TYPE: '${{ secrets.AUTH_TYPE }}'
-          NODE_ENV: '${{ secrets.NODE_ENV }}'
-          AUTOSAVE_DEBOUNCE_MS: '${{ secrets.AUTOSAVE_DEBOUNCE_MS }}'
-          SEARCH_DEBOUNCE_MS: '${{ secrets.SEARCH_DEBOUNCE_MS }}'
-          MIN_SEARCH_LENGTH: '${{ secrets.MIN_SEARCH_LENGTH }}'
-          MJ_CORE_SCHEMA_NAME: '${{ secrets.MJ_CORE_SCHEMA_NAME }}'
-          production: '${{ secrets.PRODUCTION }}'
-          APPLICATION_NAME: '${{ secrets.APPLICATION_NAME }}'
-          APPLICATION_INSTANCE: '${{ secrets.APPLICATION_INSTANCE }}'
-          AUTH0_DOMAIN: '${{ secrets.AUTH0_DOMAIN }}'
-          AUTH0_CLIENT_SECRET: '${{ secrets.AUTH0_CLIENT_SECRET }}'
-          AUTH0_CLIENTID: '${{ secrets.AUTH0_CLIENTID }}'
+          GRAPHQL_URI: '${{ secrets.GRAPHQL_URI }}',
+          GRAPHQL_WS_URI: '${{ secrets.GRAPHQL_WS_URI }}',
+          REDIRECT_URI: '${{ secrets.REDIRECT_URI }}',
+          CLIENT_ID: '${{ secrets.CLIENT_ID }}',
+          CLIENT_SECRET: '${{ secrets.CLIENT_SECRET }}',
+          CLIENT_AUTHORITY: '${{ secrets.CLIENT_AUTHORITY }}',
+          AUTH_TYPE: '${{ secrets.AUTH_TYPE }}',
+          NODE_ENV: '${{ secrets.NODE_ENV }}',
+          AUTOSAVE_DEBOUNCE_MS: '${{ secrets.AUTOSAVE_DEBOUNCE_MS }}',
+          SEARCH_DEBOUNCE_MS: '${{ secrets.SEARCH_DEBOUNCE_MS }}',
+          MIN_SEARCH_LENGTH: '${{ secrets.MIN_SEARCH_LENGTH }}',
+          MJ_CORE_SCHEMA_NAME: '${{ secrets.MJ_CORE_SCHEMA_NAME }}',
+          production: '${{ secrets.PRODUCTION }}',
+          APPLICATION_NAME: '${{ secrets.APPLICATION_NAME }}',
+          APPLICATION_INSTANCE: '${{ secrets.APPLICATION_INSTANCE }}',
+          AUTH0_DOMAIN: '${{ secrets.AUTH0_DOMAIN }}',
+          AUTH0_CLIENT_SECRET: '${{ secrets.AUTH0_CLIENT_SECRET }}',
+          AUTH0_CLIENTID: '${{ secrets.AUTH0_CLIENTID }}',
           TOKEN_CACHE_KEY: '${{ secrets.TOKEN_CACHE_KEY }}'
           };
           EOF
