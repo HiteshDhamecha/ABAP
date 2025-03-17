@@ -58,7 +58,7 @@ jobs:
       - name: Upload artifact for MJAPI deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: abpa-dev-mjapi-app
+          name: abpa-dev-mjapi
           path: MJAPI/abpa-dev-mjapi-release.zip          
 
   deploy-mjapi:
