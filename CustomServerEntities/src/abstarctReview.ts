@@ -80,13 +80,29 @@ export async function getCritearea(sessionID: string, user: UserInfo): Promise<{
 
 // Function to send email
 async function sendEmail(recipient: string, subject: string, body: string) {
+
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: process.env.EMAIL_HOST,  // Make sure this is NOT '127.0.0.1'
+    port: 587,                   // Use 587 for TLS
+    secure: false,               // Must be false for Outlook
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER,  // Outlook email
+        pass: process.env.EMAIL_PASS // Outlook password or App Password
     },
-  });
+    tls: {
+        ciphers: 'SSLv3',  // Important for Office 365
+        rejectUnauthorized: false 
+    }
+});
+
+  // const transporter = nodemailer.createTransport({
+  //   service: process.env.EMAIL_HOST,
+  //   secure
+  //   auth: {
+  //     user: process.env.EMAIL_USER,
+  //     pass: process.env.EMAIL_PASS,
+  //   },
+  // });
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -128,19 +144,19 @@ export async function processAbstract(abstractText: string, sessionID: string, u
   if (score.score > weightedScore) {
     saveAbstractResult(user,abstarctId,score.score,await getStatuses("Accepted",user),score.reviewComments);
     console.log("✅ Passed Review with Score:", score);
-    // await sendEmail(
-    //   recipientEmail,
-    //   "Abstract Submission Review Passed",
-    //   "Your abstract passed the review and is under further evaluation."
-    // );
+    await sendEmail(
+      recipientEmail,
+      "Abstract Submission Review Passed",
+      "Your abstract passed the review and is under further evaluation."
+    );
   } else {
     saveAbstractResult(user,abstarctId,score.score,await getStatuses("Rejected",user),score.reviewComments);
     console.log("❌ Rejected Review with Score:", score);
-    // await sendEmail(
-    //   recipientEmail,
-    //   "Abstract Submission Rejected",
-    //   "Your abstract did not meet the required criteria."
-    // );
+    await sendEmail(
+      recipientEmail,
+      "Abstract Submission Rejected",
+      "Your abstract did not meet the required criteria."
+    );
   }
 }
 
