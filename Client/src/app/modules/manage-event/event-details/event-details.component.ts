@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -46,8 +47,8 @@ export class EventDetailsComponent implements OnInit {
       this.event = eventEntity;
       this.eventForm.patchValue({
         name: this.event.Name,
-        startDate: this.event.EventStartDate,
-        endDate: this.event.EventEndDate,
+        startDate: formatDate(this.event.EventStartDate, 'yyyy-MM-dd', 'en-US'),
+        endDate: formatDate(this.event.EventEndDate, 'yyyy-MM-dd', 'en-US'),
         description: this.event.Description
       });
       console.log('Loaded event:', this.event); // Log the loaded event
@@ -55,7 +56,17 @@ export class EventDetailsComponent implements OnInit {
       console.error('Event not found');
     }
   }
-
+  getStatusClass(startDate: any, endDate: any): string {
+    const status = this.getEventStatus(startDate, endDate);
+    if (status === 'Completed') {
+      return 'completed';
+    } else if (status === 'Live') {
+      return 'live';
+    } else if (status === 'Upcoming') {
+      return 'upcoming';
+    }
+    return '';
+  }
   async loadSessionDetails() {
     console.log('Loading session details...'); // Log the start of the method
     const sessionEntities = await this.getSessionEntity(this.eventId);
