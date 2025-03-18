@@ -23,11 +23,13 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "logError": true,
+    "skipLibCheck": true
   },
   "ts-node": {
-    "esm": true
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
+    "logError": true
   },
   "exclude": ["node_modules", "../../node_modules/@types/plotly.js"],
   "include": ["./src/**/*.ts"]
