@@ -5,6 +5,8 @@ import { LoadGeneratedEntities } from 'mj_generatedentities';
 LoadGeneratedEntities();
 import { LoadGeneratedActions } from 'mj_generatedactions';
 LoadGeneratedActions();
+import { LoadCustomServerEntities } from 'custom-server-entities';
+LoadCustomServerEntities();
 import { LoadProvider } from '@memberjunction/communication-sendgrid';
 LoadProvider();
 
