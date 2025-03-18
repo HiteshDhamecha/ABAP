@@ -48,6 +48,7 @@ import { EventDetailsComponent } from './modules/manage-event/event-details/even
 import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
 import { ViewEventComponent } from './modules/view-event/view-event.component';
 import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component';
+import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
 
 
 
@@ -61,7 +62,8 @@ import { ViewDetailsComponent } from './modules/view-event/view-details/view-det
     EventDetailsComponent,
     ViewEventComponent,
     ManageAbstractDetailsComponent,
-    ViewDetailsComponent
+    ViewDetailsComponent,
+    SessionDetailsComponent
   ],
   imports: [
     MatDialogModule,

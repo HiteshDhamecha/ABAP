@@ -1,6 +1,7 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LogStatus, Metadata, RunView, RunViewResult } from '@memberjunction/core';
 import { EventEntity, SessionEntityType } from 'mj_generatedentities';
 
@@ -18,11 +19,12 @@ export class EventDetailsComponent implements OnInit {
   md = new Metadata();
 
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
     this.eventForm = this.fb.group({
       name: ['', Validators.required],
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required]    
+      endDate: ['', Validators.required],
+      description: ['', Validators.required]    
     });
   }
 
@@ -35,7 +37,9 @@ export class EventDetailsComponent implements OnInit {
       await this.loadSessionDetails();
     }
   }
-
+  viewSessionDetails(session: any) {
+    this.router.navigate(['/session-details', session.ID]);
+  }
   async loadEventDetails() {
     console.log('Loading event details...'); // Log the start of the method
     const eventEntity = await this.getEventEntity(this.eventId);
@@ -43,16 +47,26 @@ export class EventDetailsComponent implements OnInit {
       this.event = eventEntity;
       this.eventForm.patchValue({
         name: this.event.Name,
-        startDate: this.event.EventStartDate,
-        endDate: this.event.EventEndDate,
-        // description: this.event.Description
+        startDate: formatDate(this.event.EventStartDate, 'yyyy-MM-dd', 'en-US'),
+        endDate: formatDate(this.event.EventEndDate, 'yyyy-MM-dd', 'en-US'),
+        description: this.event.Description
       });
       console.log('Loaded event:', this.event); // Log the loaded event
     } else {
       console.error('Event not found');
     }
   }
-
+  getStatusClass(startDate: any, endDate: any): string {
+    const status = this.getEventStatus(startDate, endDate);
+    if (status === 'Completed') {
+      return 'completed';
+    } else if (status === 'Live') {
+      return 'live';
+    } else if (status === 'Upcoming') {
+      return 'upcoming';
+    }
+    return '';
+  }
   async loadSessionDetails() {
     console.log('Loading session details...'); // Log the start of the method
     const sessionEntities = await this.getSessionEntity(this.eventId);
@@ -95,7 +109,7 @@ export class EventDetailsComponent implements OnInit {
       const rv = new RunView();
       const result: RunViewResult<EventEntity> = await rv.RunView<EventEntity>({
         EntityName: 'Events',
-        Fields: ['ID', 'Name', 'EventStartDate', 'EventEndDate'],
+        Fields: ['ID', 'Name', 'EventStartDate', 'EventEndDate', 'Description'],
         ExtraFilter: `ID = '${eventId}'`,
         MaxRows: 1
       });
@@ -121,7 +135,7 @@ export class EventDetailsComponent implements OnInit {
       eventEntity.Name = this.eventForm.value.name;
       eventEntity.EventStartDate = this.eventForm.value.startDate;
       eventEntity.EventEndDate = this.eventForm.value.endDate;
-      // this.event.Description = this.eventForm.value.description;
+      eventEntity.Description = this.eventForm.value.description;
   
       // Log the event entity values
       console.log('Saving event:', eventEntity);
@@ -130,19 +144,15 @@ export class EventDetailsComponent implements OnInit {
         const saveResult: boolean = await eventEntity.Save();
         if (!saveResult) {
           LogStatus('Error saving event entity:', eventEntity.LatestResult.Message);
-          alert(`Failed to save event: ${eventEntity.LatestResult.Message}`);
         } else {
-          alert("Event Updated");
           window.location.reload();
           this.editMode = false;
         }
       } catch (error) {
         LogStatus('Failed to save event', error);
-        alert("Failed to save event");
       }
     } else {
       LogStatus('Form is invalid');
-      alert("Form is invalid");
     }
   }
 }

@@ -32,7 +32,9 @@
   letter-spacing: 0%;
   text-align: center;
 }
-
+.add-new-session-btn{
+  margin-left: 20px;
+}
 .event-details-container {
   padding: 20px;
   background: #fff;
@@ -168,4 +170,72 @@ button[mat-raised-button] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.status-badge {
+  padding: 8px;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+}
+.status-badge.completed {
+  background-color: #107C1033;
+  border: 1px solid #107C10;
+  color: #107C10;
+}
+.status-badge.live {
+  background-color: #767CFF33;
+  border: 1px solid #767CFF;
+  color: #767CFF;
+}
+.status-badge.upcoming {
+  background-color: #FFCD2333;
+  border: 1px solid #FFCD23;
+  color: #FFCD23;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.event-header h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color:#404D61;
+}
+.event-description {
+  color:#404D61;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+.event-dates {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+.date-label{
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+
 }

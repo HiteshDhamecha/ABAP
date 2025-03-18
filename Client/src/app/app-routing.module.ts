@@ -10,6 +10,7 @@ import { EventDetailsComponent } from './modules/manage-event/event-details/even
 import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
 import { ViewEventComponent } from './modules/view-event/view-event.component'; // Add this import
 import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component'; // Corrected import path
+import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
 
 const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
   if (!Metadata.Provider) {
@@ -47,6 +48,11 @@ const routes: Routes = [
     path: 'event-details/:id',
     component: EventDetailsComponent,
     canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
+  },
+  {
+    path: 'session-details/:id',
+    component: SessionDetailsComponent,
+    canActivate: [AuthGuard, MJProviderSet]
   },
   {
     path: 'manage-abstract-details/:speaker',
