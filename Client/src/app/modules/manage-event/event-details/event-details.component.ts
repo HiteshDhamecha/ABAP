@@ -133,19 +133,15 @@ export class EventDetailsComponent implements OnInit {
         const saveResult: boolean = await eventEntity.Save();
         if (!saveResult) {
           LogStatus('Error saving event entity:', eventEntity.LatestResult.Message);
-          alert(`Failed to save event: ${eventEntity.LatestResult.Message}`);
         } else {
-          alert("Event Updated");
           window.location.reload();
           this.editMode = false;
         }
       } catch (error) {
         LogStatus('Failed to save event', error);
-        alert("Failed to save event");
       }
     } else {
       LogStatus('Form is invalid');
-      alert("Form is invalid");
     }
   }
 }
