@@ -3,7 +3,7 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import * as nodemailer from "nodemailer";
 import { LogStatus, Metadata, RunView, RunViewResult, UserInfo } from "@memberjunction/core";
 import {TemplateEntity } from "@memberjunction/core-entities";
-import { AbstractResultEntity, AbstractStatusEntity, ScoreBoardEntity, SessionEntity } from "mj_generatedentities";
+import { AbstractResultEntity, AbstractStatusEntity, ScoreBoardEntity, SessionEntity, SessionScoreBoardEntity } from "mj_generatedentities";
 
 require('dotenv').config();
 
@@ -52,26 +52,36 @@ async function reviewAbstract(abstractText: string, criteria: { name: string, we
   return { score: totalScore, reviewComments };
 }
 
-export async function getCritearea(sessionID: string, user: UserInfo): Promise<{ name: string, weight: number }[] | null> {
+export async function getCritearea(sessionId: string, user: UserInfo): Promise<{ name: string, weight: number }[] | null> {
   try {
     const rv = new RunView();
-    const result: RunViewResult<ScoreBoardEntity> = await rv.RunView<ScoreBoardEntity>({
-      EntityName: 'Score Boards',
-      Fields: ['Name', 'Weightage'],
-      ExtraFilter: `SessionID = '${sessionID}'`
+
+    const sessionScoreBoard:RunViewResult<SessionScoreBoardEntity> = await rv.RunView<SessionScoreBoardEntity>({
+      EntityName: 'Session Score Boards',
+      Fields: ['ScoreBoardId'],
+      ExtraFilter: `SessionId = '${sessionId}'`
     }, user);
+    if (!sessionScoreBoard.Success || sessionScoreBoard.Results.length === 0) {
+     
+      const result: RunViewResult<ScoreBoardEntity> = await rv.RunView<ScoreBoardEntity>({
+        EntityName: 'Criteria',
+        Fields: ['Name', 'Weightage'],
+        ExtraFilter: `ScoreBoardID = '${sessionScoreBoard.Results[0].ScoreBoardId}'`
+      }, user);
 
-    if (!result.Success || result.Results.length === 0) {
-      return null;
+      if (!result.Success || result.Results.length === 0) {
+        return null;
+      }
+
+      // Map results to criteria format
+      const criteria = result.Results.map((item) => ({
+        name: item.Name,
+        weight: item.Weightage || 0,
+      }));
+
+      return criteria;
     }
-
-    // Map results to criteria format
-    const criteria = result.Results.map((item) => ({
-      name: item.Name,
-      weight: item.Weightage || 0,
-    }));
-
-    return criteria;
+ 
   } catch (error) {
     LogStatus(error);
     return null;

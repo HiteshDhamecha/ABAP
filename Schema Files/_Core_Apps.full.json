@@ -325,6 +325,13 @@
             ]
         },
         { 
+            "Name": "Criteria",
+            "Description": "",
+            "BaseView": "vwCriteria", 
+            "Fields": [        
+            ]
+        },
+        { 
             "Name": "Email Templates",
             "Description": "",
             "BaseView": "vwEmailTemplates", 

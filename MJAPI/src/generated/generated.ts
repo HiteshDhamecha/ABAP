@@ -18,7 +18,7 @@ import { DataSource } from 'typeorm';
 import * as mj_core_schema_server_object_types from '@memberjunction/server'
 
 
-import { AbstractStatusEntity, EmailTemplateEntity, AbstractResultEntity, ScoreBoardEntity, EventEntity, SessionScoreBoardEntity, SessionEntity, AbstractStagingEntity, AbstractLogsEntity, AbstractEntity } from 'mj_generatedentities';
+import { AbstractStatusEntity, CriteriaEntity, EmailTemplateEntity, AbstractResultEntity, ScoreBoardEntity, EventEntity, SessionScoreBoardEntity, SessionEntity, AbstractStagingEntity, AbstractLogsEntity, AbstractEntity } from 'mj_generatedentities';
     
 
 //****************************************************************************
@@ -164,6 +164,13 @@ export class AbstractStatusResolver extends ResolverBase {
         return this.DeleteRecord('Abstract Status', key, options, dataSource, userPayload, pubSub);
     }
     
+}
+
+//****************************************************************************
+// ENTITY CLASS for Criteria
+//****************************************************************************
+@ObjectType()
+export class Criteria_ {
 }
 
 //****************************************************************************

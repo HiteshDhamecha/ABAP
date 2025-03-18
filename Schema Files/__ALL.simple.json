@@ -990,6 +990,12 @@
             "Fields": ["ID","SessionID","UserID","YearOfExp","AbstractText","UploadUrl","__mj_CreatedAt","__mj_UpdatedAt"]
         },
         { 
+            "Name": "Criteria",
+            "Description": "",
+            "BaseView": "vwCriteria", 
+            "Fields": [""]
+        },
+        { 
             "Name": "Email Templates",
             "Description": "",
             "BaseView": "vwEmailTemplates", 
