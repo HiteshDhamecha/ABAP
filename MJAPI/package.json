@@ -11,7 +11,7 @@
     "check-types": "tsc -noEmit",
     "zip": "zip -qr deploy.zip ./node_modules ./dist ./package.json ./config.json",
     "build": "tsc",
-    "link": "npm link ../GeneratedEntities ../GeneratedActions ../CustomServerEntities"
+    "link": "npm link ../GeneratedEntities ../GeneratedActions"
   },
   "keywords": [],
   "author": "",
@@ -33,7 +33,6 @@
     "@memberjunction/templates": "2.28.0",
     "axios": "^1.6.7",
     "class-validator": "^0.14.0",
-    "custom-server-entities": "file:../CustomServerEntities",
     "mj_generatedactions": "file:../GeneratedActions",
     "mj_generatedentities": "file:../GeneratedEntities",
     "typeorm": "^0.3.20"
