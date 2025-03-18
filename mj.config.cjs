@@ -225,15 +225,9 @@ const config = {
 
   // Used only for MJAPI
   graphqlPort: process.env.GRAPHQL_PORT ?? 4000,
-  ___codeGenAPIURL: process.env.CODEGEN_API_URL,
-  ___codeGenAPIPort: process.env.CODEGEN_API_PORT,
-  ___codeGenAPISubmissionDelay: process.env.CODEGEN_API_SUBMISSION_DELAY,
   graphqlRootPath: process.env.GRAPHQL_ROOT_PATH ?? '/',
   webClientID: process.env.WEB_CLIENT_ID,
   tenantID: process.env.TENANT_ID,
-  enableIntrospection: process.env.ENABLE_INTROSPECTION,
-  websiteRunFromPackage: process.env.WEBSITE_RUN_FROM_PACKAGE,
-  userEmailMap: process.env.USER_EMAIL_MAP,
   ___skipAPIurl: process.env.ASK_SKIP_API_URL,
   ___skipAPIOrgId: process.env.ASK_SKIP_ORGANIZATION_ID,
   auth0Domain: process.env.AUTH0_DOMAIN,
