@@ -16,18 +16,6 @@
                         </mj-form-section>
                     </mj-tab-body>
                     
-                    <mj-tab Name="Abstract Results" [Visible]="record.IsSaved"> 
-                        Abstract Results
-                    </mj-tab>
-                    <mj-tab-body>
-                        <mj-user-view-grid 
-                            [Params]="BuildRelationshipViewParamsByEntityName('Abstract Results','AbstractID')"  
-                            [NewRecordValues]="NewRecordValues('Abstract Results')"
-                            [AllowLoad]="IsCurrentTab('Abstract Results')"  
-                            [EditMode]="GridEditMode()"  
-                            [BottomMargin]="GridBottomMargin">
-                        </mj-user-view-grid>                    
-                    </mj-tab-body>
                 </mj-tabstrip>
     </form>
 </div>

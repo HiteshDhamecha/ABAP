@@ -28,7 +28,6 @@ import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 // Import Generated Components
 import { AbstractLogsFormComponent, LoadAbstractLogsFormComponent } from "./Entities/AbstractLogs/abstractlogs.form.component";
 import { AbstractResultFormComponent, LoadAbstractResultFormComponent } from "./Entities/AbstractResult/abstractresult.form.component";
-import { AbstractStagingFormComponent, LoadAbstractStagingFormComponent } from "./Entities/AbstractStaging/abstractstaging.form.component";
 import { AbstractStatusFormComponent, LoadAbstractStatusFormComponent } from "./Entities/AbstractStatus/abstractstatus.form.component";
 import { AbstractFormComponent, LoadAbstractFormComponent } from "./Entities/Abstract/abstract.form.component";
 import { EmailTemplateFormComponent, LoadEmailTemplateFormComponent } from "./Entities/EmailTemplate/emailtemplate.form.component";
@@ -38,7 +37,6 @@ import { SessionScoreBoardFormComponent, LoadSessionScoreBoardFormComponent } fr
 import { SessionFormComponent, LoadSessionFormComponent } from "./Entities/Session/session.form.component";
 import { AbstractLogsDetailsComponent, LoadAbstractLogsDetailsComponent } from "./Entities/AbstractLogs/sections/details.component"
 import { AbstractResultDetailsComponent, LoadAbstractResultDetailsComponent } from "./Entities/AbstractResult/sections/details.component"
-import { AbstractStagingDetailsComponent, LoadAbstractStagingDetailsComponent } from "./Entities/AbstractStaging/sections/details.component"
 import { AbstractStatusDetailsComponent, LoadAbstractStatusDetailsComponent } from "./Entities/AbstractStatus/sections/details.component"
 import { AbstractDetailsComponent, LoadAbstractDetailsComponent } from "./Entities/Abstract/sections/details.component"
 import { EmailTemplateDetailsComponent, LoadEmailTemplateDetailsComponent } from "./Entities/EmailTemplate/sections/details.component"
@@ -52,7 +50,6 @@ import { SessionDetailsComponent, LoadSessionDetailsComponent } from "./Entities
 declarations: [
     AbstractLogsFormComponent,
     AbstractResultFormComponent,
-    AbstractStagingFormComponent,
     AbstractStatusFormComponent,
     AbstractFormComponent,
     EmailTemplateFormComponent,
@@ -62,7 +59,6 @@ declarations: [
     SessionFormComponent,
     AbstractLogsDetailsComponent,
     AbstractResultDetailsComponent,
-    AbstractStagingDetailsComponent,
     AbstractStatusDetailsComponent,
     AbstractDetailsComponent,
     EmailTemplateDetailsComponent,
@@ -111,7 +107,6 @@ export function LoadGeneratedForms() {
     // in production builds tree shaking will eliminate the code unless we do this
     LoadAbstractLogsFormComponent();
     LoadAbstractResultFormComponent();
-    LoadAbstractStagingFormComponent();
     LoadAbstractStatusFormComponent();
     LoadAbstractFormComponent();
     LoadEmailTemplateFormComponent();
@@ -121,7 +116,6 @@ export function LoadGeneratedForms() {
     LoadSessionFormComponent();
     LoadAbstractLogsDetailsComponent();
     LoadAbstractResultDetailsComponent();
-    LoadAbstractStagingDetailsComponent();
     LoadAbstractStatusDetailsComponent();
     LoadAbstractDetailsComponent();
     LoadEmailTemplateDetailsComponent();

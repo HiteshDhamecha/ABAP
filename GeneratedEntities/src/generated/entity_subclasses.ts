@@ -1,4 +1,4 @@
-import { BaseEntity, EntitySaveOptions, CompositeKey } from "@memberjunction/core";
+import { BaseEntity, EntitySaveOptions, CompositeKey, ValidationResult, ValidationErrorInfo, ValidationErrorType } from "@memberjunction/core";
 import { RegisterClass } from "@memberjunction/global";
 import { z } from "zod";
 
@@ -76,6 +76,10 @@ export const AbstractResultSchema = z.object({
         * * Display Name: Abstract Status Id
         * * SQL Data Type: uniqueidentifier
         * * Related Entity/Foreign Key: Abstract Status (vwAbstractStatus.ID)`),
+    ReviewComments: z.string().nullish().describe(`
+        * * Field Name: ReviewComments
+        * * Display Name: Review Comments
+        * * SQL Data Type: nvarchar(MAX)`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -86,10 +90,6 @@ export const AbstractResultSchema = z.object({
         * * Display Name: Updated At
         * * SQL Data Type: datetimeoffset
         * * Default Value: getutcdate()`),
-    ReviewComments: z.string().nullish().describe(`
-        * * Field Name: ReviewComments
-        * * Display Name: Review Comments
-        * * SQL Data Type: nvarchar(MAX)`),
     AbstractStatusId_Virtual: z.string().describe(`
         * * Field Name: AbstractStatusId_Virtual
         * * Display Name: Abstract Status Id _ Virtual
@@ -97,95 +97,6 @@ export const AbstractResultSchema = z.object({
 });
 
 export type AbstractResultEntityType = z.infer<typeof AbstractResultSchema>;
-
-/**
- * zod schema definition for the entity Abstract Stagings
- */
-export const AbstractStagingSchema = z.object({
-    ID: z.string().describe(`
-        * * Field Name: ID
-        * * Display Name: ID
-        * * SQL Data Type: uniqueidentifier
-        * * Default Value: newid()`),
-    SessionID: z.string().describe(`
-        * * Field Name: SessionID
-        * * Display Name: Session ID
-        * * SQL Data Type: uniqueidentifier`),
-    UserID: z.string().describe(`
-        * * Field Name: UserID
-        * * Display Name: User ID
-        * * SQL Data Type: uniqueidentifier`),
-    YearOfExp: z.number().nullish().describe(`
-        * * Field Name: YearOfExp
-        * * Display Name: Year Of Exp
-        * * SQL Data Type: int`),
-    AbstractText: z.string().nullish().describe(`
-        * * Field Name: AbstractText
-        * * Display Name: Abstract Text
-        * * SQL Data Type: nvarchar(MAX)`),
-    UploadUrl: z.string().nullish().describe(`
-        * * Field Name: UploadUrl
-        * * Display Name: Upload Url
-        * * SQL Data Type: nvarchar(500)`),
-    __mj_CreatedAt: z.date().describe(`
-        * * Field Name: __mj_CreatedAt
-        * * Display Name: Created At
-        * * SQL Data Type: datetimeoffset
-        * * Default Value: getutcdate()`),
-    __mj_UpdatedAt: z.date().describe(`
-        * * Field Name: __mj_UpdatedAt
-        * * Display Name: Updated At
-        * * SQL Data Type: datetimeoffset
-        * * Default Value: getutcdate()`),
-    Session: z.string().describe(`
-        * * Field Name: Session
-        * * Display Name: Session
-        * * SQL Data Type: nvarchar(255)`),
-    User: z.string().describe(`
-        * * Field Name: User
-        * * Display Name: User
-        * * SQL Data Type: nvarchar(255)`),
-    FirstName: z.string().nullish().describe(`
-        * * Field Name: FirstName
-        * * Display Name: First Name
-        * * SQL Data Type: nvarchar(255)`),
-    LastName: z.string().nullish().describe(`
-        * * Field Name: LastName
-        * * Display Name: Last Name
-        * * SQL Data Type: nvarchar(255)`),
-    EventID: z.string().describe(`
-        * * Field Name: EventID
-        * * Display Name: Event ID
-        * * SQL Data Type: uniqueidentifier`),
-    EventName: z.string().describe(`
-        * * Field Name: EventName
-        * * Display Name: Event Name
-        * * SQL Data Type: nvarchar(255)`),
-    EventStartDate: z.date().nullish().describe(`
-        * * Field Name: EventStartDate
-        * * Display Name: Event Start Date
-        * * SQL Data Type: datetime`),
-    EventEndDate: z.date().nullish().describe(`
-        * * Field Name: EventEndDate
-        * * Display Name: Event End Date
-        * * SQL Data Type: datetime`),
-    Description: z.string().nullish().describe(`
-        * * Field Name: Description
-        * * Display Name: Description
-        * * SQL Data Type: nvarchar(MAX)`),
-    EventCreatedAt: z.date().nullish().describe(`
-        * * Field Name: EventCreatedAt
-        * * Display Name: Event Created At
-        * * SQL Data Type: datetime
-        * * Default Value: getdate()`),
-    EventUpdatedAt: z.date().nullish().describe(`
-        * * Field Name: EventUpdatedAt
-        * * Display Name: Event Updated At
-        * * SQL Data Type: datetime
-        * * Default Value: getdate()`),
-});
-
-export type AbstractStagingEntityType = z.infer<typeof AbstractStagingSchema>;
 
 /**
  * zod schema definition for the entity Abstract Status
@@ -349,14 +260,10 @@ export const ScoreBoardSchema = z.object({
         * * Field Name: Description
         * * Display Name: Description
         * * SQL Data Type: nvarchar(MAX)`),
-    Criteria: z.string().nullish().describe(`
-        * * Field Name: Criteria
-        * * Display Name: Criteria
-        * * SQL Data Type: nvarchar(MAX)`),
-    Weightage: z.number().nullish().describe(`
-        * * Field Name: Weightage
-        * * Display Name: Weightage
-        * * SQL Data Type: float(53)`),
+    CutOffScore: z.number().describe(`
+        * * Field Name: CutOffScore
+        * * Display Name: Cut Off Score
+        * * SQL Data Type: int`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -367,15 +274,6 @@ export const ScoreBoardSchema = z.object({
         * * Display Name: Updated At
         * * SQL Data Type: datetimeoffset
         * * Default Value: getutcdate()`),
-    SessionID: z.string().nullish().describe(`
-        * * Field Name: SessionID
-        * * Display Name: Session ID
-        * * SQL Data Type: uniqueidentifier
-        * * Related Entity/Foreign Key: Sessions (vwSessions.ID)`),
-    Session: z.string().nullish().describe(`
-        * * Field Name: Session
-        * * Display Name: Session
-        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type ScoreBoardEntityType = z.infer<typeof ScoreBoardSchema>;
@@ -397,12 +295,7 @@ export const SessionScoreBoardSchema = z.object({
     ScoreBoardId: z.string().describe(`
         * * Field Name: ScoreBoardId
         * * Display Name: Score Board Id
-        * * SQL Data Type: uniqueidentifier
-        * * Related Entity/Foreign Key: Score Boards (vwScoreBoards.ID)`),
-    WeightedScore: z.number().nullish().describe(`
-        * * Field Name: WeightedScore
-        * * Display Name: Weighted Score
-        * * SQL Data Type: float(53)`),
+        * * SQL Data Type: uniqueidentifier`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -416,10 +309,6 @@ export const SessionScoreBoardSchema = z.object({
     SessionId_Virtual: z.string().describe(`
         * * Field Name: SessionId_Virtual
         * * Display Name: Session Id _ Virtual
-        * * SQL Data Type: nvarchar(255)`),
-    ScoreBoardId_Virtual: z.string().nullish().describe(`
-        * * Field Name: ScoreBoardId_Virtual
-        * * Display Name: Score Board Id _ Virtual
         * * SQL Data Type: nvarchar(255)`),
 });
 
@@ -451,6 +340,26 @@ export const SessionSchema = z.object({
         * * Field Name: SessionEndDate
         * * Display Name: Session End Date
         * * SQL Data Type: datetime`),
+    WeightedScore: z.number().nullish().describe(`
+        * * Field Name: WeightedScore
+        * * Display Name: Weighted Score
+        * * SQL Data Type: decimal(10, 2)`),
+    Title: z.string().nullish().describe(`
+        * * Field Name: Title
+        * * Display Name: Title
+        * * SQL Data Type: nvarchar(200)`),
+    UserPrompt: z.string().nullish().describe(`
+        * * Field Name: UserPrompt
+        * * Display Name: User Prompt
+        * * SQL Data Type: nvarchar(MAX)`),
+    AbstractSubmissionStartDate: z.date().nullish().describe(`
+        * * Field Name: AbstractSubmissionStartDate
+        * * Display Name: Abstract Submission Start Date
+        * * SQL Data Type: datetime`),
+    AbstractSubmissionEndDate: z.date().nullish().describe(`
+        * * Field Name: AbstractSubmissionEndDate
+        * * Display Name: Abstract Submission End Date
+        * * SQL Data Type: datetime`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -461,14 +370,6 @@ export const SessionSchema = z.object({
         * * Display Name: Updated At
         * * SQL Data Type: datetimeoffset
         * * Default Value: getutcdate()`),
-    WeightedScore: z.number().nullish().describe(`
-        * * Field Name: WeightedScore
-        * * Display Name: Weighted Score
-        * * SQL Data Type: decimal(10, 2)`),
-    Title: z.string().nullish().describe(`
-        * * Field Name: Title
-        * * Display Name: Title
-        * * SQL Data Type: nvarchar(200)`),
     Event: z.string().describe(`
         * * Field Name: Event
         * * Display Name: Event
@@ -677,26 +578,6 @@ export class AbstractResultEntity extends BaseEntity<AbstractResultEntityType> {
     }
 
     /**
-    * * Field Name: __mj_CreatedAt
-    * * Display Name: Created At
-    * * SQL Data Type: datetimeoffset
-    * * Default Value: getutcdate()
-    */
-    get __mj_CreatedAt(): Date {
-        return this.Get('__mj_CreatedAt');
-    }
-
-    /**
-    * * Field Name: __mj_UpdatedAt
-    * * Display Name: Updated At
-    * * SQL Data Type: datetimeoffset
-    * * Default Value: getutcdate()
-    */
-    get __mj_UpdatedAt(): Date {
-        return this.Get('__mj_UpdatedAt');
-    }
-
-    /**
     * * Field Name: ReviewComments
     * * Display Name: Review Comments
     * * SQL Data Type: nvarchar(MAX)
@@ -709,116 +590,6 @@ export class AbstractResultEntity extends BaseEntity<AbstractResultEntityType> {
     }
 
     /**
-    * * Field Name: AbstractStatusId_Virtual
-    * * Display Name: Abstract Status Id _ Virtual
-    * * SQL Data Type: nvarchar(255)
-    */
-    get AbstractStatusId_Virtual(): string {
-        return this.Get('AbstractStatusId_Virtual');
-    }
-}
-
-
-/**
- * Abstract Stagings - strongly typed entity sub-class
- * * Schema: dbo
- * * Base Table: AbstractStaging
- * * Base View: vwAbstractStagings
- * * Primary Key: ID
- * @extends {BaseEntity}
- * @class
- * @public
- */
-@RegisterClass(BaseEntity, 'Abstract Stagings')
-export class AbstractStagingEntity extends BaseEntity<AbstractStagingEntityType> {
-    /**
-    * Loads the Abstract Stagings record from the database
-    * @param ID: string - primary key value to load the Abstract Stagings record.
-    * @param EntityRelationshipsToLoad - (optional) the relationships to load
-    * @returns {Promise<boolean>} - true if successful, false otherwise
-    * @public
-    * @async
-    * @memberof AbstractStagingEntity
-    * @method
-    * @override
-    */
-    public async Load(ID: string, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
-        const compositeKey: CompositeKey = new CompositeKey();
-        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
-        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
-    }
-
-    /**
-    * * Field Name: ID
-    * * Display Name: ID
-    * * SQL Data Type: uniqueidentifier
-    * * Default Value: newid()
-    */
-    get ID(): string {
-        return this.Get('ID');
-    }
-
-    /**
-    * * Field Name: SessionID
-    * * Display Name: Session ID
-    * * SQL Data Type: uniqueidentifier
-    */
-    get SessionID(): string {
-        return this.Get('SessionID');
-    }
-    set SessionID(value: string) {
-        this.Set('SessionID', value);
-    }
-
-    /**
-    * * Field Name: UserID
-    * * Display Name: User ID
-    * * SQL Data Type: uniqueidentifier
-    */
-    get UserID(): string {
-        return this.Get('UserID');
-    }
-    set UserID(value: string) {
-        this.Set('UserID', value);
-    }
-
-    /**
-    * * Field Name: YearOfExp
-    * * Display Name: Year Of Exp
-    * * SQL Data Type: int
-    */
-    get YearOfExp(): number | null {
-        return this.Get('YearOfExp');
-    }
-    set YearOfExp(value: number | null) {
-        this.Set('YearOfExp', value);
-    }
-
-    /**
-    * * Field Name: AbstractText
-    * * Display Name: Abstract Text
-    * * SQL Data Type: nvarchar(MAX)
-    */
-    get AbstractText(): string | null {
-        return this.Get('AbstractText');
-    }
-    set AbstractText(value: string | null) {
-        this.Set('AbstractText', value);
-    }
-
-    /**
-    * * Field Name: UploadUrl
-    * * Display Name: Upload Url
-    * * SQL Data Type: nvarchar(500)
-    */
-    get UploadUrl(): string | null {
-        return this.Get('UploadUrl');
-    }
-    set UploadUrl(value: string | null) {
-        this.Set('UploadUrl', value);
-    }
-
-    /**
     * * Field Name: __mj_CreatedAt
     * * Display Name: Created At
     * * SQL Data Type: datetimeoffset
@@ -839,137 +610,12 @@ export class AbstractStagingEntity extends BaseEntity<AbstractStagingEntityType>
     }
 
     /**
-    * * Field Name: Session
-    * * Display Name: Session
+    * * Field Name: AbstractStatusId_Virtual
+    * * Display Name: Abstract Status Id _ Virtual
     * * SQL Data Type: nvarchar(255)
     */
-    get Session(): string {
-        return this.Get('Session');
-    }
-    set Session(value: string) {
-        this.Set('Session', value);
-    }
-
-    /**
-    * * Field Name: User
-    * * Display Name: User
-    * * SQL Data Type: nvarchar(255)
-    */
-    get User(): string {
-        return this.Get('User');
-    }
-    set User(value: string) {
-        this.Set('User', value);
-    }
-
-    /**
-    * * Field Name: FirstName
-    * * Display Name: First Name
-    * * SQL Data Type: nvarchar(255)
-    */
-    get FirstName(): string | null {
-        return this.Get('FirstName');
-    }
-    set FirstName(value: string | null) {
-        this.Set('FirstName', value);
-    }
-
-    /**
-    * * Field Name: LastName
-    * * Display Name: Last Name
-    * * SQL Data Type: nvarchar(255)
-    */
-    get LastName(): string | null {
-        return this.Get('LastName');
-    }
-    set LastName(value: string | null) {
-        this.Set('LastName', value);
-    }
-
-    /**
-    * * Field Name: EventID
-    * * Display Name: Event ID
-    * * SQL Data Type: uniqueidentifier
-    */
-    get EventID(): string {
-        return this.Get('EventID');
-    }
-    set EventID(value: string) {
-        this.Set('EventID', value);
-    }
-
-    /**
-    * * Field Name: EventName
-    * * Display Name: Event Name
-    * * SQL Data Type: nvarchar(255)
-    */
-    get EventName(): string {
-        return this.Get('EventName');
-    }
-    set EventName(value: string) {
-        this.Set('EventName', value);
-    }
-
-    /**
-    * * Field Name: EventStartDate
-    * * Display Name: Event Start Date
-    * * SQL Data Type: datetime
-    */
-    get EventStartDate(): Date | null {
-        return this.Get('EventStartDate');
-    }
-    set EventStartDate(value: Date | null) {
-        this.Set('EventStartDate', value);
-    }
-
-    /**
-    * * Field Name: EventEndDate
-    * * Display Name: Event End Date
-    * * SQL Data Type: datetime
-    */
-    get EventEndDate(): Date | null {
-        return this.Get('EventEndDate');
-    }
-    set EventEndDate(value: Date | null) {
-        this.Set('EventEndDate', value);
-    }
-
-    /**
-    * * Field Name: Description
-    * * Display Name: Description
-    * * SQL Data Type: nvarchar(MAX)
-    */
-    get Description(): string | null {
-        return this.Get('Description');
-    }
-    set Description(value: string | null) {
-        this.Set('Description', value);
-    }
-
-    /**
-    * * Field Name: EventCreatedAt
-    * * Display Name: Event Created At
-    * * SQL Data Type: datetime
-    * * Default Value: getdate()
-    */
-    get EventCreatedAt(): Date | null {
-        return this.Get('EventCreatedAt');
-    }
-    set EventCreatedAt(value: Date | null) {
-        this.Set('EventCreatedAt', value);
-    }
-
-    /**
-    * * Field Name: EventUpdatedAt
-    * * Display Name: Event Updated At
-    * * SQL Data Type: datetime
-    * * Default Value: getdate()
-    */
-    get EventUpdatedAt(): Date | null {
-        return this.Get('EventUpdatedAt');
-    }
-    set EventUpdatedAt(value: Date | null) {
-        this.Set('EventUpdatedAt', value);
+    get AbstractStatusId_Virtual(): string {
+        return this.Get('AbstractStatusId_Virtual');
     }
 }
 
@@ -1439,27 +1085,15 @@ export class ScoreBoardEntity extends BaseEntity<ScoreBoardEntityType> {
     }
 
     /**
-    * * Field Name: Criteria
-    * * Display Name: Criteria
-    * * SQL Data Type: nvarchar(MAX)
+    * * Field Name: CutOffScore
+    * * Display Name: Cut Off Score
+    * * SQL Data Type: int
     */
-    get Criteria(): string | null {
-        return this.Get('Criteria');
+    get CutOffScore(): number {
+        return this.Get('CutOffScore');
     }
-    set Criteria(value: string | null) {
-        this.Set('Criteria', value);
-    }
-
-    /**
-    * * Field Name: Weightage
-    * * Display Name: Weightage
-    * * SQL Data Type: float(53)
-    */
-    get Weightage(): number | null {
-        return this.Get('Weightage');
-    }
-    set Weightage(value: number | null) {
-        this.Set('Weightage', value);
+    set CutOffScore(value: number) {
+        this.Set('CutOffScore', value);
     }
 
     /**
@@ -1480,28 +1114,6 @@ export class ScoreBoardEntity extends BaseEntity<ScoreBoardEntityType> {
     */
     get __mj_UpdatedAt(): Date {
         return this.Get('__mj_UpdatedAt');
-    }
-
-    /**
-    * * Field Name: SessionID
-    * * Display Name: Session ID
-    * * SQL Data Type: uniqueidentifier
-    * * Related Entity/Foreign Key: Sessions (vwSessions.ID)
-    */
-    get SessionID(): string | null {
-        return this.Get('SessionID');
-    }
-    set SessionID(value: string | null) {
-        this.Set('SessionID', value);
-    }
-
-    /**
-    * * Field Name: Session
-    * * Display Name: Session
-    * * SQL Data Type: nvarchar(255)
-    */
-    get Session(): string | null {
-        return this.Get('Session');
     }
 }
 
@@ -1562,25 +1174,12 @@ export class SessionScoreBoardEntity extends BaseEntity<SessionScoreBoardEntityT
     * * Field Name: ScoreBoardId
     * * Display Name: Score Board Id
     * * SQL Data Type: uniqueidentifier
-    * * Related Entity/Foreign Key: Score Boards (vwScoreBoards.ID)
     */
     get ScoreBoardId(): string {
         return this.Get('ScoreBoardId');
     }
     set ScoreBoardId(value: string) {
         this.Set('ScoreBoardId', value);
-    }
-
-    /**
-    * * Field Name: WeightedScore
-    * * Display Name: Weighted Score
-    * * SQL Data Type: float(53)
-    */
-    get WeightedScore(): number | null {
-        return this.Get('WeightedScore');
-    }
-    set WeightedScore(value: number | null) {
-        this.Set('WeightedScore', value);
     }
 
     /**
@@ -1610,15 +1209,6 @@ export class SessionScoreBoardEntity extends BaseEntity<SessionScoreBoardEntityT
     */
     get SessionId_Virtual(): string {
         return this.Get('SessionId_Virtual');
-    }
-
-    /**
-    * * Field Name: ScoreBoardId_Virtual
-    * * Display Name: Score Board Id _ Virtual
-    * * SQL Data Type: nvarchar(255)
-    */
-    get ScoreBoardId_Virtual(): string | null {
-        return this.Get('ScoreBoardId_Virtual');
     }
 }
 
@@ -1712,26 +1302,6 @@ export class SessionEntity extends BaseEntity<SessionEntityType> {
     }
 
     /**
-    * * Field Name: __mj_CreatedAt
-    * * Display Name: Created At
-    * * SQL Data Type: datetimeoffset
-    * * Default Value: getutcdate()
-    */
-    get __mj_CreatedAt(): Date {
-        return this.Get('__mj_CreatedAt');
-    }
-
-    /**
-    * * Field Name: __mj_UpdatedAt
-    * * Display Name: Updated At
-    * * SQL Data Type: datetimeoffset
-    * * Default Value: getutcdate()
-    */
-    get __mj_UpdatedAt(): Date {
-        return this.Get('__mj_UpdatedAt');
-    }
-
-    /**
     * * Field Name: WeightedScore
     * * Display Name: Weighted Score
     * * SQL Data Type: decimal(10, 2)
@@ -1753,6 +1323,62 @@ export class SessionEntity extends BaseEntity<SessionEntityType> {
     }
     set Title(value: string | null) {
         this.Set('Title', value);
+    }
+
+    /**
+    * * Field Name: UserPrompt
+    * * Display Name: User Prompt
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get UserPrompt(): string | null {
+        return this.Get('UserPrompt');
+    }
+    set UserPrompt(value: string | null) {
+        this.Set('UserPrompt', value);
+    }
+
+    /**
+    * * Field Name: AbstractSubmissionStartDate
+    * * Display Name: Abstract Submission Start Date
+    * * SQL Data Type: datetime
+    */
+    get AbstractSubmissionStartDate(): Date | null {
+        return this.Get('AbstractSubmissionStartDate');
+    }
+    set AbstractSubmissionStartDate(value: Date | null) {
+        this.Set('AbstractSubmissionStartDate', value);
+    }
+
+    /**
+    * * Field Name: AbstractSubmissionEndDate
+    * * Display Name: Abstract Submission End Date
+    * * SQL Data Type: datetime
+    */
+    get AbstractSubmissionEndDate(): Date | null {
+        return this.Get('AbstractSubmissionEndDate');
+    }
+    set AbstractSubmissionEndDate(value: Date | null) {
+        this.Set('AbstractSubmissionEndDate', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
     }
 
     /**

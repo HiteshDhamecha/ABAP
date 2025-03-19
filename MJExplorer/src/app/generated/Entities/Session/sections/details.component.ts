@@ -42,20 +42,6 @@ import { SessionEntity } from 'mj_generatedentities';
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
-            FieldName="__mj_CreatedAt"
-            Type="textbox"
-            [EditMode]="EditMode"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
-            FieldName="__mj_UpdatedAt"
-            Type="textbox"
-            [EditMode]="EditMode"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
             FieldName="WeightedScore"
             Type="numerictextbox"
             [EditMode]="EditMode"
@@ -65,6 +51,41 @@ import { SessionEntity } from 'mj_generatedentities';
             [ShowLabel]="true"
             FieldName="Title"
             Type="textarea"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="UserPrompt"
+            Type="textarea"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="AbstractSubmissionStartDate"
+            Type="datepicker"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="AbstractSubmissionEndDate"
+            Type="datepicker"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="__mj_CreatedAt"
+            Type="textbox"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="__mj_UpdatedAt"
+            Type="textbox"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 

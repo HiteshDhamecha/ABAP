@@ -26,14 +26,7 @@ import { ScoreBoardEntity } from 'mj_generatedentities';
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
-            FieldName="Criteria"
-            Type="textarea"
-            [EditMode]="EditMode"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
-            FieldName="Weightage"
+            FieldName="CutOffScore"
             Type="numerictextbox"
             [EditMode]="EditMode"
         ></mj-form-field>
@@ -48,22 +41,6 @@ import { ScoreBoardEntity } from 'mj_generatedentities';
             [record]="record"
             [ShowLabel]="true"
             FieldName="__mj_UpdatedAt"
-            Type="textbox"
-            [EditMode]="EditMode"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
-            FieldName="SessionID"
-            Type="textbox"
-            [EditMode]="EditMode"
-            LinkType="Record"
-            LinkComponentType="Search"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
-            FieldName="Session"
             Type="textbox"
             [EditMode]="EditMode"
         ></mj-form-field>

@@ -24,15 +24,6 @@ import { SessionScoreBoardEntity } from 'mj_generatedentities';
             FieldName="ScoreBoardId"
             Type="textbox"
             [EditMode]="EditMode"
-            LinkType="Record"
-            LinkComponentType="Search"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
-            FieldName="WeightedScore"
-            Type="numerictextbox"
-            [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -52,13 +43,6 @@ import { SessionScoreBoardEntity } from 'mj_generatedentities';
             [record]="record"
             [ShowLabel]="true"
             FieldName="SessionId_Virtual"
-            Type="textbox"
-            [EditMode]="EditMode"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
-            FieldName="ScoreBoardId_Virtual"
             Type="textbox"
             [EditMode]="EditMode"
         ></mj-form-field>

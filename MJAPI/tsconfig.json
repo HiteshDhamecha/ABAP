@@ -28,8 +28,7 @@
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node",
-    "transpileOnly": true,
-    "logError": true
+    "transpileOnly": true
   },
   "exclude": ["node_modules", "../../node_modules/@types/plotly.js"],
   "include": ["./src/**/*.ts"]

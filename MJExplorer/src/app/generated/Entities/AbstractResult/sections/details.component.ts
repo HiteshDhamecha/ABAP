@@ -35,6 +35,13 @@ import { AbstractResultEntity } from 'mj_generatedentities';
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
+            FieldName="ReviewComments"
+            Type="textarea"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
             FieldName="__mj_CreatedAt"
             Type="textbox"
             [EditMode]="EditMode"
@@ -44,13 +51,6 @@ import { AbstractResultEntity } from 'mj_generatedentities';
             [ShowLabel]="true"
             FieldName="__mj_UpdatedAt"
             Type="textbox"
-            [EditMode]="EditMode"
-        ></mj-form-field>
-        <mj-form-field 
-            [record]="record"
-            [ShowLabel]="true"
-            FieldName="ReviewComments"
-            Type="textarea"
             [EditMode]="EditMode"
         ></mj-form-field>
         <mj-form-field 

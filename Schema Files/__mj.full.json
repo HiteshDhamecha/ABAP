@@ -1367,16 +1367,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "AIModelType", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "SpeedRank", 
                     "Description": "Optional column that ranks the speed of the AI model. Default is 0 and should be non-negative.",  
                     "Type": "int",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "AIModelType", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "CostRank", 
@@ -1570,26 +1570,26 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "ResponseFormat", 
-                    "Description": "Specifies the expected response format for the AI model. Options include Any, Text, Markdown, JSON, and ModelSpecific. Defaults to Any if not specified.",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "Template", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "ModelSpecificResponseFormat", 
-                    "Description": "A JSON-formatted string containing model-specific response format instructions. This will be parsed and provided as a JSON object to the model.",  
+                    "Name": "ResponseFormat", 
+                    "Description": "Specifies the expected response format for the AI model. Options include Any, Text, Markdown, JSON, and ModelSpecific. Defaults to Any if not specified.",  
                     "Type": "nvarchar",
-                    "AllowsNull": true 
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "Category", 
                     "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "ModelSpecificResponseFormat", 
+                    "Description": "A JSON-formatted string containing model-specific response format instructions. This will be parsed and provided as a JSON object to the model.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
@@ -2030,16 +2030,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "AuditLogType", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
+                },         
+                {
+                    "Name": "Entity", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
                 },         
                 {
                     "Name": "Authorization", 
@@ -3731,12 +3731,6 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Conversation", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "UserRating", 
                     "Description": "This column is used to capture user feedback as a rating scale. The scale ranges from 1 to 10, where 1 might represent thumbs down, and 10 might represent thumbs up or the highest rating in a star-based scale.",  
                     "Type": "int",
@@ -3757,6 +3751,26 @@
                 {
                     "Name": "SummaryOfEarlierConversation", 
                     "Description": "This column optionally stores a summary of the entire conversation leading up to this particular conversation detail record. It is used in long-running conversations to optimize performance by summarizing earlier parts.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserID", 
+                    "Description": "This field, when populated, overrides the UserID at the Conversation level to specify a different user created the message.",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Users",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Conversation", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "User", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 }        
@@ -4087,16 +4101,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "DataContext", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "Description", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "DataContext", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "View", 
@@ -4251,13 +4265,13 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "Dataset", 
+                    "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
+                    "Name": "Dataset", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
@@ -6810,15 +6824,15 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "AutoUpdateFromSchema", 
-                    "Description": "Indicates whether this relationship should be automatically updated by CodeGen. When set to 0, the record will not be modified by CodeGen. Defaults to 1.",  
-                    "Type": "bit",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AutoUpdateFromSchema", 
+                    "Description": "Indicates whether this relationship should be automatically updated by CodeGen. When set to 0, the record will not be modified by CodeGen. Defaults to 1.",  
+                    "Type": "bit",
                     "AllowsNull": false 
                 },         
                 {
@@ -7345,6 +7359,172 @@
             ]
         },
         { 
+            "Name": "Generated Code Categories",
+            "Description": "",
+            "BaseView": "vwGeneratedCodeCategories", 
+            "Fields": [         
+                {
+                    "Name": "ID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Name", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Description", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "ParentID", 
+                    "Description": "Parent category ID, allowing for hierarchical categorization.",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Generated Code Categories",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "__mj_CreatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_UpdatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Parent", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                }        
+            ]
+        },
+        { 
+            "Name": "Generated Codes",
+            "Description": "",
+            "BaseView": "vwGeneratedCodes", 
+            "Fields": [         
+                {
+                    "Name": "ID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "GeneratedAt", 
+                    "Description": "When the code was generated.",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "CategoryID", 
+                    "Description": "Reference to the category of generated code.",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Generated Code Categories",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "GeneratedByModelID", 
+                    "Description": "AI model responsible for generating this code.",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "AI Models",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Name", 
+                    "Description": "Descriptive name of the generated code.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Description", 
+                    "Description": "Optional description of the generated code.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Code", 
+                    "Description": "The actual generated code.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Source", 
+                    "Description": "Source material used to generate the code, e.g., a SQL CHECK constraint.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "LinkedEntityID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Entities",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "LinkedRecordPrimaryKey", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Status", 
+                    "Description": "Status of the generated code, e.g., Pending, Approved, or Rejected.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Language", 
+                    "Description": "Programming language of the generated code (TypeScript, SQL, HTML, CSS, JavaScript, Python, or Other).",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_CreatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_UpdatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Category", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "GeneratedByModel", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "LinkedEntity", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                }        
+            ]
+        },
+        { 
             "Name": "Integration URL Formats",
             "Description": "Used to generate web links for end users to easily access resources in a source system. URL Formats support templating to inject various field values at run-time to take a user directly to a resource in a source system.",
             "BaseView": "vwIntegrationURLFormats", 
@@ -7697,14 +7877,14 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Status", 
-                    "Description": "Tracks the status of each individual list detail row to enable processing of various types and the use of the status column for filtering list detail rows within a list that are in a particular state.",  
+                    "Name": "List", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "List", 
-                    "Description": "",  
+                    "Name": "Status", 
+                    "Description": "Tracks the status of each individual list detail row to enable processing of various types and the use of the status column for filtering list detail rows within a list that are in a particular state.",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
@@ -10473,16 +10653,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Template", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "OrderBy", 
                     "Description": "This field is used only when the Type of the TemplateParam table is \"Entity\". It is an optional field used to specify the sorting order for the related entity data that is used in the template for the Entity specified.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "Template", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "Entity", 
@@ -11085,13 +11265,13 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "User", 
+                    "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
+                    "Name": "User", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 

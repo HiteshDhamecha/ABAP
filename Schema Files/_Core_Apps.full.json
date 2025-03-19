@@ -92,73 +92,12 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "__mj_CreatedAt", 
-                    "Description": "",  
-                    "Type": "datetimeoffset",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "__mj_UpdatedAt", 
-                    "Description": "",  
-                    "Type": "datetimeoffset",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "ReviewComments", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "AbstractStatusId_Virtual", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                }        
-            ]
-        },
-        { 
-            "Name": "Abstract Stagings",
-            "Description": "",
-            "BaseView": "vwAbstractStagings", 
-            "Fields": [         
-                {
-                    "Name": "ID", 
-                    "Description": "",  
-                    "Type": "uniqueidentifier",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "SessionID", 
-                    "Description": "",  
-                    "Type": "uniqueidentifier",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "UserID", 
-                    "Description": "",  
-                    "Type": "uniqueidentifier",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "YearOfExp", 
-                    "Description": "",  
-                    "Type": "int",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "AbstractText", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "UploadUrl", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "__mj_CreatedAt", 
                     "Description": "",  
                     "Type": "datetimeoffset",
@@ -171,70 +110,10 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Session", 
+                    "Name": "AbstractStatusId_Virtual", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
-                },         
-                {
-                    "Name": "User", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "FirstName", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "LastName", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "EventID", 
-                    "Description": "",  
-                    "Type": "uniqueidentifier",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "EventName", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "EventStartDate", 
-                    "Description": "",  
-                    "Type": "datetime",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "EventEndDate", 
-                    "Description": "",  
-                    "Type": "datetime",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "Description", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "EventCreatedAt", 
-                    "Description": "",  
-                    "Type": "datetime",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "EventUpdatedAt", 
-                    "Description": "",  
-                    "Type": "datetime",
-                    "AllowsNull": true 
                 }        
             ]
         },
@@ -322,13 +201,6 @@
                     "Type": "datetimeoffset",
                     "AllowsNull": false 
                 }        
-            ]
-        },
-        { 
-            "Name": "Criteria",
-            "Description": "",
-            "BaseView": "vwCriteria", 
-            "Fields": [        
             ]
         },
         { 
@@ -447,16 +319,10 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "Criteria", 
+                    "Name": "CutOffScore", 
                     "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "Weightage", 
-                    "Description": "",  
-                    "Type": "float",
-                    "AllowsNull": true 
+                    "Type": "int",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "__mj_CreatedAt", 
@@ -469,20 +335,6 @@
                     "Description": "",  
                     "Type": "datetimeoffset",
                     "AllowsNull": false 
-                },         
-                {
-                    "Name": "SessionID", 
-                    "Description": "",  
-                    "Type": "uniqueidentifier",
-                "RelatedEntity": "Sessions",
-                "RelatedEntityFieldName": "ID",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "Session", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
                 }        
             ]
         },
@@ -509,15 +361,7 @@
                     "Name": "ScoreBoardId", 
                     "Description": "",  
                     "Type": "uniqueidentifier",
-                "RelatedEntity": "Score Boards",
-                "RelatedEntityFieldName": "ID",
                     "AllowsNull": false 
-                },         
-                {
-                    "Name": "WeightedScore", 
-                    "Description": "",  
-                    "Type": "float",
-                    "AllowsNull": true 
                 },         
                 {
                     "Name": "__mj_CreatedAt", 
@@ -536,12 +380,6 @@
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
-                },         
-                {
-                    "Name": "ScoreBoardId_Virtual", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
                 }        
             ]
         },
@@ -583,18 +421,6 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "__mj_CreatedAt", 
-                    "Description": "",  
-                    "Type": "datetimeoffset",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "__mj_UpdatedAt", 
-                    "Description": "",  
-                    "Type": "datetimeoffset",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "WeightedScore", 
                     "Description": "",  
                     "Type": "decimal",
@@ -605,6 +431,36 @@
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserPrompt", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractSubmissionStartDate", 
+                    "Description": "",  
+                    "Type": "datetime",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractSubmissionEndDate", 
+                    "Description": "",  
+                    "Type": "datetime",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "__mj_CreatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_UpdatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "Event", 

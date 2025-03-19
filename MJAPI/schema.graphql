@@ -242,6 +242,7 @@ type AIModel_ {
   DriverImportPath: String
   EntityAIActions_AIModelIDArray: [EntityAIAction_!]!
   EntityDocuments_AIModelIDArray: [EntityDocument_!]!
+  GeneratedCodes_GeneratedByModelIDArray: [GeneratedCode_!]!
   ID: String!
 
   """
@@ -401,28 +402,6 @@ type AbstractResult_ {
   _mj__UpdatedAt: Timestamp!
 }
 
-type AbstractStaging_ {
-  AbstractText: String
-  Description: String
-  EventCreatedAt: Timestamp
-  EventEndDate: Timestamp
-  EventID: String!
-  EventName: String!
-  EventStartDate: Timestamp
-  EventUpdatedAt: Timestamp
-  FirstName: String
-  ID: String!
-  LastName: String
-  Session: String!
-  SessionID: String!
-  UploadUrl: String
-  User: String!
-  UserID: String!
-  YearOfExp: Int
-  _mj__CreatedAt: Timestamp!
-  _mj__UpdatedAt: Timestamp!
-}
-
 type AbstractStatus_ {
   AbstractResults_AbstractStatusIdArray: [AbstractResult_!]!
   ID: String!
@@ -432,7 +411,6 @@ type AbstractStatus_ {
 }
 
 type Abstract_ {
-  AbstractResults_AbstractIDArray: [AbstractResult_!]!
   AbstractText: String
   ID: String!
   SessionID: String!
@@ -940,8 +918,16 @@ type CommunicationProvider_ {
   """The status of the communication provider (Disabled or Active)."""
   Status: String!
 
+  """
+  Whether or not the provider supports forwarding messages to another recipient 
+  """
+  SupportsForwarding: Boolean!
+
   """Indicates if the provider supports receiving messages."""
   SupportsReceiving: Boolean!
+
+  """Whether or not the provider supports replying to messages"""
+  SupportsReplying: Boolean!
 
   """
   Whether or not the provider supports sending messages at a specific time
@@ -1441,25 +1427,6 @@ input CreateAbstractResultInput {
   Score: Float
 }
 
-input CreateAbstractStagingInput {
-  AbstractText: String
-  Description: String
-  EventCreatedAt: Timestamp
-  EventEndDate: Timestamp
-  EventID: String
-  EventName: String
-  EventStartDate: Timestamp
-  EventUpdatedAt: Timestamp
-  FirstName: String
-  LastName: String
-  Session: String
-  SessionID: String
-  UploadUrl: String
-  User: String
-  UserID: String
-  YearOfExp: Int
-}
-
 input CreateAbstractStatusInput {
   Name: String
 }
@@ -1603,7 +1570,9 @@ input CreateCommunicationProviderInput {
   Description: String
   Name: String
   Status: String
+  SupportsForwarding: Boolean
   SupportsReceiving: Boolean
+  SupportsReplying: Boolean
   SupportsScheduledSending: Boolean
   SupportsSending: Boolean
 }
@@ -1969,6 +1938,10 @@ input CreateEntityFieldInput {
   ExtendedType: String
   FullTextSearchEnabled: Boolean
   GeneratedFormSection: String
+  GeneratedValidationFunctionCheckConstraint: String
+  GeneratedValidationFunctionCode: String
+  GeneratedValidationFunctionDescription: String
+  GeneratedValidationFunctionName: String
   IncludeInGeneratedForm: Boolean
   IncludeInUserSearchAPI: Boolean
   IncludeRelatedEntityNameFieldInBaseView: Boolean
@@ -2160,6 +2133,26 @@ input CreateFileStorageProviderInput {
   Name: String
   Priority: Int
   ServerDriverKey: String
+}
+
+input CreateGeneratedCodeCategoryInput {
+  Description: String
+  Name: String
+  ParentID: String
+}
+
+input CreateGeneratedCodeInput {
+  CategoryID: String
+  Code: String
+  Description: String
+  GeneratedAt: Timestamp
+  GeneratedByModelID: String
+  Language: String
+  LinkedEntityID: String
+  LinkedRecordPrimaryKey: String
+  Name: String
+  Source: String
+  Status: String
 }
 
 input CreateLibraryInput {
@@ -2445,26 +2438,26 @@ input CreateSchemaInfoInput {
 }
 
 input CreateScoreBoardInput {
-  Criteria: String
+  CutOffScore: Int
   Description: String
   Name: String
-  SessionID: String
-  Weightage: Float
 }
 
 input CreateSessionInput {
+  AbstractSubmissionEndDate: Timestamp
+  AbstractSubmissionStartDate: Timestamp
   EventID: String
   Name: String
   SessionEndDate: Timestamp
   SessionStartDate: Timestamp
   Title: String
+  UserPrompt: String
   WeightedScore: Float
 }
 
 input CreateSessionScoreBoardInput {
   ScoreBoardId: String
   SessionId: String
-  WeightedScore: Float
 }
 
 input CreateTemplateCategoryInput {
@@ -2641,19 +2634,6 @@ input CreateWorkspaceItemInput {
   ResourceTypeID: String
   Sequence: Int
   WorkspaceID: String
-}
-
-input Createflyway_schema_historyInput {
-  checksum: Int
-  description: String
-  execution_time: Int
-  installed_by: String
-  installed_on: Timestamp
-  installed_rank: Int!
-  script: String
-  success: Boolean
-  type: String
-  version: String
 }
 
 type DashboardCategory_ {
@@ -3236,6 +3216,7 @@ type EntityField_ {
   Defines extended behaviors for a field such as for Email, Web URLs, Code, etc.
   """
   ExtendedType: String
+  FieldCodeName: String
 
   """
   If set to 1, CodeGen will automatically generate a Full Text Catalog/Index in the database and include this field in the search index.
@@ -3246,6 +3227,26 @@ type EntityField_ {
   When set to Top, the field will be placed in a "top area" on the top of a generated form and visible regardless of which tab is displayed. When set to "category" Options: Top, Category, Details
   """
   GeneratedFormSection: String!
+
+  """
+  If a generated validation function was generated previously, this stores the text from the source CHECK constraint in the database. This is stored so that regeneration of the validation function will only occur when the source CHECK constraint changes.
+  """
+  GeneratedValidationFunctionCheckConstraint: String
+
+  """
+  Contains the generated code for the field validation function, if it exists, null otherwise.
+  """
+  GeneratedValidationFunctionCode: String
+
+  """
+  Contains a description for business users of what the validation function for this field does, if it exists
+  """
+  GeneratedValidationFunctionDescription: String
+
+  """
+  Contains the name of the generated field validation function, if it exists, null otherwise
+  """
+  GeneratedValidationFunctionName: String
   ID: String!
 
   """
@@ -3582,6 +3583,7 @@ type Entity_ {
   FullTextSearchEnabled: Boolean!
   FullTextSearchFunction: String
   FullTextSearchFunctionGenerated: Boolean!
+  GeneratedCodes_LinkedEntityIDArray: [GeneratedCode_!]!
   ID: String!
 
   """
@@ -3814,6 +3816,62 @@ type File_ {
   _mj__UpdatedAt: Timestamp!
 }
 
+type GeneratedCodeCategory_ {
+  Description: String
+  GeneratedCodeCategories_ParentIDArray: [GeneratedCodeCategory_!]!
+  GeneratedCodes_CategoryIDArray: [GeneratedCode_!]!
+  ID: String!
+  Name: String!
+  Parent: String
+
+  """Parent category ID, allowing for hierarchical categorization."""
+  ParentID: String
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type GeneratedCode_ {
+  Category: String!
+
+  """Reference to the category of generated code."""
+  CategoryID: String!
+
+  """The actual generated code."""
+  Code: String!
+
+  """Optional description of the generated code."""
+  Description: String
+
+  """When the code was generated."""
+  GeneratedAt: Timestamp!
+  GeneratedByModel: String!
+
+  """AI model responsible for generating this code."""
+  GeneratedByModelID: String!
+  ID: String!
+
+  """
+  Programming language of the generated code (TypeScript, SQL, HTML, CSS, JavaScript, Python, or Other).
+  """
+  Language: String!
+  LinkedEntity: String
+  LinkedEntityID: String
+  LinkedRecordPrimaryKey: String
+
+  """Descriptive name of the generated code."""
+  Name: String!
+
+  """
+  Source material used to generate the code, e.g., a SQL CHECK constraint.
+  """
+  Source: String!
+
+  """Status of the generated code, e.g., Pending, Approved, or Rejected."""
+  Status: String!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
 input GetDataInputType {
   Queries: [String!]!
   Token: String!
@@ -4007,7 +4065,6 @@ type Mutation {
   CreateAbstract(input: CreateAbstractInput!): Abstract_!
   CreateAbstractLogs(input: CreateAbstractLogsInput!): AbstractLogs_!
   CreateAbstractResult(input: CreateAbstractResultInput!): AbstractResult_!
-  CreateAbstractStaging(input: CreateAbstractStagingInput!): AbstractStaging_!
   CreateAbstractStatus(input: CreateAbstractStatusInput!): AbstractStatus_!
   CreateAction(input: CreateActionInput!): Action_!
   CreateActionAuthorization(input: CreateActionAuthorizationInput!): ActionAuthorization_!
@@ -4081,6 +4138,8 @@ type Mutation {
   CreateFileCategory(input: CreateFileCategoryInput!): FileCategory_!
   CreateFileEntityRecordLink(input: CreateFileEntityRecordLinkInput!): FileEntityRecordLink_!
   CreateFileStorageProvider(input: CreateFileStorageProviderInput!): FileStorageProvider_!
+  CreateGeneratedCode(input: CreateGeneratedCodeInput!): GeneratedCode_!
+  CreateGeneratedCodeCategory(input: CreateGeneratedCodeCategoryInput!): GeneratedCodeCategory_!
   CreateLibrary(input: CreateLibraryInput!): Library_!
   CreateLibraryItem(input: CreateLibraryItemInput!): LibraryItem_!
   CreateList(input: CreateListInput!): List_!
@@ -4134,7 +4193,6 @@ type Mutation {
   CreateVersionInstallation(input: CreateVersionInstallationInput!): VersionInstallation_!
   CreateWorkspace(input: CreateWorkspaceInput!): Workspace_!
   CreateWorkspaceItem(input: CreateWorkspaceItemInput!): WorkspaceItem_!
-  Createflyway_schema_history(input: Createflyway_schema_historyInput!): flyway_schema_history_!
   DeleteAIAction(ID: String!, options___: DeleteOptionsInput!): AIAction_!
   DeleteAIAgent(ID: String!, options___: DeleteOptionsInput!): AIAgent_!
   DeleteAIAgentAction(ID: String!, options___: DeleteOptionsInput!): AIAgentAction_!
@@ -4153,7 +4211,6 @@ type Mutation {
   DeleteAbstract(ID: String!, options___: DeleteOptionsInput!): Abstract_!
   DeleteAbstractLogs(ID: String!, options___: DeleteOptionsInput!): AbstractLogs_!
   DeleteAbstractResult(ID: String!, options___: DeleteOptionsInput!): AbstractResult_!
-  DeleteAbstractStaging(ID: String!, options___: DeleteOptionsInput!): AbstractStaging_!
   DeleteAbstractStatus(ID: String!, options___: DeleteOptionsInput!): AbstractStatus_!
   DeleteAction(ID: String!, options___: DeleteOptionsInput!): Action_!
   DeleteActionAuthorization(ID: String!, options___: DeleteOptionsInput!): ActionAuthorization_!
@@ -4215,6 +4272,8 @@ type Mutation {
   DeleteFileCategory(ID: String!, options___: DeleteOptionsInput!): FileCategory_!
   DeleteFileEntityRecordLink(ID: String!, options___: DeleteOptionsInput!): FileEntityRecordLink_!
   DeleteFileStorageProvider(ID: String!, options___: DeleteOptionsInput!): FileStorageProvider_!
+  DeleteGeneratedCode(ID: String!, options___: DeleteOptionsInput!): GeneratedCode_!
+  DeleteGeneratedCodeCategory(ID: String!, options___: DeleteOptionsInput!): GeneratedCodeCategory_!
   DeleteIntegration(ID: String!, options___: DeleteOptionsInput!): Integration_!
   DeleteIntegrationURLFormat(ID: String!, options___: DeleteOptionsInput!): IntegrationURLFormat_!
   DeleteLibrary(ID: String!, options___: DeleteOptionsInput!): Library_!
@@ -4257,7 +4316,6 @@ type Mutation {
   DeleteWorkflowEngine(ID: String!, options___: DeleteOptionsInput!): WorkflowEngine_!
   DeleteWorkspace(ID: String!, options___: DeleteOptionsInput!): Workspace_!
   DeleteWorkspaceItem(ID: String!, options___: DeleteOptionsInput!): WorkspaceItem_!
-  Deleteflyway_schema_history(installed_rank: Int!, options___: DeleteOptionsInput!): flyway_schema_history_!
   ExecuteTransactionGroup(group: TransactionInputType!): TransactionOutputType!
   MergeRecords(request: RecordMergeRequest!): RecordMergeResult!
   SetRecordFavoriteStatus(params: UserFavoriteSetParams!): UserFavoriteResult!
@@ -4283,7 +4341,6 @@ type Mutation {
   UpdateAbstract(input: UpdateAbstractInput!): Abstract_!
   UpdateAbstractLogs(input: UpdateAbstractLogsInput!): AbstractLogs_!
   UpdateAbstractResult(input: UpdateAbstractResultInput!): AbstractResult_!
-  UpdateAbstractStaging(input: UpdateAbstractStagingInput!): AbstractStaging_!
   UpdateAbstractStatus(input: UpdateAbstractStatusInput!): AbstractStatus_!
   UpdateAction(input: UpdateActionInput!): Action_!
   UpdateActionAuthorization(input: UpdateActionAuthorizationInput!): ActionAuthorization_!
@@ -4362,6 +4419,8 @@ type Mutation {
   UpdateFileCategory(input: UpdateFileCategoryInput!): FileCategory_!
   UpdateFileEntityRecordLink(input: UpdateFileEntityRecordLinkInput!): FileEntityRecordLink_!
   UpdateFileStorageProvider(input: UpdateFileStorageProviderInput!): FileStorageProvider_!
+  UpdateGeneratedCode(input: UpdateGeneratedCodeInput!): GeneratedCode_!
+  UpdateGeneratedCodeCategory(input: UpdateGeneratedCodeCategoryInput!): GeneratedCodeCategory_!
   UpdateIntegration(input: UpdateIntegrationInput!): Integration_!
   UpdateIntegrationURLFormat(input: UpdateIntegrationURLFormatInput!): IntegrationURLFormat_!
   UpdateLibrary(input: UpdateLibraryInput!): Library_!
@@ -4419,7 +4478,6 @@ type Mutation {
   UpdateWorkflowRun(input: UpdateWorkflowRunInput!): WorkflowRun_!
   UpdateWorkspace(input: UpdateWorkspaceInput!): Workspace_!
   UpdateWorkspaceItem(input: UpdateWorkspaceItemInput!): WorkspaceItem_!
-  Updateflyway_schema_history(input: Updateflyway_schema_historyInput!): flyway_schema_history_!
 }
 
 type OutputDeliveryType_ {
@@ -4501,7 +4559,6 @@ type Query {
   Abstract(ID: String!): Abstract_
   AbstractLogs(ID: String!): AbstractLogs_
   AbstractResult(ID: String!): AbstractResult_
-  AbstractStaging(ID: String!): AbstractStaging_
   AbstractStatus(ID: String!): AbstractStatus_
   Action(ID: String!): Action_
   ActionAuthorization(ID: String!): ActionAuthorization_
@@ -4617,6 +4674,8 @@ type Query {
   FileCategory(ID: String!): FileCategory_
   FileEntityRecordLink(ID: String!): FileEntityRecordLink_
   FileStorageProvider(ID: String!): FileStorageProvider_
+  GeneratedCode(ID: String!): GeneratedCode_
+  GeneratedCodeCategory(ID: String!): GeneratedCodeCategory_
   GetAllEntities: SimpleEntityResultType!
   GetData(input: GetDataInputType!): GetDataOutputType!
   GetDatasetByName(DatasetName: String!, ItemFilters: [DatasetItemFilterTypeGQL]): DatasetResultType!
@@ -4624,7 +4683,8 @@ type Query {
   GetEntityDependencies(entityName: String!): [EntityDependencyResult!]!
   GetEntityRecordName(CompositeKey: CompositeKeyInputType!, EntityName: String!): EntityRecordNameResult!
   GetEntityRecordNames(info: [EntityRecordNameInput!]!): [EntityRecordNameResult!]!
-  GetQueryData(QueryID: String!): RunQueryResultType!
+  GetQueryData(CategoryID: String, CategoryName: String, QueryID: String!): RunQueryResultType!
+  GetQueryDataByName(CategoryID: String, CategoryName: String, QueryName: String!): RunQueryResultType!
   GetRecordDependencies(CompositeKey: CompositeKeyInputType!, entityName: String!): [RecordDependencyResult!]!
   GetRecordDuplicates(params: PotentialDuplicateRequestType!): PotentialDuplicateResponseType!
   GetRecordFavoriteStatus(params: UserFavoriteSearchParams!): UserFavoriteResult!
@@ -4716,9 +4776,6 @@ type Query {
   RunAbstractResultDynamicView(input: RunDynamicViewInput!): RunAbstractResultViewResult!
   RunAbstractResultViewByID(input: RunViewByIDInput!): RunAbstractResultViewResult!
   RunAbstractResultViewByName(input: RunViewByNameInput!): RunAbstractResultViewResult!
-  RunAbstractStagingDynamicView(input: RunDynamicViewInput!): RunAbstractStagingViewResult!
-  RunAbstractStagingViewByID(input: RunViewByIDInput!): RunAbstractStagingViewResult!
-  RunAbstractStagingViewByName(input: RunViewByNameInput!): RunAbstractStagingViewResult!
   RunAbstractStatusDynamicView(input: RunDynamicViewInput!): RunAbstractStatusViewResult!
   RunAbstractStatusViewByID(input: RunViewByIDInput!): RunAbstractStatusViewResult!
   RunAbstractStatusViewByName(input: RunViewByNameInput!): RunAbstractStatusViewResult!
@@ -4972,6 +5029,12 @@ type Query {
   RunFileStorageProviderViewByName(input: RunViewByNameInput!): RunFileStorageProviderViewResult!
   RunFileViewByID(input: RunViewByIDInput!): RunFileViewResult!
   RunFileViewByName(input: RunViewByNameInput!): RunFileViewResult!
+  RunGeneratedCodeCategoryDynamicView(input: RunDynamicViewInput!): RunGeneratedCodeCategoryViewResult!
+  RunGeneratedCodeCategoryViewByID(input: RunViewByIDInput!): RunGeneratedCodeCategoryViewResult!
+  RunGeneratedCodeCategoryViewByName(input: RunViewByNameInput!): RunGeneratedCodeCategoryViewResult!
+  RunGeneratedCodeDynamicView(input: RunDynamicViewInput!): RunGeneratedCodeViewResult!
+  RunGeneratedCodeViewByID(input: RunViewByIDInput!): RunGeneratedCodeViewResult!
+  RunGeneratedCodeViewByName(input: RunViewByNameInput!): RunGeneratedCodeViewResult!
   RunIntegrationDynamicView(input: RunDynamicViewInput!): RunIntegrationViewResult!
   RunIntegrationURLFormatDynamicView(input: RunDynamicViewInput!): RunIntegrationURLFormatViewResult!
   RunIntegrationURLFormatViewByID(input: RunViewByIDInput!): RunIntegrationURLFormatViewResult!
@@ -5176,9 +5239,6 @@ type Query {
   RunWorkspaceItemViewByName(input: RunViewByNameInput!): RunWorkspaceItemViewResult!
   RunWorkspaceViewByID(input: RunViewByIDInput!): RunWorkspaceViewResult!
   RunWorkspaceViewByName(input: RunViewByNameInput!): RunWorkspaceViewResult!
-  Runflyway_schema_historyDynamicView(input: RunDynamicViewInput!): Runflyway_schema_historyViewResult!
-  Runflyway_schema_historyViewByID(input: RunViewByIDInput!): Runflyway_schema_historyViewResult!
-  Runflyway_schema_historyViewByName(input: RunViewByNameInput!): Runflyway_schema_historyViewResult!
   ScheduledAction(ID: String!): ScheduledAction_
   ScheduledActionParam(ID: String!): ScheduledActionParam_
   SchemaInfo(ID: String!): SchemaInfo_
@@ -5220,7 +5280,6 @@ type Query {
   Workspace(ID: String!): Workspace_
   WorkspaceItem(ID: String!): WorkspaceItem_
   colors: [Color!]!
-  flyway_schema_history(installed_rank: Int!): flyway_schema_history_
 }
 
 type QueryCategory_ {
@@ -5931,16 +5990,6 @@ type RunAbstractResultViewResult {
   ErrorMessage: String
   ExecutionTime: Int
   Results: [AbstractResult_!]!
-  RowCount: Int
-  Success: Boolean!
-  TotalRowCount: Int
-  UserViewRunID: String
-}
-
-type RunAbstractStagingViewResult {
-  ErrorMessage: String
-  ExecutionTime: Int
-  Results: [AbstractStaging_!]!
   RowCount: Int
   Success: Boolean!
   TotalRowCount: Int
@@ -6852,6 +6901,26 @@ type RunFileViewResult {
   UserViewRunID: String
 }
 
+type RunGeneratedCodeCategoryViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [GeneratedCodeCategory_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunGeneratedCodeViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [GeneratedCode_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
 type RunIntegrationURLFormatViewResult {
   ErrorMessage: String
   ExecutionTime: Int
@@ -6996,6 +7065,7 @@ type RunQueryResultType {
   ErrorMessage: String!
   ExecutionTime: Float!
   QueryID: String!
+  QueryName: String!
   Results: String!
   RowCount: Float!
   Success: Boolean!
@@ -7779,16 +7849,6 @@ type RunWorkspaceViewResult {
   UserViewRunID: String
 }
 
-type Runflyway_schema_historyViewResult {
-  ErrorMessage: String
-  ExecutionTime: Int
-  Results: [flyway_schema_history_!]!
-  RowCount: Int
-  Success: Boolean!
-  TotalRowCount: Int
-  UserViewRunID: String
-}
-
 type ScheduledActionParam_ {
   ActionParam: String!
   ActionParamID: String!
@@ -7857,14 +7917,10 @@ type SchemaInfo_ {
 }
 
 type ScoreBoard_ {
-  Criteria: String
+  CutOffScore: Int!
   Description: String
   ID: String!
   Name: String
-  Session: String
-  SessionID: String
-  SessionScoreBoards_ScoreBoardIdArray: [SessionScoreBoard_!]!
-  Weightage: Float
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
 }
@@ -7872,25 +7928,24 @@ type ScoreBoard_ {
 type SessionScoreBoard_ {
   ID: String!
   ScoreBoardId: String!
-  ScoreBoardId_Virtual: String
   SessionId: String!
   SessionId_Virtual: String!
-  WeightedScore: Float
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
 }
 
 type Session_ {
-  Abstracts_SessionIDArray: [Abstract_!]!
+  AbstractSubmissionEndDate: Timestamp
+  AbstractSubmissionStartDate: Timestamp
   Event: String!
   EventID: String!
   ID: String!
   Name: String!
-  ScoreBoards_SessionIDArray: [ScoreBoard_!]!
   SessionEndDate: Timestamp
   SessionScoreBoards_SessionIdArray: [SessionScoreBoard_!]!
   SessionStartDate: Timestamp
   Title: String
+  UserPrompt: String
   WeightedScore: Float
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
@@ -8392,27 +8447,6 @@ input UpdateAbstractResultInput {
   Score: Float
 }
 
-input UpdateAbstractStagingInput {
-  AbstractText: String
-  Description: String
-  EventCreatedAt: Timestamp
-  EventEndDate: Timestamp
-  EventID: String
-  EventName: String
-  EventStartDate: Timestamp
-  EventUpdatedAt: Timestamp
-  FirstName: String
-  ID: String!
-  LastName: String
-  OldValues___: [KeyValuePairInput!]
-  Session: String
-  SessionID: String
-  UploadUrl: String
-  User: String
-  UserID: String
-  YearOfExp: Int
-}
-
 input UpdateAbstractStatusInput {
   ID: String!
   Name: String
@@ -8592,7 +8626,9 @@ input UpdateCommunicationProviderInput {
   Name: String
   OldValues___: [KeyValuePairInput!]
   Status: String
+  SupportsForwarding: Boolean
   SupportsReceiving: Boolean
+  SupportsReplying: Boolean
   SupportsScheduledSending: Boolean
   SupportsSending: Boolean
 }
@@ -9080,6 +9116,10 @@ input UpdateEntityFieldInput {
   ExtendedType: String
   FullTextSearchEnabled: Boolean
   GeneratedFormSection: String
+  GeneratedValidationFunctionCheckConstraint: String
+  GeneratedValidationFunctionCode: String
+  GeneratedValidationFunctionDescription: String
+  GeneratedValidationFunctionName: String
   ID: String!
   IncludeInGeneratedForm: Boolean
   IncludeInUserSearchAPI: Boolean
@@ -9303,6 +9343,30 @@ input UpdateFileStorageProviderInput {
   OldValues___: [KeyValuePairInput!]
   Priority: Int
   ServerDriverKey: String
+}
+
+input UpdateGeneratedCodeCategoryInput {
+  Description: String
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
+  ParentID: String
+}
+
+input UpdateGeneratedCodeInput {
+  CategoryID: String
+  Code: String
+  Description: String
+  GeneratedAt: Timestamp
+  GeneratedByModelID: String
+  ID: String!
+  Language: String
+  LinkedEntityID: String
+  LinkedRecordPrimaryKey: String
+  Name: String
+  OldValues___: [KeyValuePairInput!]
+  Source: String
+  Status: String
 }
 
 input UpdateIntegrationInput {
@@ -9660,16 +9724,16 @@ input UpdateSchemaInfoInput {
 }
 
 input UpdateScoreBoardInput {
-  Criteria: String
+  CutOffScore: Int
   Description: String
   ID: String!
   Name: String
   OldValues___: [KeyValuePairInput!]
-  SessionID: String
-  Weightage: Float
 }
 
 input UpdateSessionInput {
+  AbstractSubmissionEndDate: Timestamp
+  AbstractSubmissionStartDate: Timestamp
   EventID: String
   ID: String!
   Name: String
@@ -9677,6 +9741,7 @@ input UpdateSessionInput {
   SessionEndDate: Timestamp
   SessionStartDate: Timestamp
   Title: String
+  UserPrompt: String
   WeightedScore: Float
 }
 
@@ -9685,7 +9750,6 @@ input UpdateSessionScoreBoardInput {
   OldValues___: [KeyValuePairInput!]
   ScoreBoardId: String
   SessionId: String
-  WeightedScore: Float
 }
 
 input UpdateTemplateCategoryInput {
@@ -9939,20 +10003,6 @@ input UpdateWorkspaceItemInput {
   ResourceTypeID: String
   Sequence: Int
   WorkspaceID: String
-}
-
-input Updateflyway_schema_historyInput {
-  OldValues___: [KeyValuePairInput!]
-  checksum: Int
-  description: String
-  execution_time: Int
-  installed_by: String
-  installed_on: Timestamp
-  installed_rank: Int!
-  script: String
-  success: Boolean
-  type: String
-  version: String
 }
 
 type UserApplicationEntity_ {
@@ -10346,19 +10396,4 @@ type Workspace_ {
   WorkspaceItems_WorkSpaceIDArray: [WorkspaceItem_!]!
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
-}
-
-type flyway_schema_history_ {
-  _mj__CreatedAt: Timestamp!
-  _mj__UpdatedAt: Timestamp!
-  checksum: Int
-  description: String
-  execution_time: Int!
-  installed_by: String!
-  installed_on: Timestamp!
-  installed_rank: Int!
-  script: String!
-  success: Boolean!
-  type: String!
-  version: String
 }
