@@ -17,12 +17,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "dotenv": "16.4.5",
+    "dotenv": "^16.4.5",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@azure/identity": "^4.8.0",
     "@langchain/openai": "^0.4.5",
     "@memberjunction/ai": "2.30.0",
     "@memberjunction/communication-sendgrid": "2.30.0",
@@ -31,6 +32,7 @@
     "@memberjunction/server": "2.30.0",
     "@memberjunction/sqlserver-dataprovider": "2.30.0",
     "@memberjunction/templates": "2.30.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
     "axios": "^1.6.7",
     "class-validator": "^0.14.0",
     "mj_generatedactions": "1.0.0",
