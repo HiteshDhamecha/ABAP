@@ -18,7 +18,7 @@ import { DataSource } from 'typeorm';
 import * as mj_core_schema_server_object_types from '@memberjunction/server'
 
 
-import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, AbstractEntity, SessionEntity, ReviewCriteriaEntity, EventEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
+import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, UserPersonalDetailsEntity, AbstractEntity, SessionEntity, ReviewCriteriaEntity, EventEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
     
 
 //****************************************************************************
@@ -687,6 +687,191 @@ export class ScoreBoardResolver extends ResolverBase {
         const dataSource = GetReadWriteDataSource(dataSources);
         const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
         return this.DeleteRecord('Score Boards', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
+// ENTITY CLASS for User Personal Details
+//****************************************************************************
+@ObjectType()
+export class UserPersonalDetails_ {
+    @Field() 
+    @MaxLength(16)
+    ID: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(100)
+    JobTitle?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(40)
+    PhoneNumber?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(100)
+    Affiliation?: string;
+        
+    @Field({nullable: true}) 
+    SocialMediaLinks?: string;
+        
+    @Field({nullable: true}) 
+    PreviousSpeakingExperiences?: string;
+        
+    @Field() 
+    @MaxLength(16)
+    UserID: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+    @Field() 
+    @MaxLength(200)
+    User: string;
+        
+}
+
+//****************************************************************************
+// INPUT TYPE for User Personal Details
+//****************************************************************************
+@InputType()
+export class CreateUserPersonalDetailsInput {
+    @Field({ nullable: true })
+    JobTitle: string | null;
+
+    @Field({ nullable: true })
+    PhoneNumber: string | null;
+
+    @Field({ nullable: true })
+    Affiliation: string | null;
+
+    @Field({ nullable: true })
+    SocialMediaLinks: string | null;
+
+    @Field({ nullable: true })
+    PreviousSpeakingExperiences: string | null;
+
+    @Field({ nullable: true })
+    UserID?: string;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for User Personal Details
+//****************************************************************************
+@InputType()
+export class UpdateUserPersonalDetailsInput {
+    @Field()
+    ID: string;
+
+    @Field({ nullable: true })
+    JobTitle?: string | null;
+
+    @Field({ nullable: true })
+    PhoneNumber?: string | null;
+
+    @Field({ nullable: true })
+    Affiliation?: string | null;
+
+    @Field({ nullable: true })
+    SocialMediaLinks?: string | null;
+
+    @Field({ nullable: true })
+    PreviousSpeakingExperiences?: string | null;
+
+    @Field({ nullable: true })
+    UserID?: string;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for User Personal Details
+//****************************************************************************
+@ObjectType()
+export class RunUserPersonalDetailsViewResult {
+    @Field(() => [UserPersonalDetails_])
+    Results: UserPersonalDetails_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(UserPersonalDetails_)
+export class UserPersonalDetailsResolver extends ResolverBase {
+    @Query(() => RunUserPersonalDetailsViewResult)
+    async RunUserPersonalDetailsViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunUserPersonalDetailsViewResult)
+    async RunUserPersonalDetailsViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunUserPersonalDetailsViewResult)
+    async RunUserPersonalDetailsDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        input.EntityName = 'User Personal Details';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => UserPersonalDetails_, { nullable: true })
+    async UserPersonalDetails(@Arg('ID', () => String) ID: string, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<UserPersonalDetails_ | null> {
+        this.CheckUserReadPermissions('User Personal Details', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwUserPersonalDetails] WHERE [ID]='${ID}' ` + this.getRowLevelSecurityWhereClause('User Personal Details', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('User Personal Details', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @Mutation(() => UserPersonalDetails_)
+    async CreateUserPersonalDetails(
+        @Arg('input', () => CreateUserPersonalDetailsInput) input: CreateUserPersonalDetailsInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.CreateRecord('User Personal Details', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => UserPersonalDetails_)
+    async UpdateUserPersonalDetails(
+        @Arg('input', () => UpdateUserPersonalDetailsInput) input: UpdateUserPersonalDetailsInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.UpdateRecord('User Personal Details', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => UserPersonalDetails_)
+    async DeleteUserPersonalDetails(@Arg('ID', () => String) ID: string, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('User Personal Details', key, options, dataSource, userPayload, pubSub);
     }
     
 }

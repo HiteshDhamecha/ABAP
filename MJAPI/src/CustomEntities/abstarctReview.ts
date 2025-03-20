@@ -11,7 +11,6 @@ const model = new ChatOpenAI({
   temperature: 0,
   modelName: "gpt-4",
   openAIApiKey: process.env.OPENAI_API_KEY,
-  //'sk-svcacct-3QIiyUH0fku4QJXIOmvZ0b9M0HnFj5ZGNa06GxJ-W79cOeBcmbQKNg3SiCvZ2lQeReRT3BlbkFJUr-kPWnVHinIJcGJDMyJZoKZCyWg8UoV4yzQNQUavgVnX8NSOG5LttNDzAQYTBDWjCAA',
 });
 
 // Function to review and score abstract
@@ -133,13 +132,13 @@ export async function processAbstract(abstractText: string, sessionID: string, u
     return;
   }
 
-  const promptTemplate = await getPromptTemplate(user,0);
+  const promptTemplate = await getPromptTemplate(user,sessionID);
   if (!promptTemplate) {
     console.error("Failed to retrieve prompt template");
     return;
   }
 
-  const sessionDetails = await getSessionDetails(user, sessionID);
+  const sessionDetails = await getScoreDetails(user, sessionID);
   if (!sessionDetails) {
     console.error("Failed to retrieve session details");
     return;
@@ -153,7 +152,7 @@ export async function processAbstract(abstractText: string, sessionID: string, u
 
   if (score.score > weightedScore) {
     saveAbstractResult(user,abstarctId,score.score,await getStatuses("Accepted",user),score.reviewComments);
-    console.log("✅ Passed Review with Score:", score);
+    console.log("Passed Review with Score:", score);
     await sendEmail(
       recipientEmail,
       "Abstract Submission Review Passed",
@@ -161,7 +160,7 @@ export async function processAbstract(abstractText: string, sessionID: string, u
     );
   } else {
     saveAbstractResult(user,abstarctId,score.score,await getStatuses("Rejected",user),score.reviewComments);
-    console.log("❌ Rejected Review with Score:", score);
+    console.log("Rejected Review with Score:", score);
     await sendEmail(
       recipientEmail,
       "Abstract Submission Rejected",
@@ -170,11 +169,12 @@ export async function processAbstract(abstractText: string, sessionID: string, u
   }
 }
 
- async function getPromptTemplate(user: UserInfo,rank:number): Promise<string | null> {
+ async function getPromptTemplate(user: UserInfo,sessionID:string): Promise<string | null> {
   try {
     const rv = new RunView();
-    const result: RunViewResult<TemplateEntity> = await rv.RunView<TemplateEntity>({
-      EntityName: 'Templates',
+    const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
+      EntityName: 'Sessions',
+      ExtraFilter: `ID = '${sessionID}'`,
       Fields: ['UserPrompt']
     }, user);
 
@@ -182,14 +182,14 @@ export async function processAbstract(abstractText: string, sessionID: string, u
       return null;
     }
 
-    return result.Results[rank].UserPrompt;
+    return result.Results[0].UserPrompt;
   } catch (error) {
     LogStatus(error);
     return null;
   }
 }
 
-async function getSessionDetails(user: UserInfo, sessionID: string): Promise<{ title: string, weightedScore: number } | null> {
+async function getScoreDetails(user: UserInfo, sessionID: string): Promise<{ title: string, weightedScore: number } | null> {
   try {
     const rv = new RunView();
     const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
@@ -202,10 +202,33 @@ async function getSessionDetails(user: UserInfo, sessionID: string): Promise<{ t
       return null;
     }
 
-    return {
-      title: result.Results[0].Title,
-      weightedScore: result.Results[0].WeightedScore
-    };
+    // Return Session SCoreBoard
+
+    const sessionScoreResult: RunViewResult<SessionScoreBoardEntity> = await rv.RunView<SessionScoreBoardEntity>({
+      EntityName: 'Session Score Boards',
+      ExtraFilter: `ID = '${sessionID}'`,
+      Fields: ['ScoreBoardId']
+    }, user);
+
+    if (!sessionScoreResult.Success || sessionScoreResult.Results.length === 0) {
+      return null;
+    }else{
+      console.log("Session Score Board",sessionScoreResult.Results[0].ScoreBoardId);
+
+      const ScoreBoardResult: RunViewResult<ScoreBoardEntity> = await rv.RunView<ScoreBoardEntity>({
+        EntityName: 'Score Boards',
+        ExtraFilter: `ID = '${sessionScoreResult.Results[0].ScoreBoardId}'`,
+        Fields: ['CutOffScore']
+      }, user);
+
+      if (!ScoreBoardResult.Success || ScoreBoardResult.Results.length === 0) {
+        return null;
+      }
+      return {
+        title: result.Results[0].Title,
+        weightedScore: ScoreBoardResult.Results[0].CutOffScore
+      };
+    }
   } catch (error) {
     LogStatus(error);
     return null;
@@ -213,11 +236,11 @@ async function getSessionDetails(user: UserInfo, sessionID: string): Promise<{ t
 }
 
 // Function to get cut-off score from AI agent
-export async function getCutOffScore(user: UserInfo, sessionTitle: string, criteria: { name: string, weight: number }[]): Promise<{ cutOffScore: number, reasoning: string }> {
+export async function getCutOffScore(user: UserInfo,sessionID:string, sessionTitle: string, criteria: { name: string, weight: number }[]): Promise<{ cutOffScore: number, reasoning: string }> {
   const criteriaText = criteria.map((c, index) => `${index + 1}. ${c.name} (${c.weight}%)`).join('\n');
   
 
-  const prompt = await getPromptTemplate(user,1);
+  const prompt = await getPromptTemplate(user,sessionID);
   if (!prompt) {
     console.error("Failed to retrieve prompt template");
     return { cutOffScore: 0, reasoning: "Failed to retrieve prompt template" };
@@ -302,7 +325,41 @@ async function saveAbstractResult(user:UserInfo,abstractID: string, score: numbe
   }
 }
 
+export async function getSessionDetails(user: UserInfo, scoreBoradID: string): Promise<{ title: string, ID: string } | null> {
+  try {
+    // Return Session SCoreBoard
+    const rv = new RunView();
+    const sessionScoreResult: RunViewResult<SessionScoreBoardEntity> = await rv.RunView<SessionScoreBoardEntity>({
+      EntityName: 'Session Score Boards',
+      ExtraFilter: `ScoreBoardId = '${scoreBoradID}'`,
+      Fields: ['SessionId']
+    }, user);
 
+    if (!sessionScoreResult.Success || sessionScoreResult.Results.length === 0) {
+      return null;
+    }else{
+      console.log("Session Score Board",sessionScoreResult.Results[0].SessionId);
+
+      const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
+        EntityName: 'Sessions',
+        ExtraFilter: `ID = '${sessionScoreResult.Results[0].SessionId}'`,
+        Fields: ['ID', 'Title']
+      }, user);
+  
+      if (!result.Success || result.Results.length === 0) {
+        return null;
+      }
+
+      return {
+        title: result.Results[0].Title,
+        ID: result.Results[0].ID
+      };
+    }
+  } catch (error) {
+    LogStatus(error);
+    return null;
+  }
+}
 // Example Usage
 // const sampleAbstract = "This is an example research abstract on AI's psychological effects.";
 // const recipientEmail = "applicant@example.com";

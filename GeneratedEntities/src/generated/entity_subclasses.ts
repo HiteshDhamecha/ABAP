@@ -282,8 +282,7 @@ export const ReviewCriteriaSchema = z.object({
     ScoreBoard: z.string().nullish().describe(`
         * * Field Name: ScoreBoard
         * * Display Name: Score Board
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type ReviewCriteriaEntityType = z.infer<typeof ReviewCriteriaSchema>;
@@ -423,6 +422,59 @@ export const SessionSchema = z.object({
 });
 
 export type SessionEntityType = z.infer<typeof SessionSchema>;
+
+/**
+ * zod schema definition for the entity User Personal Details
+ */
+export const UserPersonalDetailsSchema = z.object({
+    ID: z.string().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: uniqueidentifier
+        * * Default Value: newid()`),
+    JobTitle: z.string().nullish().describe(`
+        * * Field Name: JobTitle
+        * * Display Name: Job Title
+        * * SQL Data Type: nvarchar(50)`),
+    PhoneNumber: z.string().nullish().describe(`
+        * * Field Name: PhoneNumber
+        * * Display Name: Phone Number
+        * * SQL Data Type: nvarchar(20)`),
+    Affiliation: z.string().nullish().describe(`
+        * * Field Name: Affiliation
+        * * Display Name: Affiliation
+        * * SQL Data Type: nvarchar(50)`),
+    SocialMediaLinks: z.string().nullish().describe(`
+        * * Field Name: SocialMediaLinks
+        * * Display Name: Social Media Links
+        * * SQL Data Type: nvarchar(MAX)`),
+    PreviousSpeakingExperiences: z.string().nullish().describe(`
+        * * Field Name: PreviousSpeakingExperiences
+        * * Display Name: Previous Speaking Experiences
+        * * SQL Data Type: nvarchar(MAX)`),
+    UserID: z.string().describe(`
+        * * Field Name: UserID
+        * * Display Name: User ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Users (vwUsers.ID)`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    User: z.string().describe(`
+        * * Field Name: User
+        * * Display Name: User
+        * * SQL Data Type: nvarchar(100)
+        * * Default Value: null`),
+});
+
+export type UserPersonalDetailsEntityType = z.infer<typeof UserPersonalDetailsSchema>;
  
  
 
@@ -1179,7 +1231,6 @@ export class ReviewCriteriaEntity extends BaseEntity<ReviewCriteriaEntityType> {
     * * Field Name: ScoreBoard
     * * Display Name: Score Board
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get ScoreBoard(): string | null {
         return this.Get('ScoreBoard');
@@ -1555,5 +1606,149 @@ export class SessionEntity extends BaseEntity<SessionEntityType> {
     */
     get Event(): string {
         return this.Get('Event');
+    }
+}
+
+
+/**
+ * User Personal Details - strongly typed entity sub-class
+ * * Schema: dbo
+ * * Base Table: UserPersonalDetails
+ * * Base View: vwUserPersonalDetails
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'User Personal Details')
+export class UserPersonalDetailsEntity extends BaseEntity<UserPersonalDetailsEntityType> {
+    /**
+    * Loads the User Personal Details record from the database
+    * @param ID: string - primary key value to load the User Personal Details record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof UserPersonalDetailsEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: string, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: uniqueidentifier
+    * * Default Value: newid()
+    */
+    get ID(): string {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: JobTitle
+    * * Display Name: Job Title
+    * * SQL Data Type: nvarchar(50)
+    */
+    get JobTitle(): string | null {
+        return this.Get('JobTitle');
+    }
+    set JobTitle(value: string | null) {
+        this.Set('JobTitle', value);
+    }
+
+    /**
+    * * Field Name: PhoneNumber
+    * * Display Name: Phone Number
+    * * SQL Data Type: nvarchar(20)
+    */
+    get PhoneNumber(): string | null {
+        return this.Get('PhoneNumber');
+    }
+    set PhoneNumber(value: string | null) {
+        this.Set('PhoneNumber', value);
+    }
+
+    /**
+    * * Field Name: Affiliation
+    * * Display Name: Affiliation
+    * * SQL Data Type: nvarchar(50)
+    */
+    get Affiliation(): string | null {
+        return this.Get('Affiliation');
+    }
+    set Affiliation(value: string | null) {
+        this.Set('Affiliation', value);
+    }
+
+    /**
+    * * Field Name: SocialMediaLinks
+    * * Display Name: Social Media Links
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get SocialMediaLinks(): string | null {
+        return this.Get('SocialMediaLinks');
+    }
+    set SocialMediaLinks(value: string | null) {
+        this.Set('SocialMediaLinks', value);
+    }
+
+    /**
+    * * Field Name: PreviousSpeakingExperiences
+    * * Display Name: Previous Speaking Experiences
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get PreviousSpeakingExperiences(): string | null {
+        return this.Get('PreviousSpeakingExperiences');
+    }
+    set PreviousSpeakingExperiences(value: string | null) {
+        this.Set('PreviousSpeakingExperiences', value);
+    }
+
+    /**
+    * * Field Name: UserID
+    * * Display Name: User ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Users (vwUsers.ID)
+    */
+    get UserID(): string {
+        return this.Get('UserID');
+    }
+    set UserID(value: string) {
+        this.Set('UserID', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
+    }
+
+    /**
+    * * Field Name: User
+    * * Display Name: User
+    * * SQL Data Type: nvarchar(100)
+    * * Default Value: null
+    */
+    get User(): string {
+        return this.Get('User');
     }
 }

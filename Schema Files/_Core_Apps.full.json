@@ -528,6 +528,75 @@
                     "AllowsNull": false 
                 }        
             ]
+        },
+        { 
+            "Name": "User Personal Details",
+            "Description": "",
+            "BaseView": "vwUserPersonalDetails", 
+            "Fields": [         
+                {
+                    "Name": "ID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "JobTitle", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "PhoneNumber", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Affiliation", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "SocialMediaLinks", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "PreviousSpeakingExperiences", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Users",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_CreatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_UpdatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "User", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                }        
+            ]
         }
         ]
     }]

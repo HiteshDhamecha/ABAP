@@ -2558,6 +2558,15 @@ input CreateUserNotificationInput {
   UserID: String
 }
 
+input CreateUserPersonalDetailsInput {
+  Affiliation: String
+  JobTitle: String
+  PhoneNumber: String
+  PreviousSpeakingExperiences: String
+  SocialMediaLinks: String
+  UserID: String
+}
+
 input CreateUserRoleInput {
   RoleID: String
   UserID: String
@@ -4191,6 +4200,7 @@ type Mutation {
   CreateUserApplicationEntity(input: CreateUserApplicationEntityInput!): UserApplicationEntity_!
   CreateUserFavorite(input: CreateUserFavoriteInput!): UserFavorite_!
   CreateUserNotification(input: CreateUserNotificationInput!): UserNotification_!
+  CreateUserPersonalDetails(input: CreateUserPersonalDetailsInput!): UserPersonalDetails_!
   CreateUserRole(input: CreateUserRoleInput!): UserRole_!
   CreateUserView(input: CreateUserViewInput!): UserView_!
   CreateUserViewCategory(input: CreateUserViewCategoryInput!): UserViewCategory_!
@@ -4317,6 +4327,7 @@ type Mutation {
   DeleteUserApplicationEntity(ID: String!, options___: DeleteOptionsInput!): UserApplicationEntity_!
   DeleteUserFavorite(ID: String!, options___: DeleteOptionsInput!): UserFavorite_!
   DeleteUserNotification(ID: String!, options___: DeleteOptionsInput!): UserNotification_!
+  DeleteUserPersonalDetails(ID: String!, options___: DeleteOptionsInput!): UserPersonalDetails_!
   DeleteUserRole(ID: String!, options___: DeleteOptionsInput!): UserRole_!
   DeleteUserView(ID: String!, options___: DeleteOptionsInput!): UserView_!
   DeleteUserViewCategory(ID: String!, options___: DeleteOptionsInput!): UserViewCategory_!
@@ -4475,6 +4486,7 @@ type Mutation {
   UpdateUserApplicationEntity(input: UpdateUserApplicationEntityInput!): UserApplicationEntity_!
   UpdateUserFavorite(input: UpdateUserFavoriteInput!): UserFavorite_!
   UpdateUserNotification(input: UpdateUserNotificationInput!): UserNotification_!
+  UpdateUserPersonalDetails(input: UpdateUserPersonalDetailsInput!): UserPersonalDetails_!
   UpdateUserRecordLog(input: UpdateUserRecordLogInput!): UserRecordLog_!
   UpdateUserView(input: UpdateUserViewInput!): UserView_!
   UpdateUserViewCategory(input: UpdateUserViewCategoryInput!): UserViewCategory_!
@@ -5206,6 +5218,9 @@ type Query {
   RunUserNotificationDynamicView(input: RunDynamicViewInput!): RunUserNotificationViewResult!
   RunUserNotificationViewByID(input: RunViewByIDInput!): RunUserNotificationViewResult!
   RunUserNotificationViewByName(input: RunViewByNameInput!): RunUserNotificationViewResult!
+  RunUserPersonalDetailsDynamicView(input: RunDynamicViewInput!): RunUserPersonalDetailsViewResult!
+  RunUserPersonalDetailsViewByID(input: RunViewByIDInput!): RunUserPersonalDetailsViewResult!
+  RunUserPersonalDetailsViewByName(input: RunViewByNameInput!): RunUserPersonalDetailsViewResult!
   RunUserRecordLogDynamicView(input: RunDynamicViewInput!): RunUserRecordLogViewResult!
   RunUserRecordLogViewByID(input: RunViewByIDInput!): RunUserRecordLogViewResult!
   RunUserRecordLogViewByName(input: RunViewByNameInput!): RunUserRecordLogViewResult!
@@ -5278,6 +5293,7 @@ type Query {
   UserFavoriteSearchByParams(params: Int!): [UserFavorite_!]!
   UserFavoritesByUserID(UserID: Int!): [UserFavorite_!]!
   UserNotification(ID: String!): UserNotification_
+  UserPersonalDetails(ID: String!): UserPersonalDetails_
   UserRecordLog(ID: String!): UserRecordLog_
   UserRole(ID: String!): UserRole_
   UserView(ID: String!): UserView_
@@ -7489,6 +7505,16 @@ type RunUserNotificationViewResult {
   ErrorMessage: String
   ExecutionTime: Int
   Results: [UserNotification_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunUserPersonalDetailsViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [UserPersonalDetails_!]!
   RowCount: Int
   Success: Boolean!
   TotalRowCount: Int
@@ -9909,6 +9935,17 @@ input UpdateUserNotificationInput {
   UserID: String
 }
 
+input UpdateUserPersonalDetailsInput {
+  Affiliation: String
+  ID: String!
+  JobTitle: String
+  OldValues___: [KeyValuePairInput!]
+  PhoneNumber: String
+  PreviousSpeakingExperiences: String
+  SocialMediaLinks: String
+  UserID: String
+}
+
 input UpdateUserRecordLogInput {
   EarliestAt: Timestamp
   EntityID: String
@@ -10131,6 +10168,19 @@ type UserNotification_ {
   ResourceTypeID: String
   Title: String
   Unread: Boolean!
+  User: String!
+  UserID: String!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type UserPersonalDetails_ {
+  Affiliation: String
+  ID: String!
+  JobTitle: String
+  PhoneNumber: String
+  PreviousSpeakingExperiences: String
+  SocialMediaLinks: String
   User: String!
   UserID: String!
   _mj__CreatedAt: Timestamp!

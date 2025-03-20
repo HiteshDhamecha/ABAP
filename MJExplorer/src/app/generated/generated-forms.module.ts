@@ -36,6 +36,7 @@ import { ReviewCriteriaFormComponent, LoadReviewCriteriaFormComponent } from "./
 import { ScoreBoardFormComponent, LoadScoreBoardFormComponent } from "./Entities/ScoreBoard/scoreboard.form.component";
 import { SessionScoreBoardFormComponent, LoadSessionScoreBoardFormComponent } from "./Entities/SessionScoreBoard/sessionscoreboard.form.component";
 import { SessionFormComponent, LoadSessionFormComponent } from "./Entities/Session/session.form.component";
+import { UserPersonalDetailsFormComponent, LoadUserPersonalDetailsFormComponent } from "./Entities/UserPersonalDetails/userpersonaldetails.form.component";
 import { AbstractLogsDetailsComponent, LoadAbstractLogsDetailsComponent } from "./Entities/AbstractLogs/sections/details.component"
 import { AbstractResultDetailsComponent, LoadAbstractResultDetailsComponent } from "./Entities/AbstractResult/sections/details.component"
 import { AbstractStatusDetailsComponent, LoadAbstractStatusDetailsComponent } from "./Entities/AbstractStatus/sections/details.component"
@@ -46,6 +47,7 @@ import { ReviewCriteriaDetailsComponent, LoadReviewCriteriaDetailsComponent } fr
 import { ScoreBoardDetailsComponent, LoadScoreBoardDetailsComponent } from "./Entities/ScoreBoard/sections/details.component"
 import { SessionScoreBoardDetailsComponent, LoadSessionScoreBoardDetailsComponent } from "./Entities/SessionScoreBoard/sections/details.component"
 import { SessionDetailsComponent, LoadSessionDetailsComponent } from "./Entities/Session/sections/details.component"
+import { UserPersonalDetailsDetailsComponent, LoadUserPersonalDetailsDetailsComponent } from "./Entities/UserPersonalDetails/sections/details.component"
    
 
 @NgModule({
@@ -60,6 +62,7 @@ declarations: [
     ScoreBoardFormComponent,
     SessionScoreBoardFormComponent,
     SessionFormComponent,
+    UserPersonalDetailsFormComponent,
     AbstractLogsDetailsComponent,
     AbstractResultDetailsComponent,
     AbstractStatusDetailsComponent,
@@ -68,8 +71,7 @@ declarations: [
     EventDetailsComponent,
     ReviewCriteriaDetailsComponent,
     ScoreBoardDetailsComponent,
-    SessionScoreBoardDetailsComponent,
-    SessionDetailsComponent],
+    SessionScoreBoardDetailsComponent],
 imports: [
     CommonModule,
     FormsModule,
@@ -96,9 +98,37 @@ export class GeneratedForms_SubModule_0 { }
 
 @NgModule({
 declarations: [
+    SessionDetailsComponent,
+    UserPersonalDetailsDetailsComponent],
+imports: [
+    CommonModule,
+    FormsModule,
+    LayoutModule,
+    InputsModule,
+    ButtonsModule,
+    DateInputsModule,
+    UserViewGridModule,
+    LinkDirectivesModule,
+    BaseFormsModule,
+    FormToolbarModule,
+    MJTabStripModule,
+    ContainerDirectivesModule,
+    DropDownListModule,
+    ComboBoxModule
+],
+exports: [
+]
+})
+export class GeneratedForms_SubModule_1 { }
+    
+
+
+@NgModule({
+declarations: [
 ],
 imports: [
-    GeneratedForms_SubModule_0
+    GeneratedForms_SubModule_0,
+    GeneratedForms_SubModule_1
 ]
 })
 export class GeneratedFormsModule { }
@@ -119,6 +149,7 @@ export function LoadGeneratedForms() {
     LoadScoreBoardFormComponent();
     LoadSessionScoreBoardFormComponent();
     LoadSessionFormComponent();
+    LoadUserPersonalDetailsFormComponent();
     LoadAbstractLogsDetailsComponent();
     LoadAbstractResultDetailsComponent();
     LoadAbstractStatusDetailsComponent();
@@ -129,5 +160,6 @@ export function LoadGeneratedForms() {
     LoadScoreBoardDetailsComponent();
     LoadSessionScoreBoardDetailsComponent();
     LoadSessionDetailsComponent();
+    LoadUserPersonalDetailsDetailsComponent();
 }
     

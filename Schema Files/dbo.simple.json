@@ -60,6 +60,12 @@
             "Description": "",
             "BaseView": "vwSessions", 
             "Fields": ["ID","EventID","Name","SessionStartDate","SessionEndDate","WeightedScore","Title","UserPrompt","AbstractSubmissionStartDate","AbstractSubmissionEndDate","__mj_CreatedAt","__mj_UpdatedAt","Event"]
+        },
+        { 
+            "Name": "User Personal Details",
+            "Description": "",
+            "BaseView": "vwUserPersonalDetails", 
+            "Fields": ["ID","JobTitle","PhoneNumber","Affiliation","SocialMediaLinks","PreviousSpeakingExperiences","UserID","__mj_CreatedAt","__mj_UpdatedAt","User"]
         }
         ]
     }

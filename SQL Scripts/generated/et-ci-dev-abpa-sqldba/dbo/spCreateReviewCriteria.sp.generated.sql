@@ -17,7 +17,7 @@ CREATE PROCEDURE [dbo].[spCreateReviewCriteria]
     @Name nvarchar(255),
     @Description nvarchar(MAX),
     @Weightage int,
-    @ScoreBoardID uniqueidentifier = '00000000-0000-0000-0000-000000000000'
+    @ScoreBoardID uniqueidentifier
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -36,7 +36,7 @@ BEGIN
             @Name,
             @Description,
             @Weightage,
-            CASE @ScoreBoardID WHEN '00000000-0000-0000-0000-000000000000' THEN null ELSE @ScoreBoardID END
+            @ScoreBoardID
         )
     -- return the new record from the base view, which might have some calculated fields
     SELECT * FROM [dbo].[vwReviewCriterias] WHERE [ID] = (SELECT [ID] FROM @InsertedRow)
