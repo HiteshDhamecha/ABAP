@@ -28,7 +28,7 @@ jobs:
           export const environment = {
           GRAPHQL_URI: '${{ secrets.GRAPHQL_URI }}',
           GRAPHQL_WS_URI: '${{ secrets.GRAPHQL_WS_URI }}',
-          REDIRECT_URI: '${{ secrets.TEST_REDIRECT_URI }}',
+          REDIRECT_URI: '${{ secrets.REDIRECT_URI }}',
           CLIENT_ID: '${{ secrets.CLIENT_ID }}',
           CLIENT_SECRET: '${{ secrets.CLIENT_SECRET }}',
           CLIENT_AUTHORITY: '${{ secrets.CLIENT_AUTHORITY }}',
@@ -90,8 +90,8 @@ jobs:
         id: deploy-to-align-dev-mjwebapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'et-ci-test-abpa-ui'
+          app-name: 'et-ci-dev-abpa-ui'
           slot-name: 'Production'
           package: et-dev-client-release.zip
-          publish-profile: ${{ secrets.AZURE_WEBAPP_TEST_UI_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_DEV_UI_PUBLISH_PROFILE }}
  
