@@ -42,6 +42,7 @@ export class UserAbstractFormComponent implements OnInit {
   uploadedFile: File = null;
   currentUser: any;
   md = new Metadata();
+  submittingForm: boolean = false;
 
   constructor(private route: ActivatedRoute, private user: UserService, private azureBlob: UploadService) { }
 
@@ -104,6 +105,7 @@ export class UserAbstractFormComponent implements OnInit {
   }
 
   async submitAbstract() {
+    this.submittingForm = true;
     console.log('Submit Clicked', this.abstractDetails);
     const abstractEntity = await this.md.GetEntityObject<AbstractEntity>('Abstracts');
     const userPersonalDetailsEntity = await this.md.GetEntityObject<UserPersonalDetailsEntity>('UserPersonalDetail');
@@ -126,8 +128,13 @@ export class UserAbstractFormComponent implements OnInit {
     });
     if (result?.Results && result?.Results.length === 0) throw new Error('No record found!');
     const newAbstract = result.Results[0];
-    await this.azureBlob.upload(this.uploadedFile, this.sessionDetails.ID, newAbstract.ID);
-    alert(`Abstract Submitted with the following details: ${JSON.stringify({...this.abstractDetails, uploadedFile: this.uploadedFile})}`);
+    this.abstractDetails.uploadUrl = await this.azureBlob.upload(this.uploadedFile, this.sessionDetails.ID, newAbstract.ID);
+    if (this.abstractDetails.uploadUrl !== '') {
+      abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
+      await abstractEntity.Save();
+    };
+    alert(`Abstract Submitted with the following details: ${JSON.stringify({...this.abstractDetails, uploadedFile: this.uploadedFile.name})}`);
+    this.submittingForm = false;
   };
 
   formatSessionTime(startDate: Date, endDate: Date): string {
