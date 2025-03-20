@@ -5,6 +5,7 @@
   margin: 0 0 24px 24px;
   padding-top: 24px;
 }
+
 .event-details-container {
   font-family: Arial, sans-serif;
   padding: 24px;
@@ -16,20 +17,22 @@
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 24px;
+  padding: 20px;
   margin-bottom: 24px;
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .event-header h2 {
-  margin: 0 0 8px 0;
+  margin: 0;
   font-size: 24px;
   font-weight: 500;
   color: #333;
 }
 
 .event-description {
-  margin: 0 0 16px 0;
+  margin: 8px 0 0;
   color: #666;
   font-size: 16px;
 }
@@ -38,9 +41,6 @@
   margin: 0;
   color: #555;
   font-size: 16px;
-  position: absolute;
-  top: 24px;
-  right: 24px;
 }
 
 .date-label {
@@ -48,17 +48,30 @@
 }
 
 .status-badge {
-  background-color: #fff9db;
-  color: #b38c00;
-  border: 1px solid #fce57e;
   border-radius: 4px;
   padding: 6px 12px;
   font-size: 14px;
   text-align: center;
   width: 100px;
-  position: absolute;
-  top: 50px;
-  right: 24px;
+  margin: 8px 0 0;
+}
+
+.status-badge.completed {
+  color: #107C10;
+  border: 1px solid #107C10;
+  background-color: #107C1033;
+}
+
+.status-badge.live {
+  color: #767CFF;
+  border: 1px solid #767CFF;
+  background-color: #767CFF33;
+}
+
+.status-badge.upcoming {
+  color: #FFCD23;
+  border: 1px solid #FFCD23;
+  background-color: #FFCD2333;
 }
 
 .mat-elevation-z8 {
@@ -118,4 +131,3 @@
 :host ::ng-deep .mat-table tbody tr td {
   border-bottom: 1px solid #e0e0e0;
 }
-

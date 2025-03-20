@@ -23,6 +23,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@langchain/core": "^0.3.42",
     "@langchain/openai": "^0.4.5",
     "@memberjunction/ai": "2.30.0",
     "@memberjunction/communication-sendgrid": "2.30.0",

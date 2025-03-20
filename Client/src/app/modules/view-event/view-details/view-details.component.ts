@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RunView, LogStatus, Metadata } from '@memberjunction/core';
-import { EventEntity, SessionEntity } from 'mj_generatedentities';
+import { AbstractEntity, EventEntity, SessionEntity } from 'mj_generatedentities';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-view-details',
@@ -15,8 +16,8 @@ export class ViewDetailsComponent implements OnInit {
   md = new Metadata();
 
   // Table columns definition
-displayedColumns: string[] = ['srNo', 'name', 'startDate', 'abstractStatus'];
-  constructor(private route: ActivatedRoute) { }
+  displayedColumns: string[] = ['srNo', 'name', 'startDate', 'title', 'abstractStatus'];
+  constructor(private route: ActivatedRoute, private user: UserService, private router: Router) { }
 
   async ngOnInit() {
     // Load metadata first
@@ -81,21 +82,23 @@ displayedColumns: string[] = ['srNo', 'name', 'startDate', 'abstractStatus'];
       const rv = new RunView();
       const result = await rv.RunView<SessionEntity>({
         EntityName: 'Sessions', // Ensure this matches the entity name in metadata
-        Fields: ['ID', 'Name', 'SessionStartDate', 'SessionEndDate'],
+        Fields: ['ID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title'],
         ExtraFilter: `EventID = '${eventId}'`
       });
 
       if (result.Success) {
         console.log('Sessions Result:', result); // Log the result of RunView
-        return result.Results.map((session, index) => ({
-          srNo: index + 1, // Add SR No based on the index
-          id: session.ID,
-          name: session.Name,
-          startDate: session.SessionStartDate,
-          endDate: session.SessionEndDate,
-          // title: session.Title ,
-          abstractStatus: '' // Add empty Abstract Status
-        }));
+        return Promise.all(
+          result.Results.map(async (session, index) => ({
+            srNo: index + 1, // Add SR No based on the index
+            id: session.ID,
+            name: session.Name,
+            startDate: session.SessionStartDate,
+            endDate: session.SessionEndDate,
+            title: session.Title,
+            abstractStatus: await this.getAbstractStatus(session.ID)
+          }))
+        );
       } else {
         console.error('Failed to fetch sessions:', result.ErrorMessage);
       }
@@ -105,16 +108,40 @@ displayedColumns: string[] = ['srNo', 'name', 'startDate', 'abstractStatus'];
     return [];
   }
 
+  async getAbstractStatus(session: string): Promise<string> {
+    try {
+      const userInfo = this.user.getUserInfo();
+      const rv = new RunView();
+      const result = await rv.RunView<AbstractEntity>({
+        EntityName: 'Abstracts',
+        Fields: ['ID'],
+        ExtraFilter: `SessionID = '${session}' AND UserID = '${userInfo.ID}'`,
+        MaxRows: 1
+      });
+      console.log('Abstract Status Result:', result);
+      if (result.Success && result.Results.length > 0) return 'submitted';
+      return 'pending';
+    } catch (error) {
+      LogStatus('Error getting Abstract Status:', error);
+      console.log('Error:', error);
+      return 'pending';
+    }
+  };
+
+  submitAbstract(sessionID: string) {
+    this.router.navigate(['/abstract-form', sessionID]);
+  };
+
   formatSessionTime(startDate: Date, endDate: Date): string {
     if (!startDate) return 'TBD';
 
     const start = new Date(startDate);
     let timeStr = start.toLocaleDateString() + ' ' +
-                  start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     if (endDate) {
       const end = new Date(endDate);
-      timeStr += ' - ' + end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      timeStr += ' - ' + end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
     return timeStr;

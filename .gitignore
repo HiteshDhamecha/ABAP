@@ -141,7 +141,7 @@ SQL Scripts/generated/et-ci-dev-abpa-sqldb/dbo
 GeneratedEntities/package-lock.json
 GeneratedActions/package-lock.json
 .gitignore
-.gitignore
+install.config.json
 MJAPI/package-lock.json
 Client/package-lock.json
 MJExplorer
