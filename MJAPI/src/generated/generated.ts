@@ -18,7 +18,7 @@ import { DataSource } from 'typeorm';
 import * as mj_core_schema_server_object_types from '@memberjunction/server'
 
 
-import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, AbstractEntity, SessionEntity, EventEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
+import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, AbstractEntity, SessionEntity, ReviewCriteriaEntity, EventEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
     
 
 //****************************************************************************
@@ -543,6 +543,12 @@ export class ScoreBoard_ {
     @MaxLength(10)
     _mj__UpdatedAt: Date;
         
+    @Field(() => [ReviewCriteria_])
+    ReviewCriterias_ScoreBoardIDArray: ReviewCriteria_[]; // Link to ReviewCriterias
+    
+    @Field(() => [SessionScoreBoard_])
+    SessionScoreBoards_ScoreBoardIdArray: SessionScoreBoard_[]; // Link to SessionScoreBoards
+    
 }
 
 //****************************************************************************
@@ -638,6 +644,24 @@ export class ScoreBoardResolver extends ResolverBase {
         return result;
     }
     
+    @FieldResolver(() => [ReviewCriteria_])
+    async ReviewCriterias_ScoreBoardIDArray(@Root() scoreboard_: ScoreBoard_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Review Criterias', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwReviewCriterias] WHERE [ScoreBoardID]='${scoreboard_.ID}' ` + this.getRowLevelSecurityWhereClause('Review Criterias', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Review Criterias', await dataSource.query(sSQL));
+        return result;
+    }
+        
+    @FieldResolver(() => [SessionScoreBoard_])
+    async SessionScoreBoards_ScoreBoardIdArray(@Root() scoreboard_: ScoreBoard_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Session Score Boards', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwSessionScoreBoards] WHERE [ScoreBoardId]='${scoreboard_.ID}' ` + this.getRowLevelSecurityWhereClause('Session Score Boards', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Session Score Boards', await dataSource.query(sSQL));
+        return result;
+    }
+        
     @Mutation(() => ScoreBoard_)
     async CreateScoreBoard(
         @Arg('input', () => CreateScoreBoardInput) input: CreateScoreBoardInput,
@@ -1061,6 +1085,171 @@ export class SessionResolver extends ResolverBase {
         const dataSource = GetReadWriteDataSource(dataSources);
         const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
         return this.DeleteRecord('Sessions', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
+// ENTITY CLASS for Review Criterias
+//****************************************************************************
+@ObjectType()
+export class ReviewCriteria_ {
+    @Field() 
+    @MaxLength(16)
+    ID: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    Name?: string;
+        
+    @Field({nullable: true}) 
+    Description?: string;
+        
+    @Field(() => Int) 
+    Weightage: number;
+        
+    @Field() 
+    @MaxLength(16)
+    ScoreBoardID: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    ScoreBoard?: string;
+        
+}
+
+//****************************************************************************
+// INPUT TYPE for Review Criterias
+//****************************************************************************
+@InputType()
+export class CreateReviewCriteriaInput {
+    @Field({ nullable: true })
+    Name: string | null;
+
+    @Field({ nullable: true })
+    Description: string | null;
+
+    @Field(() => Int, { nullable: true })
+    Weightage?: number;
+
+    @Field({ nullable: true })
+    ScoreBoardID?: string;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Review Criterias
+//****************************************************************************
+@InputType()
+export class UpdateReviewCriteriaInput {
+    @Field()
+    ID: string;
+
+    @Field({ nullable: true })
+    Name?: string | null;
+
+    @Field({ nullable: true })
+    Description?: string | null;
+
+    @Field(() => Int, { nullable: true })
+    Weightage?: number;
+
+    @Field({ nullable: true })
+    ScoreBoardID?: string;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Review Criterias
+//****************************************************************************
+@ObjectType()
+export class RunReviewCriteriaViewResult {
+    @Field(() => [ReviewCriteria_])
+    Results: ReviewCriteria_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(ReviewCriteria_)
+export class ReviewCriteriaResolver extends ResolverBase {
+    @Query(() => RunReviewCriteriaViewResult)
+    async RunReviewCriteriaViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunReviewCriteriaViewResult)
+    async RunReviewCriteriaViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunReviewCriteriaViewResult)
+    async RunReviewCriteriaDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        input.EntityName = 'Review Criterias';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => ReviewCriteria_, { nullable: true })
+    async ReviewCriteria(@Arg('ID', () => String) ID: string, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<ReviewCriteria_ | null> {
+        this.CheckUserReadPermissions('Review Criterias', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwReviewCriterias] WHERE [ID]='${ID}' ` + this.getRowLevelSecurityWhereClause('Review Criterias', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Review Criterias', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @Mutation(() => ReviewCriteria_)
+    async CreateReviewCriteria(
+        @Arg('input', () => CreateReviewCriteriaInput) input: CreateReviewCriteriaInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.CreateRecord('Review Criterias', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => ReviewCriteria_)
+    async UpdateReviewCriteria(
+        @Arg('input', () => UpdateReviewCriteriaInput) input: UpdateReviewCriteriaInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.UpdateRecord('Review Criterias', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => ReviewCriteria_)
+    async DeleteReviewCriteria(@Arg('ID', () => String) ID: string, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Review Criterias', key, options, dataSource, userPayload, pubSub);
     }
     
 }

@@ -1,4 +1,4 @@
-import { BaseEntity, EntitySaveOptions, CompositeKey, ValidationResult, ValidationErrorInfo, ValidationErrorType } from "@memberjunction/core";
+import { BaseEntity, EntitySaveOptions, CompositeKey } from "@memberjunction/core";
 import { RegisterClass } from "@memberjunction/global";
 import { z } from "zod";
 
@@ -244,6 +244,51 @@ export const EventSchema = z.object({
 export type EventEntityType = z.infer<typeof EventSchema>;
 
 /**
+ * zod schema definition for the entity Review Criterias
+ */
+export const ReviewCriteriaSchema = z.object({
+    ID: z.string().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: uniqueidentifier
+        * * Default Value: newid()`),
+    Name: z.string().nullish().describe(`
+        * * Field Name: Name
+        * * Display Name: Name
+        * * SQL Data Type: nvarchar(255)`),
+    Description: z.string().nullish().describe(`
+        * * Field Name: Description
+        * * Display Name: Description
+        * * SQL Data Type: nvarchar(MAX)`),
+    Weightage: z.number().describe(`
+        * * Field Name: Weightage
+        * * Display Name: Weightage
+        * * SQL Data Type: int`),
+    ScoreBoardID: z.string().describe(`
+        * * Field Name: ScoreBoardID
+        * * Display Name: Score Board ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Score Boards (vwScoreBoards.ID)`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    ScoreBoard: z.string().nullish().describe(`
+        * * Field Name: ScoreBoard
+        * * Display Name: Score Board
+        * * SQL Data Type: nvarchar(255)
+        * * Default Value: null`),
+});
+
+export type ReviewCriteriaEntityType = z.infer<typeof ReviewCriteriaSchema>;
+
+/**
  * zod schema definition for the entity Score Boards
  */
 export const ScoreBoardSchema = z.object({
@@ -295,7 +340,8 @@ export const SessionScoreBoardSchema = z.object({
     ScoreBoardId: z.string().describe(`
         * * Field Name: ScoreBoardId
         * * Display Name: Score Board Id
-        * * SQL Data Type: uniqueidentifier`),
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Score Boards (vwScoreBoards.ID)`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -1022,6 +1068,126 @@ export class EventEntity extends BaseEntity<EventEntityType> {
 
 
 /**
+ * Review Criterias - strongly typed entity sub-class
+ * * Schema: dbo
+ * * Base Table: ReviewCriteria
+ * * Base View: vwReviewCriterias
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'Review Criterias')
+export class ReviewCriteriaEntity extends BaseEntity<ReviewCriteriaEntityType> {
+    /**
+    * Loads the Review Criterias record from the database
+    * @param ID: string - primary key value to load the Review Criterias record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof ReviewCriteriaEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: string, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: uniqueidentifier
+    * * Default Value: newid()
+    */
+    get ID(): string {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: Name
+    * * Display Name: Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get Name(): string | null {
+        return this.Get('Name');
+    }
+    set Name(value: string | null) {
+        this.Set('Name', value);
+    }
+
+    /**
+    * * Field Name: Description
+    * * Display Name: Description
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get Description(): string | null {
+        return this.Get('Description');
+    }
+    set Description(value: string | null) {
+        this.Set('Description', value);
+    }
+
+    /**
+    * * Field Name: Weightage
+    * * Display Name: Weightage
+    * * SQL Data Type: int
+    */
+    get Weightage(): number {
+        return this.Get('Weightage');
+    }
+    set Weightage(value: number) {
+        this.Set('Weightage', value);
+    }
+
+    /**
+    * * Field Name: ScoreBoardID
+    * * Display Name: Score Board ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Score Boards (vwScoreBoards.ID)
+    */
+    get ScoreBoardID(): string {
+        return this.Get('ScoreBoardID');
+    }
+    set ScoreBoardID(value: string) {
+        this.Set('ScoreBoardID', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
+    }
+
+    /**
+    * * Field Name: ScoreBoard
+    * * Display Name: Score Board
+    * * SQL Data Type: nvarchar(255)
+    * * Default Value: null
+    */
+    get ScoreBoard(): string | null {
+        return this.Get('ScoreBoard');
+    }
+}
+
+
+/**
  * Score Boards - strongly typed entity sub-class
  * * Schema: dbo
  * * Base Table: ScoreBoard
@@ -1174,6 +1340,7 @@ export class SessionScoreBoardEntity extends BaseEntity<SessionScoreBoardEntityT
     * * Field Name: ScoreBoardId
     * * Display Name: Score Board Id
     * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Score Boards (vwScoreBoards.ID)
     */
     get ScoreBoardId(): string {
         return this.Get('ScoreBoardId');

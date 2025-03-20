@@ -32,6 +32,7 @@ import { AbstractStatusFormComponent, LoadAbstractStatusFormComponent } from "./
 import { AbstractFormComponent, LoadAbstractFormComponent } from "./Entities/Abstract/abstract.form.component";
 import { EmailTemplateFormComponent, LoadEmailTemplateFormComponent } from "./Entities/EmailTemplate/emailtemplate.form.component";
 import { EventFormComponent, LoadEventFormComponent } from "./Entities/Event/event.form.component";
+import { ReviewCriteriaFormComponent, LoadReviewCriteriaFormComponent } from "./Entities/ReviewCriteria/reviewcriteria.form.component";
 import { ScoreBoardFormComponent, LoadScoreBoardFormComponent } from "./Entities/ScoreBoard/scoreboard.form.component";
 import { SessionScoreBoardFormComponent, LoadSessionScoreBoardFormComponent } from "./Entities/SessionScoreBoard/sessionscoreboard.form.component";
 import { SessionFormComponent, LoadSessionFormComponent } from "./Entities/Session/session.form.component";
@@ -41,6 +42,7 @@ import { AbstractStatusDetailsComponent, LoadAbstractStatusDetailsComponent } fr
 import { AbstractDetailsComponent, LoadAbstractDetailsComponent } from "./Entities/Abstract/sections/details.component"
 import { EmailTemplateDetailsComponent, LoadEmailTemplateDetailsComponent } from "./Entities/EmailTemplate/sections/details.component"
 import { EventDetailsComponent, LoadEventDetailsComponent } from "./Entities/Event/sections/details.component"
+import { ReviewCriteriaDetailsComponent, LoadReviewCriteriaDetailsComponent } from "./Entities/ReviewCriteria/sections/details.component"
 import { ScoreBoardDetailsComponent, LoadScoreBoardDetailsComponent } from "./Entities/ScoreBoard/sections/details.component"
 import { SessionScoreBoardDetailsComponent, LoadSessionScoreBoardDetailsComponent } from "./Entities/SessionScoreBoard/sections/details.component"
 import { SessionDetailsComponent, LoadSessionDetailsComponent } from "./Entities/Session/sections/details.component"
@@ -54,6 +56,7 @@ declarations: [
     AbstractFormComponent,
     EmailTemplateFormComponent,
     EventFormComponent,
+    ReviewCriteriaFormComponent,
     ScoreBoardFormComponent,
     SessionScoreBoardFormComponent,
     SessionFormComponent,
@@ -63,6 +66,7 @@ declarations: [
     AbstractDetailsComponent,
     EmailTemplateDetailsComponent,
     EventDetailsComponent,
+    ReviewCriteriaDetailsComponent,
     ScoreBoardDetailsComponent,
     SessionScoreBoardDetailsComponent,
     SessionDetailsComponent],
@@ -111,6 +115,7 @@ export function LoadGeneratedForms() {
     LoadAbstractFormComponent();
     LoadEmailTemplateFormComponent();
     LoadEventFormComponent();
+    LoadReviewCriteriaFormComponent();
     LoadScoreBoardFormComponent();
     LoadSessionScoreBoardFormComponent();
     LoadSessionFormComponent();
@@ -120,6 +125,7 @@ export function LoadGeneratedForms() {
     LoadAbstractDetailsComponent();
     LoadEmailTemplateDetailsComponent();
     LoadEventDetailsComponent();
+    LoadReviewCriteriaDetailsComponent();
     LoadScoreBoardDetailsComponent();
     LoadSessionScoreBoardDetailsComponent();
     LoadSessionDetailsComponent();

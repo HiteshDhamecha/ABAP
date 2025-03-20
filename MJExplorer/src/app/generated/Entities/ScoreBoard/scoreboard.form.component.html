@@ -16,6 +16,31 @@
                         </mj-form-section>
                     </mj-tab-body>
                     
+                    <mj-tab Name="Review Criterias" [Visible]="record.IsSaved"> 
+                        Review Criterias
+                    </mj-tab>
+                    <mj-tab-body>
+                        <mj-user-view-grid 
+                            [Params]="BuildRelationshipViewParamsByEntityName('Review Criterias','ScoreBoardID')"  
+                            [NewRecordValues]="NewRecordValues('Review Criterias')"
+                            [AllowLoad]="IsCurrentTab('Review Criterias')"  
+                            [EditMode]="GridEditMode()"  
+                            [BottomMargin]="GridBottomMargin">
+                        </mj-user-view-grid>                    
+                    </mj-tab-body>
+
+                    <mj-tab Name="Session Score Boards" [Visible]="record.IsSaved"> 
+                        Session Score Boards
+                    </mj-tab>
+                    <mj-tab-body>
+                        <mj-user-view-grid 
+                            [Params]="BuildRelationshipViewParamsByEntityName('Session Score Boards','ScoreBoardId')"  
+                            [NewRecordValues]="NewRecordValues('Session Score Boards')"
+                            [AllowLoad]="IsCurrentTab('Session Score Boards')"  
+                            [EditMode]="GridEditMode()"  
+                            [BottomMargin]="GridBottomMargin">
+                        </mj-user-view-grid>                    
+                    </mj-tab-body>
                 </mj-tabstrip>
     </form>
 </div>

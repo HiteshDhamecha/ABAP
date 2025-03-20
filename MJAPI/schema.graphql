@@ -2399,6 +2399,13 @@ input CreateResourcePermissionInput {
   UserID: String
 }
 
+input CreateReviewCriteriaInput {
+  Description: String
+  Name: String
+  ScoreBoardID: String
+  Weightage: Int
+}
+
 input CreateRoleInput {
   Description: String
   DirectoryID: String
@@ -4166,6 +4173,7 @@ type Mutation {
   CreateReportSnapshot(input: CreateReportSnapshotInput!): ReportSnapshot_!
   CreateResourceLink(input: CreateResourceLinkInput!): ResourceLink_!
   CreateResourcePermission(input: CreateResourcePermissionInput!): ResourcePermission_!
+  CreateReviewCriteria(input: CreateReviewCriteriaInput!): ReviewCriteria_!
   CreateRole(input: CreateRoleInput!): Role_!
   CreateScheduledAction(input: CreateScheduledActionInput!): ScheduledAction_!
   CreateScheduledActionParam(input: CreateScheduledActionParamInput!): ScheduledActionParam_!
@@ -4292,6 +4300,7 @@ type Mutation {
   DeleteReportSnapshot(ID: String!, options___: DeleteOptionsInput!): ReportSnapshot_!
   DeleteResourceLink(ID: String!, options___: DeleteOptionsInput!): ResourceLink_!
   DeleteResourcePermission(ID: String!, options___: DeleteOptionsInput!): ResourcePermission_!
+  DeleteReviewCriteria(ID: String!, options___: DeleteOptionsInput!): ReviewCriteria_!
   DeleteRole(ID: String!, options___: DeleteOptionsInput!): Role_!
   DeleteScheduledAction(ID: String!, options___: DeleteOptionsInput!): ScheduledAction_!
   DeleteScheduledActionParam(ID: String!, options___: DeleteOptionsInput!): ScheduledActionParam_!
@@ -4448,6 +4457,7 @@ type Mutation {
   UpdateReportSnapshot(input: UpdateReportSnapshotInput!): ReportSnapshot_!
   UpdateResourceLink(input: UpdateResourceLinkInput!): ResourceLink_!
   UpdateResourcePermission(input: UpdateResourcePermissionInput!): ResourcePermission_!
+  UpdateReviewCriteria(input: UpdateReviewCriteriaInput!): ReviewCriteria_!
   UpdateRole(input: UpdateRoleInput!): Role_!
   UpdateScheduledAction(input: UpdateScheduledActionInput!): ScheduledAction_!
   UpdateScheduledActionParam(input: UpdateScheduledActionParamInput!): ScheduledActionParam_!
@@ -4722,6 +4732,7 @@ type Query {
   ResourceLink(ID: String!): ResourceLink_
   ResourcePermission(ID: String!): ResourcePermission_
   ResourceType(ID: String!): ResourceType_
+  ReviewCriteria(ID: String!): ReviewCriteria_
   Role(ID: String!): Role_
   RowLevelSecurityFilter(ID: String!): RowLevelSecurityFilter_
   RunAIActionDynamicView(input: RunDynamicViewInput!): RunAIActionViewResult!
@@ -5131,6 +5142,9 @@ type Query {
   RunResourceTypeDynamicView(input: RunDynamicViewInput!): RunResourceTypeViewResult!
   RunResourceTypeViewByID(input: RunViewByIDInput!): RunResourceTypeViewResult!
   RunResourceTypeViewByName(input: RunViewByNameInput!): RunResourceTypeViewResult!
+  RunReviewCriteriaDynamicView(input: RunDynamicViewInput!): RunReviewCriteriaViewResult!
+  RunReviewCriteriaViewByID(input: RunViewByIDInput!): RunReviewCriteriaViewResult!
+  RunReviewCriteriaViewByName(input: RunViewByNameInput!): RunReviewCriteriaViewResult!
   RunRoleDynamicView(input: RunDynamicViewInput!): RunRoleViewResult!
   RunRoleViewByID(input: RunViewByIDInput!): RunRoleViewResult!
   RunRoleViewByName(input: RunViewByNameInput!): RunRoleViewResult!
@@ -5772,6 +5786,17 @@ type ResourceType_ {
   ResourcePermissions_ResourceTypeIDArray: [ResourcePermission_!]!
   UserNotifications_ResourceTypeIDArray: [UserNotification_!]!
   WorkspaceItems_ResourceTypeIDArray: [WorkspaceItem_!]!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+type ReviewCriteria_ {
+  Description: String
+  ID: String!
+  Name: String
+  ScoreBoard: String
+  ScoreBoardID: String!
+  Weightage: Int!
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
 }
@@ -7260,6 +7285,16 @@ type RunResourceTypeViewResult {
   UserViewRunID: String
 }
 
+type RunReviewCriteriaViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [ReviewCriteria_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
 type RunRoleViewResult {
   ErrorMessage: String
   ExecutionTime: Int
@@ -7921,6 +7956,8 @@ type ScoreBoard_ {
   Description: String
   ID: String!
   Name: String
+  ReviewCriterias_ScoreBoardIDArray: [ReviewCriteria_!]!
+  SessionScoreBoards_ScoreBoardIdArray: [SessionScoreBoard_!]!
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
 }
@@ -9675,6 +9712,15 @@ input UpdateResourcePermissionInput {
   Status: String
   Type: String
   UserID: String
+}
+
+input UpdateReviewCriteriaInput {
+  Description: String
+  ID: String!
+  Name: String
+  OldValues___: [KeyValuePairInput!]
+  ScoreBoardID: String
+  Weightage: Int
 }
 
 input UpdateRoleInput {

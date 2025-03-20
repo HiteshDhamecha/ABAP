@@ -1008,6 +1008,12 @@
             "Fields": ["ID","Name","EventStartDate","EventEndDate","Description","__mj_CreatedAt","__mj_UpdatedAt"]
         },
         { 
+            "Name": "Review Criterias",
+            "Description": "",
+            "BaseView": "vwReviewCriterias", 
+            "Fields": ["ID","Name","Description","Weightage","ScoreBoardID","__mj_CreatedAt","__mj_UpdatedAt","ScoreBoard"]
+        },
+        { 
             "Name": "Score Boards",
             "Description": "",
             "BaseView": "vwScoreBoards", 

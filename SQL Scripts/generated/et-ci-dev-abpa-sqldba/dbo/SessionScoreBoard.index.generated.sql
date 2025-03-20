@@ -14,3 +14,12 @@ IF NOT EXISTS (
     AND object_id = OBJECT_ID('[dbo].[SessionScoreBoard]')
 )
 CREATE INDEX IDX_AUTO_MJ_FKEY_SessionScoreBoard_SessionId ON [dbo].[SessionScoreBoard] ([SessionId]);
+
+-- Index for foreign key ScoreBoardId in table SessionScoreBoard
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IDX_AUTO_MJ_FKEY_SessionScoreBoard_ScoreBoardId' 
+    AND object_id = OBJECT_ID('[dbo].[SessionScoreBoard]')
+)
+CREATE INDEX IDX_AUTO_MJ_FKEY_SessionScoreBoard_ScoreBoardId ON [dbo].[SessionScoreBoard] ([ScoreBoardId]);

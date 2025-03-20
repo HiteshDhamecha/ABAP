@@ -296,6 +296,63 @@
             ]
         },
         { 
+            "Name": "Review Criterias",
+            "Description": "",
+            "BaseView": "vwReviewCriterias", 
+            "Fields": [         
+                {
+                    "Name": "ID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Name", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Description", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Weightage", 
+                    "Description": "",  
+                    "Type": "int",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "ScoreBoardID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Score Boards",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_CreatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_UpdatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "ScoreBoard", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                }        
+            ]
+        },
+        { 
             "Name": "Score Boards",
             "Description": "",
             "BaseView": "vwScoreBoards", 
@@ -361,6 +418,8 @@
                     "Name": "ScoreBoardId", 
                     "Description": "",  
                     "Type": "uniqueidentifier",
+                "RelatedEntity": "Score Boards",
+                "RelatedEntityFieldName": "ID",
                     "AllowsNull": false 
                 },         
                 {

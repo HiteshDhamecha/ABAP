@@ -137,4 +137,11 @@ Client/.angular
 install.config.json 
 
 SQL Scripts/generated/et-ci-dev-abpa-sqldb/dbo
- 
+ GeneratedActions/package-lock.json
+GeneratedEntities/package-lock.json
+GeneratedActions/package-lock.json
+.gitignore
+.gitignore
+MJAPI/package-lock.json
+Client/package-lock.json
+MJExplorer

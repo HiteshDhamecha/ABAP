@@ -8,7 +8,10 @@ LoadGeneratedActions();
 import { LoadProvider } from '@memberjunction/communication-sendgrid';
 LoadProvider();
 
-import { EventEntityServer } from './CustomEntities/sessions.server';
+import {LoadCustomSession } from './CustomEntities/sessions.server';
+LoadCustomSession();
+import {LoadCustomAbstract } from './CustomEntities/abstracts.server';
+LoadCustomAbstract();
 //import './auth/exampleNewUserSubClass'; // make sure this new class gets registered
  
 const localPath = (p: string) => {

@@ -24,6 +24,8 @@ import { SessionScoreBoardEntity } from 'mj_generatedentities';
             FieldName="ScoreBoardId"
             Type="textbox"
             [EditMode]="EditMode"
+            LinkType="Record"
+            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
