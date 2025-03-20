@@ -46,7 +46,7 @@ export class UploadService {
             const blob = await this.connectAndAccessContainer(user.ID, sessionID, abstractID, file.name) as BlockBlobClient;
             if (blob) {
                 const blobOptions = { blobHTTPHeaders: { blobContentType: file.type } };
-                await blob.uploadFile(file.webkitRelativePath, blobOptions);
+                await blob.uploadData(file, blobOptions);
                 const url = blob.url;
                 // Use when the uploaded URL needs to be previewed by the user.
                 // const sasToken = await this.generateSAS(blob);
