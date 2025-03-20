@@ -6,7 +6,7 @@ on:
       - 'GeneratedEntities/**'
       - 'Client/**'
     branches:
-      - Develop
+      - Development
   workflow_dispatch:
  
 jobs:

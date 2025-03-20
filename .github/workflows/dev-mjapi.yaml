@@ -10,7 +10,7 @@ on:
       - 'GeneratedActions/**'
       - 'MJAPI/**'
     branches:
-      - Develop
+      - Development
   workflow_dispatch:
 
 jobs:
