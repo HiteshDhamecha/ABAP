@@ -18,7 +18,7 @@ import { DataSource } from 'typeorm';
 import * as mj_core_schema_server_object_types from '@memberjunction/server'
 
 
-import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, UserPersonalDetailsEntity, AbstractEntity, SessionEntity, ReviewCriteriaEntity, EventEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
+import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, UserPersonalDetailsEntity, AbstractEntity, SessionEntity, ReviewCriteriaEntity, EventEntity, AbstractDetailsStagingEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
     
 
 //****************************************************************************
@@ -1612,6 +1612,13 @@ export class EventResolver extends ResolverBase {
         return this.DeleteRecord('Events', key, options, dataSource, userPayload, pubSub);
     }
     
+}
+
+//****************************************************************************
+// ENTITY CLASS for Abstract Details Stagings
+//****************************************************************************
+@ObjectType()
+export class AbstractDetailsStaging_ {
 }
 
 //****************************************************************************
