@@ -19,7 +19,9 @@ export class SessionDetailsComponent implements OnInit {
     this.sessionForm = this.fb.group({
       name: ['', Validators.required],
       sessionTime: ['', Validators.required],
-      title: ['', Validators.required]
+      title: ['', Validators.required],
+      abstractSubmissionStartDate: ['', Validators.required],
+      abstractSubmissionEndDate: ['', Validators.required]
     });
   }
 
@@ -37,7 +39,7 @@ export class SessionDetailsComponent implements OnInit {
       const rv = new RunView();
       const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
         EntityName: 'Sessions',
-        Fields: ['ID', 'EventID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title'],
+        Fields: ['ID', 'EventID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title', 'AbstractSubmissionStartDate', 'AbstractSubmissionEndDate'],
         ExtraFilter: `ID = '${this.sessionId}'`,
         MaxRows: 1
       });
@@ -57,7 +59,9 @@ export class SessionDetailsComponent implements OnInit {
       this.sessionForm.patchValue({
         name: this.session.Name,
         sessionTime: this.session.SessionStartDate,
-        title: this.session.Title
+        title: this.session.Title,
+        abstractSubmissionStartDate: this.session.AbstractSubmissionStartDate,
+        abstractSubmissionEndDate: this.session.AbstractSubmissionEndDate
       });
       console.log('Loaded session:', this.session); // Log the loaded session
     } else {
