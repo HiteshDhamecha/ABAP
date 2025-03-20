@@ -105,6 +105,7 @@ export class UserAbstractFormComponent implements OnInit {
   }
 
   async submitAbstract() {
+    //proceed to submit the form
     this.submittingForm = true;
     console.log('Submit Clicked', this.abstractDetails);
     const abstractEntity = await this.md.GetEntityObject<AbstractEntity>('Abstracts');
@@ -119,6 +120,7 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
     await abstractEntity.Save();
+    // get the saved abstract entity to get the ID and upload the file with it
     const rv = new RunView();
     const result = await rv.RunView({
       EntityName: 'Abstracts',
