@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Metadata, RunView } from '@memberjunction/core';
-import { AbstractEntity } from 'mj_generatedentities';
+import { AbstractEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
+import { UploadService } from 'src/app/service/upload.service';
 import { UserService } from 'src/app/service/user.service';
 
 interface AbstractDetails {
@@ -42,7 +43,7 @@ export class UserAbstractFormComponent implements OnInit {
   currentUser: any;
   md = new Metadata();
 
-  constructor(private route: ActivatedRoute, private user: UserService) { }
+  constructor(private route: ActivatedRoute, private user: UserService, private azureBlob: UploadService) { }
 
   async ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -105,10 +106,27 @@ export class UserAbstractFormComponent implements OnInit {
   async submitAbstract() {
     console.log('Submit Clicked', this.abstractDetails);
     const abstractEntity = await this.md.GetEntityObject<AbstractEntity>('Abstracts');
+    const userPersonalDetailsEntity = await this.md.GetEntityObject<UserPersonalDetailsEntity>('UserPersonalDetail');
     abstractEntity.SessionID = this.sessionDetails.ID;
     abstractEntity.UserID = this.currentUser.ID;
     abstractEntity.AbstractText = this.abstractDetails.summary;
+    abstractEntity.FileName = this.uploadedFile.name;
+    userPersonalDetailsEntity.Affiliation = this.abstractDetails.affiliation;
+    userPersonalDetailsEntity.JobTitle = this.abstractDetails.jobTitle;
+    userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
+    userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
+    userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
     await abstractEntity.Save();
+    const rv = new RunView();
+    const result = await rv.RunView({
+      EntityName: 'Abstracts',
+      ExtraFilter: `SessionID = '${this.sessionDetails.ID}' AND UserID = '${this.currentUser.ID}' AND FileName = '${this.uploadedFile.name}'`,
+      Fields: ['ID'],
+      MaxRows: 1,
+    });
+    if (result?.Results && result?.Results.length === 0) throw new Error('No record found!');
+    const newAbstract = result.Results[0];
+    await this.azureBlob.upload(this.uploadedFile, this.sessionDetails.ID, newAbstract.ID);
     alert(`Abstract Submitted with the following details: ${JSON.stringify({...this.abstractDetails, uploadedFile: this.uploadedFile})}`);
   };
 

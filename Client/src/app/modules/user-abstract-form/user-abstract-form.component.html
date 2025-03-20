@@ -27,30 +27,30 @@
         </div>
         <div class="publish-preview-group">
             <label>Email</label>
-            <input name="email" required [(ngModel)]="abstractDetails.email" type="email" placeholder="Enter">
+            <input name="email" [value]="abstractDetails.email" type="email" disabled>
         </div>
         <div class="publish-preview-group">
             <label>Affiliation</label>
-            <input name="affiliation" required [(ngModel)]="abstractDetails.affiliation" type="text"
+            <input name="affiliation" maxlength="50" required [(ngModel)]="abstractDetails.affiliation" type="text"
                 placeholder="Enter">
         </div>
         <div class="publish-preview-group">
             <label>Job Title</label>
-            <input name="jobTitle" required [(ngModel)]="abstractDetails.jobTitle" type="text" placeholder="Enter">
+            <input name="jobTitle" maxlength="50" required [(ngModel)]="abstractDetails.jobTitle" type="text" placeholder="Enter">
         </div>
         <div class="publish-preview-group">
             <label>Phone Number</label>
-            <input name="phoneNumber" required [(ngModel)]="abstractDetails.phoneNumber" type="text"
+            <input name="phoneNumber" maxlength="20" required [(ngModel)]="abstractDetails.phoneNumber" type="text"
                 placeholder="Enter">
         </div>
         <div class="publish-preview-group">
             <label>Social Media Links</label>
-            <input name="socialLinks" required [(ngModel)]="abstractDetails.socialLinks" type="url"
+            <input name="socialLinks" maxlength="4000" required [(ngModel)]="abstractDetails.socialLinks" type="url"
                 placeholder="Enter">
         </div>
         <div class="publish-preview-group full-width">
             <label>Previous Speaking Experiences</label>
-            <textarea name="speakingExperiences" required [(ngModel)]="abstractDetails.speakingExperiences"
+            <textarea name="speakingExperiences" maxlength="4000" required [(ngModel)]="abstractDetails.speakingExperiences"
                 placeholder="Autosize height based on content lines"></textarea>
         </div>
     </div>
@@ -63,7 +63,7 @@
         </div>
         <div class="publish-preview-group full-width">
             <label>Summary</label>
-            <textarea name="summary" required [(ngModel)]="abstractDetails.summary"
+            <textarea name="summary" maxlength="4000" required [(ngModel)]="abstractDetails.summary"
                 placeholder="Autosize height based on content lines"></textarea>
         </div>
         <div *ngIf="!uploadedFile; else fileInfo" class="fileContainer publish-preview-group full-width">
