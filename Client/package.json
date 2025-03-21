@@ -7,7 +7,7 @@
     "build": "ng build",
     "build:stage": "ng build --configuration staging",
     "watch": "ng build --watch --configuration development",
-    "link": "npm link ../GeneratedEntities",
+    "link": "npm link ../GeneratedEntities ../GeneratedActions",
     "test": "ng test"
   },
   "engines": {
