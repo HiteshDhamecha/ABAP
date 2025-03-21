@@ -470,8 +470,7 @@ export const UserPersonalDetailsSchema = z.object({
     User: z.string().describe(`
         * * Field Name: User
         * * Display Name: User
-        * * SQL Data Type: nvarchar(100)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(100)`),
 });
 
 export type UserPersonalDetailsEntityType = z.infer<typeof UserPersonalDetailsSchema>;
@@ -1746,7 +1745,6 @@ export class UserPersonalDetailsEntity extends BaseEntity<UserPersonalDetailsEnt
     * * Field Name: User
     * * Display Name: User
     * * SQL Data Type: nvarchar(100)
-    * * Default Value: null
     */
     get User(): string {
         return this.Get('User');
