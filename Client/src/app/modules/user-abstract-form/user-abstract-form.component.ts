@@ -120,17 +120,7 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
     await abstractEntity.Save();
-    // get the saved abstract entity to get the ID and upload the file with it
-    const rv = new RunView();
-    const result = await rv.RunView({
-      EntityName: 'Abstracts',
-      ExtraFilter: `SessionID = '${this.sessionDetails.ID}' AND UserID = '${this.currentUser.ID}' AND FileName = '${this.uploadedFile.name}'`,
-      Fields: ['ID'],
-      MaxRows: 1,
-    });
-    if (result?.Results && result?.Results.length === 0) throw new Error('No record found!');
-    const newAbstract = result.Results[0];
-    this.abstractDetails.uploadUrl = await this.azureBlob.upload(this.uploadedFile, this.sessionDetails.ID, newAbstract.ID);
+    this.abstractDetails.uploadUrl = await this.azureBlob.upload(this.uploadedFile, this.sessionDetails.ID, abstractEntity.ID);
     if (this.abstractDetails.uploadUrl !== '') {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
       await abstractEntity.Save();
