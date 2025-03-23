@@ -28,12 +28,13 @@ export class UploadService {
 
     private async generateSAS(blob: BlockBlobClient) {
         try {
-            const sasToken = await blob.generateSasUrl({
-                protocol: SASProtocol.Https,
-                expiresOn: new Date(new Date().getTime() + 1000 * 60 * 60 * environment.azureStorage.sasExpiry), //environment file is in hours
-                permissions: BlobSASPermissions.parse(environment.azureStorage.sasPermission as string),
-            })
-            return sasToken;
+            // TODO: This throws an error at the client-side | Its use would most probably be in the backend so shift this code their and try to run.
+            // const sasToken = await blob.generateSasUrl({
+            //     protocol: SASProtocol.Https,
+            //     expiresOn: new Date(new Date().getTime() + 1000 * 60 * 60 * environment.azureStorage.sasExpiry), //environment file is in hours
+            //     permissions: BlobSASPermissions.parse(environment.azureStorage.sasPermission as string),
+            // })
+            // return sasToken;
         } catch (error) {
             console.error(`Couldn't generate SAS: ${error}`)
             return null;

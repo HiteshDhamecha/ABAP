@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "18.0.2",
     "@angular/router": "^18.0.2",
     "@auth0/auth0-angular": "2.1.0",
-    "@azure/storage-blob": "^12.27.0",
+    "@azure/storage-blob": "^12.15.0",
     "@memberjunction/core": "2.30.0",
     "@memberjunction/core-entities": "2.30.0",
     "@memberjunction/global": "2.30.0",

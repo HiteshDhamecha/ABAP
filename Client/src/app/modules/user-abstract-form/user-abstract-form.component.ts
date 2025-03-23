@@ -109,17 +109,18 @@ export class UserAbstractFormComponent implements OnInit {
     this.submittingForm = true;
     console.log('Submit Clicked', this.abstractDetails);
     const abstractEntity = await this.md.GetEntityObject<AbstractEntity>('Abstracts');
-    const userPersonalDetailsEntity = await this.md.GetEntityObject<UserPersonalDetailsEntity>('UserPersonalDetail');
+    const userPersonalDetailsEntity = await this.md.GetEntityObject<UserPersonalDetailsEntity>('User Personal Details');
     abstractEntity.SessionID = this.sessionDetails.ID;
     abstractEntity.UserID = this.currentUser.ID;
     abstractEntity.AbstractText = this.abstractDetails.summary;
-    abstractEntity.FileName = this.uploadedFile.name;
+    abstractEntity.FileName = this.uploadedFile?.name;
     userPersonalDetailsEntity.Affiliation = this.abstractDetails.affiliation;
     userPersonalDetailsEntity.JobTitle = this.abstractDetails.jobTitle;
     userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
-    await abstractEntity.Save();
+    const saved = await abstractEntity.Save();
+    console.log('saved: ', saved);
     this.abstractDetails.uploadUrl = await this.azureBlob.upload(this.uploadedFile, this.sessionDetails.ID, abstractEntity.ID);
     if (this.abstractDetails.uploadUrl !== '') {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
