@@ -17,8 +17,9 @@ CREATE PROCEDURE [dbo].[spCreateAbstract]
     @SessionID uniqueidentifier,
     @UserID uniqueidentifier,
     @YearOfExp int,
-    @AbstractText nvarchar(MAX),
-    @UploadUrl nvarchar(500)
+    @AbstractText nvarchar(4000),
+    @UploadUrl nvarchar(500),
+    @FileName nvarchar(200)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -30,7 +31,8 @@ BEGIN
             [UserID],
             [YearOfExp],
             [AbstractText],
-            [UploadUrl]
+            [UploadUrl],
+            [FileName]
         )
     OUTPUT INSERTED.[ID] INTO @InsertedRow
     VALUES
@@ -39,7 +41,8 @@ BEGIN
             @UserID,
             @YearOfExp,
             @AbstractText,
-            @UploadUrl
+            @UploadUrl,
+            @FileName
         )
     -- return the new record from the base view, which might have some calculated fields
     SELECT * FROM [dbo].[vwAbstracts] WHERE [ID] = (SELECT [ID] FROM @InsertedRow)
