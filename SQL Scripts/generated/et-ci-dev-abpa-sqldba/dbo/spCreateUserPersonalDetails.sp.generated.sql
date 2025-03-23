@@ -19,7 +19,7 @@ CREATE PROCEDURE [dbo].[spCreateUserPersonalDetails]
     @Affiliation nvarchar(50),
     @SocialMediaLinks nvarchar(MAX),
     @PreviousSpeakingExperiences nvarchar(MAX),
-    @UserID uniqueidentifier = '00000000-0000-0000-0000-000000000000'
+    @UserID uniqueidentifier
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -42,7 +42,7 @@ BEGIN
             @Affiliation,
             @SocialMediaLinks,
             @PreviousSpeakingExperiences,
-            CASE @UserID WHEN '00000000-0000-0000-0000-000000000000' THEN null ELSE @UserID END
+            @UserID
         )
     -- return the new record from the base view, which might have some calculated fields
     SELECT * FROM [dbo].[vwUserPersonalDetails] WHERE [ID] = (SELECT [ID] FROM @InsertedRow)

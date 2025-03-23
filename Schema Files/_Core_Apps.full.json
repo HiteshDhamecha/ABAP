@@ -2,6 +2,13 @@
         "schemaName": "dbo", 
         "entities": [
         { 
+            "Name": "Abstract Details Stagings",
+            "Description": "",
+            "BaseView": "vwAbstractDetailsStagings", 
+            "Fields": [        
+            ]
+        },
+        { 
             "Name": "Abstract Logs",
             "Description": "",
             "BaseView": "vwAbstractLogs", 

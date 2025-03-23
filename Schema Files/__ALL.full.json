@@ -1367,16 +1367,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "SpeedRank", 
-                    "Description": "Optional column that ranks the speed of the AI model. Default is 0 and should be non-negative.",  
-                    "Type": "int",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "AIModelType", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
+                },         
+                {
+                    "Name": "SpeedRank", 
+                    "Description": "Optional column that ranks the speed of the AI model. Default is 0 and should be non-negative.",  
+                    "Type": "int",
+                    "AllowsNull": true 
                 },         
                 {
                     "Name": "CostRank", 
@@ -1570,26 +1570,26 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Template", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "ResponseFormat", 
                     "Description": "Specifies the expected response format for the AI model. Options include Any, Text, Markdown, JSON, and ModelSpecific. Defaults to Any if not specified.",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Category", 
+                    "Name": "Template", 
                     "Description": "",  
                     "Type": "nvarchar",
-                    "AllowsNull": true 
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "ModelSpecificResponseFormat", 
                     "Description": "A JSON-formatted string containing model-specific response format instructions. This will be parsed and provided as a JSON object to the model.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Category", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
@@ -2030,16 +2030,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "AuditLogType", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "AuditLogType", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "Authorization", 
@@ -4101,16 +4101,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Description", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "DataContext", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
+                },         
+                {
+                    "Name": "Description", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
                 },         
                 {
                     "Name": "View", 
@@ -5140,19 +5140,13 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "CodeName", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "ScopeDefault", 
                     "Description": "Optional, comma-delimited string indicating the default scope for entity visibility. Options include Users, Admins, AI, and All. Defaults to All when NULL. This is used for simple defaults for filtering entity visibility, not security enforcement.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "ClassName", 
+                    "Name": "CodeName", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
@@ -5164,7 +5158,7 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "BaseTableCodeName", 
+                    "Name": "ClassName", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
@@ -5176,7 +5170,7 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "ParentEntity", 
+                    "Name": "BaseTableCodeName", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
@@ -5188,14 +5182,20 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "RowsToPackSampleOrder", 
-                    "Description": "An optional ORDER BY clause for row packing when RowsToPackWithSchema is set to Sample. Allows custom ordering for selected entity data when using top n and bottom n.",  
+                    "Name": "ParentEntity", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
                 {
                     "Name": "ParentBaseTable", 
                     "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "RowsToPackSampleOrder", 
+                    "Description": "An optional ORDER BY clause for row packing when RowsToPackWithSchema is set to Sample. Allows custom ordering for selected entity data when using top n and bottom n.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
@@ -6308,16 +6308,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "ScopeDefault", 
                     "Description": "A comma-delimited string indicating the default scope for field visibility. Options include Users, Admins, AI, and All. Defaults to All when NULL. This is used for a simple method of filtering field defaults for visibility, not security enforcement.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "Entity", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "SchemaName", 
@@ -7877,14 +7877,14 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "List", 
-                    "Description": "",  
+                    "Name": "Status", 
+                    "Description": "Tracks the status of each individual list detail row to enable processing of various types and the use of the status column for filtering list detail rows within a list that are in a particular state.",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Status", 
-                    "Description": "Tracks the status of each individual list detail row to enable processing of various types and the use of the status column for filtering list detail rows within a list that are in a particular state.",  
+                    "Name": "List", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
@@ -10653,16 +10653,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "OrderBy", 
-                    "Description": "This field is used only when the Type of the TemplateParam table is \"Entity\". It is an optional field used to specify the sorting order for the related entity data that is used in the template for the Entity specified.",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "Template", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
+                },         
+                {
+                    "Name": "OrderBy", 
+                    "Description": "This field is used only when the Type of the TemplateParam table is \"Entity\". It is an optional field used to specify the sorting order for the related entity data that is used in the template for the Entity specified.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
                 },         
                 {
                     "Name": "Entity", 
@@ -11265,13 +11265,13 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "Entity", 
+                    "Name": "User", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "User", 
+                    "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
@@ -12224,6 +12224,13 @@
     },{
         "schemaName": "dbo", 
         "entities": [
+        { 
+            "Name": "Abstract Details Stagings",
+            "Description": "",
+            "BaseView": "vwAbstractDetailsStagings", 
+            "Fields": [        
+            ]
+        },
         { 
             "Name": "Abstract Logs",
             "Description": "",

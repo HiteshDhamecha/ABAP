@@ -2,8 +2,8 @@
 import { BaseEntity, EntitySaveOptions } from '@memberjunction/core';
 import { RegisterClass } from '@memberjunction/global';
 import { AbstractEntity } from 'mj_generatedentities';
-import { sendEmailNotification } from './utility/emailNotificationUtility';
 import { processAbstract } from './abstarctReview';
+import { sendEmail } from './utility/sendEmail';
 
 @RegisterClass(BaseEntity, 'Abstracts')
 export class AbstractEntityServer extends AbstractEntity {
@@ -12,6 +12,7 @@ export class AbstractEntityServer extends AbstractEntity {
             const abstarctText =this.AbstractText
 
             // Review abstract
+            sendEmail(this.ContextCurrentUser.Email, "Abstract Submitted", "Your abstract has been submitted successfully");
              await processAbstract(abstarctText,this.SessionID,this.ContextCurrentUser,this.ID);  
             return true;
         }

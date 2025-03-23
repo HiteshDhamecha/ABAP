@@ -2,8 +2,8 @@ import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import * as nodemailer from "nodemailer";
 import { LogStatus, Metadata, RunView, RunViewResult, UserInfo } from "@memberjunction/core";
-import {TemplateEntity } from "@memberjunction/core-entities";
 import { AbstractResultEntity, AbstractStatusEntity, ReviewCriteriaEntity, ScoreBoardEntity, SessionEntity, SessionScoreBoardEntity } from "mj_generatedentities";
+import { sendEmail } from "./utility/sendEmail";
 
 
 // Initialize OpenAI model
@@ -88,7 +88,7 @@ export async function getCritearea(sessionId: string, user: UserInfo): Promise<{
 }
 
 // Function to send email
-async function sendEmail(recipient: string, subject: string, body: string) {
+async function sendEmailNodeMailer(recipient: string, subject: string, body: string) {
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,  // Make sure this is NOT '127.0.0.1'
