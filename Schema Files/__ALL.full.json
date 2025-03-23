@@ -1367,12 +1367,6 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "AIModelType", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "SpeedRank", 
                     "Description": "Optional column that ranks the speed of the AI model. Default is 0 and should be non-negative.",  
                     "Type": "int",
@@ -1399,6 +1393,12 @@
                 {
                     "Name": "SupportedResponseFormats", 
                     "Description": "A comma-delimited string indicating the supported response formats for the AI model. Options include Any, Text, Markdown, JSON, and ModelSpecific. Defaults to Any if not specified.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AIModelType", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 }        
@@ -1576,16 +1576,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Template", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "ModelSpecificResponseFormat", 
                     "Description": "A JSON-formatted string containing model-specific response format instructions. This will be parsed and provided as a JSON object to the model.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "Template", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "Category", 
@@ -2030,12 +2030,6 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "AuditLogType", 
                     "Description": "",  
                     "Type": "nvarchar",
@@ -2043,6 +2037,12 @@
                 },         
                 {
                     "Name": "Authorization", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
@@ -2444,6 +2444,18 @@
                 {
                     "Name": "SupportsScheduledSending", 
                     "Description": "Whether or not the provider supports sending messages at a specific time",  
+                    "Type": "bit",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "SupportsForwarding", 
+                    "Description": "Whether or not the provider supports forwarding messages to another recipient ",  
+                    "Type": "bit",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "SupportsReplying", 
+                    "Description": "Whether or not the provider supports replying to messages",  
                     "Type": "bit",
                     "AllowsNull": false 
                 }        
@@ -4101,16 +4113,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "DataContext", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "Description", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "DataContext", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "View", 
@@ -4265,13 +4277,13 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "Entity", 
+                    "Name": "Dataset", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Dataset", 
+                    "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
@@ -5146,22 +5158,10 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "CodeName", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
                     "Name": "RowsToPackWithSchema", 
                     "Description": "Determines how entity rows should be packaged for external use. Options include None, Sample, and All. Defaults to None.",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
-                },         
-                {
-                    "Name": "ClassName", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
                 },         
                 {
                     "Name": "RowsToPackSampleMethod", 
@@ -5170,16 +5170,34 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "BaseTableCodeName", 
+                    "Name": "RowsToPackSampleCount", 
+                    "Description": "The number of rows to pack when RowsToPackWithSchema is set to Sample, based on the designated sampling method. Defaults to 0.",  
+                    "Type": "int",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "RowsToPackSampleOrder", 
+                    "Description": "An optional ORDER BY clause for row packing when RowsToPackWithSchema is set to Sample. Allows custom ordering for selected entity data when using top n and bottom n.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "CodeName", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "RowsToPackSampleCount", 
-                    "Description": "The number of rows to pack when RowsToPackWithSchema is set to Sample, based on the designated sampling method. Defaults to 0.",  
-                    "Type": "int",
-                    "AllowsNull": false 
+                    "Name": "ClassName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "BaseTableCodeName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
                 },         
                 {
                     "Name": "ParentEntity", 
@@ -5190,12 +5208,6 @@
                 {
                     "Name": "ParentBaseTable", 
                     "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": true 
-                },         
-                {
-                    "Name": "RowsToPackSampleOrder", 
-                    "Description": "An optional ORDER BY clause for row packing when RowsToPackWithSchema is set to Sample. Allows custom ordering for selected entity data when using top n and bottom n.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
                 },         
@@ -6314,18 +6326,6 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "Entity", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
-                    "Name": "SchemaName", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "AutoUpdateRelatedEntityInfo", 
                     "Description": "Indicates whether the related entity information should be automatically updated from the database schema. When set to 0, relationships not part of the database schema can be manually defined at the application and AI agent level. Defaults to 1.",  
                     "Type": "bit",
@@ -6334,6 +6334,48 @@
                 {
                     "Name": "ValuesToPackWithSchema", 
                     "Description": "Determines whether values for the field should be included when the schema is packed. Options: Auto (include manually set or auto-derived values), None (exclude all values), All (include all distinct values from the table). Defaults to Auto.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "GeneratedValidationFunctionName", 
+                    "Description": "Contains the name of the generated field validation function, if it exists, null otherwise",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "GeneratedValidationFunctionDescription", 
+                    "Description": "Contains a description for business users of what the validation function for this field does, if it exists",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "GeneratedValidationFunctionCode", 
+                    "Description": "Contains the generated code for the field validation function, if it exists, null otherwise.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "GeneratedValidationFunctionCheckConstraint", 
+                    "Description": "If a generated validation function was generated previously, this stores the text from the source CHECK constraint in the database. This is stored so that regeneration of the validation function will only occur when the source CHECK constraint changes.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "FieldCodeName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "Entity", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "SchemaName", 
+                    "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
@@ -6824,15 +6866,15 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "AutoUpdateFromSchema", 
                     "Description": "Indicates whether this relationship should be automatically updated by CodeGen. When set to 0, the record will not be modified by CodeGen. Defaults to 1.",  
                     "Type": "bit",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Entity", 
+                    "Description": "",  
+                    "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
@@ -7883,16 +7925,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "List", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "AdditionalData", 
                     "Description": "Optional column that allows for tracking any additional data for each ListDetail row",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "List", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 }        
             ]
         },
@@ -10653,16 +10695,16 @@
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Template", 
-                    "Description": "",  
-                    "Type": "nvarchar",
-                    "AllowsNull": false 
-                },         
-                {
                     "Name": "OrderBy", 
                     "Description": "This field is used only when the Type of the TemplateParam table is \"Entity\". It is an optional field used to specify the sorting order for the related entity data that is used in the template for the Entity specified.",  
                     "Type": "nvarchar",
                     "AllowsNull": true 
+                },         
+                {
+                    "Name": "Template", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
                 },         
                 {
                     "Name": "Entity", 
@@ -11265,13 +11307,13 @@
                     "AllowsNull": true 
                 },         
                 {
-                    "Name": "User", 
+                    "Name": "Entity", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
                 },         
                 {
-                    "Name": "Entity", 
+                    "Name": "User", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": false 
@@ -12228,7 +12270,181 @@
             "Name": "Abstract Details Stagings",
             "Description": "",
             "BaseView": "vwAbstractDetailsStagings", 
-            "Fields": [        
+            "Fields": [         
+                {
+                    "Name": "ID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Abstracts",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "SessionID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Sessions",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "UserID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Users",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "YearOfExp", 
+                    "Description": "",  
+                    "Type": "int",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractText", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UploadUrl", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractCreatedAt", 
+                    "Description": "",  
+                    "Type": "datetime",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "EventID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Events",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "SessionName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "EventName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "FirstName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "LastName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserTitle", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserEmail", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserType", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "IsActive", 
+                    "Description": "",  
+                    "Type": "bit",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "PhoneNumber", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractResultID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Abstract Results",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractStatusId", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Abstract Status",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractStatusName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "__mj_CreatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_UpdatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Session", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "User", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Event", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractStatusId_Virtual", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                }        
             ]
         },
         { 
@@ -12415,6 +12631,12 @@
                 },         
                 {
                     "Name": "UploadUrl", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "FileName", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 

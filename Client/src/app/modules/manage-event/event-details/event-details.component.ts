@@ -1,9 +1,11 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogStatus, Metadata, RunView, RunViewResult } from '@memberjunction/core';
 import { EventEntity, SessionEntityType } from 'mj_generatedentities';
+import { CreateSessionDialogComponent } from 'src/app/components/create-session-dialog/create-session-dialog.component';
 
 @Component({
   selector: 'app-event-details',
@@ -19,7 +21,7 @@ export class EventDetailsComponent implements OnInit {
   md = new Metadata();
 
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, public dialog: MatDialog) {
     this.eventForm = this.fb.group({
       name: ['', Validators.required],
       startDate: ['', Validators.required],
@@ -36,6 +38,19 @@ export class EventDetailsComponent implements OnInit {
       await this.loadEventDetails();
       await this.loadSessionDetails();
     }
+  }
+  openCreateSessionDialog(): void {
+    const dialogRef = this.dialog.open(CreateSessionDialogComponent, {
+      width: '350px',
+      height: 'auto',
+      data :{ eventId: this.eventId}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.sessions.push(result);
+      }
+    });
   }
   viewSessionDetails(session: any) {
     this.router.navigate(['/session-details', session.ID]);

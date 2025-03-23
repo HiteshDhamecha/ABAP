@@ -5,7 +5,7 @@
             "Name": "Abstract Details Stagings",
             "Description": "",
             "BaseView": "vwAbstractDetailsStagings", 
-            "Fields": [""]
+            "Fields": ["ID","AbstractID","SessionID","UserID","YearOfExp","AbstractText","UploadUrl","AbstractCreatedAt","EventID","SessionName","EventName","FirstName","LastName","UserTitle","UserEmail","UserType","IsActive","PhoneNumber","AbstractResultID","AbstractStatusId","AbstractStatusName","__mj_CreatedAt","__mj_UpdatedAt","Session","User","Event","AbstractStatusId_Virtual"]
         },
         { 
             "Name": "Abstract Logs",
@@ -29,7 +29,7 @@
             "Name": "Abstracts",
             "Description": "",
             "BaseView": "vwAbstracts", 
-            "Fields": ["ID","SessionID","UserID","YearOfExp","AbstractText","UploadUrl","__mj_CreatedAt","__mj_UpdatedAt"]
+            "Fields": ["ID","SessionID","UserID","YearOfExp","AbstractText","UploadUrl","FileName","__mj_CreatedAt","__mj_UpdatedAt"]
         },
         { 
             "Name": "Email Templates",
