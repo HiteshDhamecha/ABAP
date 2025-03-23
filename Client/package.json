@@ -31,7 +31,7 @@
     "@memberjunction/core": "2.30.0",
     "@memberjunction/core-entities": "2.30.0",
     "@memberjunction/global": "2.30.0",
-    "@memberjunction/graphql-dataprovider": "2.30.0",
+    "@memberjunction/graphql-dataprovider": "^2.30.0",
     "@memberjunction/ng-chat": "2.30.0",
     "@memberjunction/templates": "2.30.0",
     "@progress/kendo-angular-buttons": "16.2.0",
@@ -83,7 +83,7 @@
     "stream-browserify": "^3.0.0",
     "tslib": "^2.5.3",
     "util": "^0.12.5",
-    "zone.js": "~0.14.8"
+    "zone.js": "^0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.2",
@@ -93,7 +93,7 @@
     "@types/axios": "^0.14.4",
     "@types/dom-speech-recognition": "^0.0.4",
     "@types/jasmine": "~4.3.4",
-    "@types/node": "^22.13.10",
+    "@types/node": "^22.13.11",
     "jasmine-core": "~5.0.1",
     "karma": "~6.4.2",
     "karma-chrome-launcher": "~3.2.0",
