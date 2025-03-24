@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Metadata, RunView } from '@memberjunction/core';
 import { AbstractEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
-import { UploadService } from 'src/app/service/upload.service';
+import { AzureBlobService } from 'src/app/service/azure-blob.service';
 import { UserService } from 'src/app/service/user.service';
 
 interface AbstractDetails {
@@ -44,7 +44,7 @@ export class UserAbstractFormComponent implements OnInit {
   md = new Metadata();
   submittingForm: boolean = false;
 
-  constructor(private route: ActivatedRoute, private user: UserService, private azureBlob: UploadService) { }
+  constructor(private route: ActivatedRoute, private user: UserService, private azureBlob: AzureBlobService) { }
 
   async ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -119,11 +119,13 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
-    const saved = await abstractEntity.Save();
-    console.log('saved: ', saved);
-    this.abstractDetails.uploadUrl = await this.azureBlob.upload(this.uploadedFile, this.sessionDetails.ID, abstractEntity.ID);
+    //const saved = await abstractEntity.Save();
+    //console.log('saved: ', saved);
+    this.abstractDetails.uploadUrl = await this.azureBlob.uploadFile(this.uploadedFile);
     if (this.abstractDetails.uploadUrl !== '') {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
+      console.log('Abstract Entity: ', abstractEntity);
+      console.log('Abstract Entity Url: ', this.abstractDetails.uploadUrl);
       await abstractEntity.Save();
     };
     alert(`Abstract Submitted with the following details: ${JSON.stringify({...this.abstractDetails, uploadedFile: this.uploadedFile.name})}`);

@@ -719,7 +719,9 @@ CREATE PROCEDURE [dbo].[spCreateSession]
     @Title nvarchar(200),
     @UserPrompt nvarchar(MAX),
     @AbstractSubmissionStartDate datetime,
-    @AbstractSubmissionEndDate datetime
+    @AbstractSubmissionEndDate datetime,
+    @UserPrompt1 nvarchar(MAX),
+    @UserPrompt2 nvarchar(MAX)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -735,7 +737,9 @@ BEGIN
             [Title],
             [UserPrompt],
             [AbstractSubmissionStartDate],
-            [AbstractSubmissionEndDate]
+            [AbstractSubmissionEndDate],
+            [UserPrompt1],
+            [UserPrompt2]
         )
     OUTPUT INSERTED.[ID] INTO @InsertedRow
     VALUES
@@ -748,7 +752,9 @@ BEGIN
             @Title,
             @UserPrompt,
             @AbstractSubmissionStartDate,
-            @AbstractSubmissionEndDate
+            @AbstractSubmissionEndDate,
+            @UserPrompt1,
+            @UserPrompt2
         )
     -- return the new record from the base view, which might have some calculated fields
     SELECT * FROM [dbo].[vwSessions] WHERE [ID] = (SELECT [ID] FROM @InsertedRow)
@@ -1970,7 +1976,9 @@ CREATE PROCEDURE [dbo].[spUpdateSession]
     @Title nvarchar(200),
     @UserPrompt nvarchar(MAX),
     @AbstractSubmissionStartDate datetime,
-    @AbstractSubmissionEndDate datetime
+    @AbstractSubmissionEndDate datetime,
+    @UserPrompt1 nvarchar(MAX),
+    @UserPrompt2 nvarchar(MAX)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -1985,7 +1993,9 @@ BEGIN
         [Title] = @Title,
         [UserPrompt] = @UserPrompt,
         [AbstractSubmissionStartDate] = @AbstractSubmissionStartDate,
-        [AbstractSubmissionEndDate] = @AbstractSubmissionEndDate
+        [AbstractSubmissionEndDate] = @AbstractSubmissionEndDate,
+        [UserPrompt1] = @UserPrompt1,
+        [UserPrompt2] = @UserPrompt2
     WHERE
         [ID] = @ID
 

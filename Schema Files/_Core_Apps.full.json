@@ -709,6 +709,18 @@
                     "AllowsNull": false 
                 },         
                 {
+                    "Name": "UserPrompt1", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserPrompt2", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
                     "Name": "Event", 
                     "Description": "",  
                     "Type": "nvarchar",

@@ -116,23 +116,19 @@ export const AbstractDetailsStagingSchema = z.object({
     Session: z.string().describe(`
         * * Field Name: Session
         * * Display Name: Session
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
     User: z.string().describe(`
         * * Field Name: User
         * * Display Name: User
-        * * SQL Data Type: nvarchar(100)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(100)`),
     Event: z.string().describe(`
         * * Field Name: Event
         * * Display Name: Event
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
     AbstractStatusId_Virtual: z.string().describe(`
         * * Field Name: AbstractStatusId_Virtual
         * * Display Name: Abstract Status Id _ Virtual
-        * * SQL Data Type: nvarchar(255)
-        * * Default Value: null`),
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type AbstractDetailsStagingEntityType = z.infer<typeof AbstractDetailsStagingSchema>;
@@ -548,6 +544,14 @@ export const SessionSchema = z.object({
         * * Display Name: Updated At
         * * SQL Data Type: datetimeoffset
         * * Default Value: getutcdate()`),
+    UserPrompt1: z.string().nullish().describe(`
+        * * Field Name: UserPrompt1
+        * * Display Name: User Prompt 1
+        * * SQL Data Type: nvarchar(MAX)`),
+    UserPrompt2: z.string().nullish().describe(`
+        * * Field Name: UserPrompt2
+        * * Display Name: User Prompt 2
+        * * SQL Data Type: nvarchar(MAX)`),
     Event: z.string().describe(`
         * * Field Name: Event
         * * Display Name: Event
@@ -919,7 +923,6 @@ export class AbstractDetailsStagingEntity extends BaseEntity<AbstractDetailsStag
     * * Field Name: Session
     * * Display Name: Session
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get Session(): string {
         return this.Get('Session');
@@ -929,7 +932,6 @@ export class AbstractDetailsStagingEntity extends BaseEntity<AbstractDetailsStag
     * * Field Name: User
     * * Display Name: User
     * * SQL Data Type: nvarchar(100)
-    * * Default Value: null
     */
     get User(): string {
         return this.Get('User');
@@ -939,7 +941,6 @@ export class AbstractDetailsStagingEntity extends BaseEntity<AbstractDetailsStag
     * * Field Name: Event
     * * Display Name: Event
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get Event(): string {
         return this.Get('Event');
@@ -949,7 +950,6 @@ export class AbstractDetailsStagingEntity extends BaseEntity<AbstractDetailsStag
     * * Field Name: AbstractStatusId_Virtual
     * * Display Name: Abstract Status Id _ Virtual
     * * SQL Data Type: nvarchar(255)
-    * * Default Value: null
     */
     get AbstractStatusId_Virtual(): string {
         return this.Get('AbstractStatusId_Virtual');
@@ -2088,6 +2088,30 @@ export class SessionEntity extends BaseEntity<SessionEntityType> {
     */
     get __mj_UpdatedAt(): Date {
         return this.Get('__mj_UpdatedAt');
+    }
+
+    /**
+    * * Field Name: UserPrompt1
+    * * Display Name: User Prompt 1
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get UserPrompt1(): string | null {
+        return this.Get('UserPrompt1');
+    }
+    set UserPrompt1(value: string | null) {
+        this.Set('UserPrompt1', value);
+    }
+
+    /**
+    * * Field Name: UserPrompt2
+    * * Display Name: User Prompt 2
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get UserPrompt2(): string | null {
+        return this.Get('UserPrompt2');
+    }
+    set UserPrompt2(value: string | null) {
+        this.Set('UserPrompt2', value);
     }
 
     /**
