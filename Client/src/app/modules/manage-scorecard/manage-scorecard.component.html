@@ -1,1 +1,32 @@
-<p>manage-scorecard works!</p>
+<div class="heading-row">
+    <div class="title">Scorecard Details</div>
+    <div class="add-scorecard">
+      <button class="add-scorecard-btn" (click)="openCreateScorecardDialog()">Add New Scorecard</button>
+    </div>
+  </div>
+  
+  <div class="scorecard-details-container">
+    <table mat-table [dataSource]="scores" class="table-main">
+      <!-- Scorecard Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="scorecard-header"> Name </th>
+        <td mat-cell *matCellDef="let scorecard" class="scorecard-cell"> {{scorecard.name}} </td>
+      </ng-container>
+  
+      <!-- Scorecard Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef class="scorecard-header"> Description </th>
+        <td mat-cell *matCellDef="let scorecard" class="scorecard-cell"> {{scorecard.description}} </td>
+      </ng-container>
+  
+      <!-- Cut Off Score Column -->
+      <ng-container matColumnDef="cutoffScore">
+        <th mat-header-cell *matHeaderCellDef class="scorecard-header"> Cut Off Score </th>
+        <td mat-cell *matCellDef="let scorecard" class="scorecard-cell"> {{scorecard.cutoffScore}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let scorecard; columns: displayedColumns;" (click)="viewScoreboardDetails(scorecard)" style="cursor: pointer;">
+      </tr>
+    </table>
+  </div>
