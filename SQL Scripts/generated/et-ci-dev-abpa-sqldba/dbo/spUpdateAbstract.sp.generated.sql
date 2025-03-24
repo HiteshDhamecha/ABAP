@@ -18,8 +18,9 @@ CREATE PROCEDURE [dbo].[spUpdateAbstract]
     @SessionID uniqueidentifier,
     @UserID uniqueidentifier,
     @YearOfExp int,
-    @AbstractText nvarchar(MAX),
-    @UploadUrl nvarchar(500)
+    @AbstractText nvarchar(4000),
+    @UploadUrl nvarchar(500),
+    @FileName nvarchar(200)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -30,7 +31,8 @@ BEGIN
         [UserID] = @UserID,
         [YearOfExp] = @YearOfExp,
         [AbstractText] = @AbstractText,
-        [UploadUrl] = @UploadUrl
+        [UploadUrl] = @UploadUrl,
+        [FileName] = @FileName
     WHERE
         [ID] = @ID
 

@@ -3,7 +3,7 @@
   <div class="add-event">
     <button class="edit-event-btn" *ngIf="!editMode" (click)="onEditEvent()">Edit</button>
     <button class="edit-event-btn" *ngIf="editMode" (click)="onSaveEvent()">Save</button>
-    <button class="add-new-session-btn edit-event-btn"> Add New Session</button>
+    <button class="add-new-session-btn edit-event-btn" (click)="openCreateSessionDialog()"> Add New Session</button>
   </div>
 </div>
 <div class="event-details-container">

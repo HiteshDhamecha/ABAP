@@ -15,6 +15,8 @@ import { AbstractDetailsStagingEntity } from 'mj_generatedentities';
             FieldName="AbstractID"
             Type="textbox"
             [EditMode]="EditMode"
+            LinkType="Record"
+            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -22,6 +24,8 @@ import { AbstractDetailsStagingEntity } from 'mj_generatedentities';
             FieldName="SessionID"
             Type="textbox"
             [EditMode]="EditMode"
+            LinkType="Record"
+            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -29,6 +33,8 @@ import { AbstractDetailsStagingEntity } from 'mj_generatedentities';
             FieldName="UserID"
             Type="textbox"
             [EditMode]="EditMode"
+            LinkType="Record"
+            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -64,6 +70,8 @@ import { AbstractDetailsStagingEntity } from 'mj_generatedentities';
             FieldName="EventID"
             Type="textbox"
             [EditMode]="EditMode"
+            LinkType="Record"
+            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -132,15 +140,19 @@ import { AbstractDetailsStagingEntity } from 'mj_generatedentities';
             [record]="record"
             [ShowLabel]="true"
             FieldName="AbstractResultID"
-            Type="numerictextbox"
+            Type="textbox"
             [EditMode]="EditMode"
+            LinkType="Record"
+            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
             FieldName="AbstractStatusId"
-            Type="numerictextbox"
+            Type="textbox"
             [EditMode]="EditMode"
+            LinkType="Record"
+            LinkComponentType="Search"
         ></mj-form-field>
         <mj-form-field 
             [record]="record"
@@ -160,6 +172,34 @@ import { AbstractDetailsStagingEntity } from 'mj_generatedentities';
             [record]="record"
             [ShowLabel]="true"
             FieldName="__mj_UpdatedAt"
+            Type="textbox"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="Session"
+            Type="textbox"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="User"
+            Type="textbox"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="Event"
+            Type="textbox"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
+            FieldName="AbstractStatusId_Virtual"
             Type="textbox"
             [EditMode]="EditMode"
         ></mj-form-field>

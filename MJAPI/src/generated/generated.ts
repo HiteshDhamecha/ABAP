@@ -18,7 +18,7 @@ import { DataSource } from 'typeorm';
 import * as mj_core_schema_server_object_types from '@memberjunction/server'
 
 
-import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, UserPersonalDetailsEntity, AbstractEntity, SessionEntity, ReviewCriteriaEntity, EventEntity, AbstractDetailsStagingEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
+import { AbstractLogsEntity, AbstractResultEntity, EmailTemplateEntity, ScoreBoardEntity, UserPersonalDetailsEntity, SessionEntity, ReviewCriteriaEntity, EventEntity, AbstractEntity, AbstractDetailsStagingEntity, AbstractStatusEntity, SessionScoreBoardEntity } from 'mj_generatedentities';
     
 
 //****************************************************************************
@@ -222,6 +222,9 @@ export class AbstractResult_ {
     @MaxLength(510)
     AbstractStatusId_Virtual: string;
         
+    @Field(() => [AbstractDetailsStaging_])
+    AbstractDetailsStagings_AbstractResultIDArray: AbstractDetailsStaging_[]; // Link to AbstractDetailsStagings
+    
     @Field(() => [AbstractLogs_])
     AbstractLogs_AbstractResultIdArray: AbstractLogs_[]; // Link to AbstractLogs
     
@@ -326,6 +329,15 @@ export class AbstractResultResolver extends ResolverBase {
         return result;
     }
     
+    @FieldResolver(() => [AbstractDetailsStaging_])
+    async AbstractDetailsStagings_AbstractResultIDArray(@Root() abstractresult_: AbstractResult_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Abstract Details Stagings', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstractDetailsStagings] WHERE [AbstractResultID]='${abstractresult_.ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Details Stagings', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Abstract Details Stagings', await dataSource.query(sSQL));
+        return result;
+    }
+        
     @FieldResolver(() => [AbstractLogs_])
     async AbstractLogs_AbstractResultIdArray(@Root() abstractresult_: AbstractResult_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
         this.CheckUserReadPermissions('Abstract Logs', userPayload);
@@ -877,177 +889,6 @@ export class UserPersonalDetailsResolver extends ResolverBase {
 }
 
 //****************************************************************************
-// ENTITY CLASS for Abstracts
-//****************************************************************************
-@ObjectType()
-export class Abstract_ {
-    @Field() 
-    @MaxLength(16)
-    ID: string;
-        
-    @Field() 
-    @MaxLength(16)
-    SessionID: string;
-        
-    @Field() 
-    @MaxLength(16)
-    UserID: string;
-        
-    @Field(() => Int, {nullable: true}) 
-    YearOfExp?: number;
-        
-    @Field({nullable: true}) 
-    AbstractText?: string;
-        
-    @Field({nullable: true}) 
-    @MaxLength(1000)
-    UploadUrl?: string;
-        
-    @Field() 
-    @MaxLength(10)
-    _mj__CreatedAt: Date;
-        
-    @Field() 
-    @MaxLength(10)
-    _mj__UpdatedAt: Date;
-        
-}
-
-//****************************************************************************
-// INPUT TYPE for Abstracts
-//****************************************************************************
-@InputType()
-export class CreateAbstractInput {
-    @Field({ nullable: true })
-    SessionID?: string;
-
-    @Field({ nullable: true })
-    UserID?: string;
-
-    @Field(() => Int, { nullable: true })
-    YearOfExp: number | null;
-
-    @Field({ nullable: true })
-    AbstractText: string | null;
-
-    @Field({ nullable: true })
-    UploadUrl: string | null;
-}
-    
-
-//****************************************************************************
-// INPUT TYPE for Abstracts
-//****************************************************************************
-@InputType()
-export class UpdateAbstractInput {
-    @Field()
-    ID: string;
-
-    @Field({ nullable: true })
-    SessionID?: string;
-
-    @Field({ nullable: true })
-    UserID?: string;
-
-    @Field(() => Int, { nullable: true })
-    YearOfExp?: number | null;
-
-    @Field({ nullable: true })
-    AbstractText?: string | null;
-
-    @Field({ nullable: true })
-    UploadUrl?: string | null;
-
-    @Field(() => [KeyValuePairInput], { nullable: true })
-    OldValues___?: KeyValuePairInput[];
-}
-    
-//****************************************************************************
-// RESOLVER for Abstracts
-//****************************************************************************
-@ObjectType()
-export class RunAbstractViewResult {
-    @Field(() => [Abstract_])
-    Results: Abstract_[];
-
-    @Field(() => String, {nullable: true})
-    UserViewRunID?: string;
-
-    @Field(() => Int, {nullable: true})
-    RowCount: number;
-
-    @Field(() => Int, {nullable: true})
-    TotalRowCount: number;
-
-    @Field(() => Int, {nullable: true})
-    ExecutionTime: number;
-
-    @Field({nullable: true})
-    ErrorMessage?: string;
-
-    @Field(() => Boolean, {nullable: false})
-    Success: boolean;
-}
-
-@Resolver(Abstract_)
-export class AbstractResolver extends ResolverBase {
-    @Query(() => RunAbstractViewResult)
-    async RunAbstractViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
-        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
-        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
-    }
-
-    @Query(() => RunAbstractViewResult)
-    async RunAbstractViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
-        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
-        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
-    }
-
-    @Query(() => RunAbstractViewResult)
-    async RunAbstractDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
-        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
-        input.EntityName = 'Abstracts';
-        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
-    }
-    @Query(() => Abstract_, { nullable: true })
-    async Abstract(@Arg('ID', () => String) ID: string, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<Abstract_ | null> {
-        this.CheckUserReadPermissions('Abstracts', userPayload);
-        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
-        const sSQL = `SELECT * FROM [dbo].[vwAbstracts] WHERE [ID]='${ID}' ` + this.getRowLevelSecurityWhereClause('Abstracts', userPayload, EntityPermissionType.Read, 'AND');
-        const result = this.MapFieldNamesToCodeNames('Abstracts', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
-        return result;
-    }
-    
-    @Mutation(() => Abstract_)
-    async CreateAbstract(
-        @Arg('input', () => CreateAbstractInput) input: CreateAbstractInput,
-        @Ctx() { dataSources, userPayload }: AppContext,
-        @PubSub() pubSub: PubSubEngine
-    ) {
-        const dataSource = GetReadWriteDataSource(dataSources);
-        return this.CreateRecord('Abstracts', input, dataSource, userPayload, pubSub)
-    }
-        
-    @Mutation(() => Abstract_)
-    async UpdateAbstract(
-        @Arg('input', () => UpdateAbstractInput) input: UpdateAbstractInput,
-        @Ctx() { dataSources, userPayload }: AppContext,
-        @PubSub() pubSub: PubSubEngine
-    ) {
-        const dataSource = GetReadWriteDataSource(dataSources);
-        return this.UpdateRecord('Abstracts', input, dataSource, userPayload, pubSub);
-    }
-    
-    @Mutation(() => Abstract_)
-    async DeleteAbstract(@Arg('ID', () => String) ID: string, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
-        const dataSource = GetReadWriteDataSource(dataSources);
-        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
-        return this.DeleteRecord('Abstracts', key, options, dataSource, userPayload, pubSub);
-    }
-    
-}
-
-//****************************************************************************
 // ENTITY CLASS for Sessions
 //****************************************************************************
 @ObjectType()
@@ -1104,6 +945,9 @@ export class Session_ {
         
     @Field(() => [SessionScoreBoard_])
     SessionScoreBoards_SessionIdArray: SessionScoreBoard_[]; // Link to SessionScoreBoards
+    
+    @Field(() => [AbstractDetailsStaging_])
+    AbstractDetailsStagings_SessionIDArray: AbstractDetailsStaging_[]; // Link to AbstractDetailsStagings
     
 }
 
@@ -1242,6 +1086,15 @@ export class SessionResolver extends ResolverBase {
         const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
         const sSQL = `SELECT * FROM [dbo].[vwSessionScoreBoards] WHERE [SessionId]='${session_.ID}' ` + this.getRowLevelSecurityWhereClause('Session Score Boards', userPayload, EntityPermissionType.Read, 'AND');
         const result = this.ArrayMapFieldNamesToCodeNames('Session Score Boards', await dataSource.query(sSQL));
+        return result;
+    }
+        
+    @FieldResolver(() => [AbstractDetailsStaging_])
+    async AbstractDetailsStagings_SessionIDArray(@Root() session_: Session_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Abstract Details Stagings', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstractDetailsStagings] WHERE [SessionID]='${session_.ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Details Stagings', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Abstract Details Stagings', await dataSource.query(sSQL));
         return result;
     }
         
@@ -1475,6 +1328,9 @@ export class Event_ {
     @Field(() => [Session_])
     Sessions_EventIDArray: Session_[]; // Link to Sessions
     
+    @Field(() => [AbstractDetailsStaging_])
+    AbstractDetailsStagings_EventIDArray: AbstractDetailsStaging_[]; // Link to AbstractDetailsStagings
+    
 }
 
 //****************************************************************************
@@ -1585,6 +1441,15 @@ export class EventResolver extends ResolverBase {
         return result;
     }
         
+    @FieldResolver(() => [AbstractDetailsStaging_])
+    async AbstractDetailsStagings_EventIDArray(@Root() event_: Event_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Abstract Details Stagings', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstractDetailsStagings] WHERE [EventID]='${event_.ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Details Stagings', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Abstract Details Stagings', await dataSource.query(sSQL));
+        return result;
+    }
+        
     @Mutation(() => Event_)
     async CreateEvent(
         @Arg('input', () => CreateEventInput) input: CreateEventInput,
@@ -1615,10 +1480,533 @@ export class EventResolver extends ResolverBase {
 }
 
 //****************************************************************************
+// ENTITY CLASS for Abstracts
+//****************************************************************************
+@ObjectType()
+export class Abstract_ {
+    @Field() 
+    @MaxLength(16)
+    ID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    SessionID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    UserID: string;
+        
+    @Field(() => Int, {nullable: true}) 
+    YearOfExp?: number;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8000)
+    AbstractText?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(1000)
+    UploadUrl?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(400)
+    FileName?: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+    @Field(() => [AbstractDetailsStaging_])
+    AbstractDetailsStagings_AbstractIDArray: AbstractDetailsStaging_[]; // Link to AbstractDetailsStagings
+    
+}
+
+//****************************************************************************
+// INPUT TYPE for Abstracts
+//****************************************************************************
+@InputType()
+export class CreateAbstractInput {
+    @Field({ nullable: true })
+    SessionID?: string;
+
+    @Field({ nullable: true })
+    UserID?: string;
+
+    @Field(() => Int, { nullable: true })
+    YearOfExp: number | null;
+
+    @Field({ nullable: true })
+    AbstractText: string | null;
+
+    @Field({ nullable: true })
+    UploadUrl: string | null;
+
+    @Field({ nullable: true })
+    FileName: string | null;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Abstracts
+//****************************************************************************
+@InputType()
+export class UpdateAbstractInput {
+    @Field()
+    ID: string;
+
+    @Field({ nullable: true })
+    SessionID?: string;
+
+    @Field({ nullable: true })
+    UserID?: string;
+
+    @Field(() => Int, { nullable: true })
+    YearOfExp?: number | null;
+
+    @Field({ nullable: true })
+    AbstractText?: string | null;
+
+    @Field({ nullable: true })
+    UploadUrl?: string | null;
+
+    @Field({ nullable: true })
+    FileName?: string | null;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Abstracts
+//****************************************************************************
+@ObjectType()
+export class RunAbstractViewResult {
+    @Field(() => [Abstract_])
+    Results: Abstract_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(Abstract_)
+export class AbstractResolver extends ResolverBase {
+    @Query(() => RunAbstractViewResult)
+    async RunAbstractViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunAbstractViewResult)
+    async RunAbstractViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunAbstractViewResult)
+    async RunAbstractDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        input.EntityName = 'Abstracts';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => Abstract_, { nullable: true })
+    async Abstract(@Arg('ID', () => String) ID: string, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<Abstract_ | null> {
+        this.CheckUserReadPermissions('Abstracts', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstracts] WHERE [ID]='${ID}' ` + this.getRowLevelSecurityWhereClause('Abstracts', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Abstracts', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @FieldResolver(() => [AbstractDetailsStaging_])
+    async AbstractDetailsStagings_AbstractIDArray(@Root() abstract_: Abstract_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Abstract Details Stagings', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstractDetailsStagings] WHERE [AbstractID]='${abstract_.ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Details Stagings', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Abstract Details Stagings', await dataSource.query(sSQL));
+        return result;
+    }
+        
+    @Mutation(() => Abstract_)
+    async CreateAbstract(
+        @Arg('input', () => CreateAbstractInput) input: CreateAbstractInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.CreateRecord('Abstracts', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => Abstract_)
+    async UpdateAbstract(
+        @Arg('input', () => UpdateAbstractInput) input: UpdateAbstractInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.UpdateRecord('Abstracts', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => Abstract_)
+    async DeleteAbstract(@Arg('ID', () => String) ID: string, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Abstracts', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
 // ENTITY CLASS for Abstract Details Stagings
 //****************************************************************************
 @ObjectType()
 export class AbstractDetailsStaging_ {
+    @Field() 
+    @MaxLength(16)
+    ID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    AbstractID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    SessionID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    UserID: string;
+        
+    @Field(() => Int, {nullable: true}) 
+    YearOfExp?: number;
+        
+    @Field({nullable: true}) 
+    AbstractText?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    UploadUrl?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(8)
+    AbstractCreatedAt?: Date;
+        
+    @Field() 
+    @MaxLength(16)
+    EventID: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    SessionName?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    EventName?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(200)
+    FirstName?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(200)
+    LastName?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(200)
+    UserTitle?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    UserEmail?: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(200)
+    UserType?: string;
+        
+    @Field(() => Boolean, {nullable: true}) 
+    IsActive?: boolean;
+        
+    @Field({nullable: true}) 
+    @MaxLength(40)
+    PhoneNumber?: string;
+        
+    @Field() 
+    @MaxLength(16)
+    AbstractResultID: string;
+        
+    @Field() 
+    @MaxLength(16)
+    AbstractStatusId: string;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    AbstractStatusName?: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+    @Field() 
+    @MaxLength(510)
+    Session: string;
+        
+    @Field() 
+    @MaxLength(200)
+    User: string;
+        
+    @Field() 
+    @MaxLength(510)
+    Event: string;
+        
+    @Field() 
+    @MaxLength(510)
+    AbstractStatusId_Virtual: string;
+        
+}
+
+//****************************************************************************
+// INPUT TYPE for Abstract Details Stagings
+//****************************************************************************
+@InputType()
+export class CreateAbstractDetailsStagingInput {
+    @Field({ nullable: true })
+    AbstractID?: string;
+
+    @Field({ nullable: true })
+    SessionID?: string;
+
+    @Field({ nullable: true })
+    UserID?: string;
+
+    @Field(() => Int, { nullable: true })
+    YearOfExp: number | null;
+
+    @Field({ nullable: true })
+    AbstractText: string | null;
+
+    @Field({ nullable: true })
+    UploadUrl: string | null;
+
+    @Field({ nullable: true })
+    AbstractCreatedAt: Date | null;
+
+    @Field({ nullable: true })
+    EventID?: string;
+
+    @Field({ nullable: true })
+    SessionName: string | null;
+
+    @Field({ nullable: true })
+    EventName: string | null;
+
+    @Field({ nullable: true })
+    FirstName: string | null;
+
+    @Field({ nullable: true })
+    LastName: string | null;
+
+    @Field({ nullable: true })
+    UserTitle: string | null;
+
+    @Field({ nullable: true })
+    UserEmail: string | null;
+
+    @Field({ nullable: true })
+    UserType: string | null;
+
+    @Field(() => Boolean, { nullable: true })
+    IsActive: boolean | null;
+
+    @Field({ nullable: true })
+    PhoneNumber: string | null;
+
+    @Field({ nullable: true })
+    AbstractResultID?: string;
+
+    @Field({ nullable: true })
+    AbstractStatusId?: string;
+
+    @Field({ nullable: true })
+    AbstractStatusName: string | null;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Abstract Details Stagings
+//****************************************************************************
+@InputType()
+export class UpdateAbstractDetailsStagingInput {
+    @Field()
+    ID: string;
+
+    @Field({ nullable: true })
+    AbstractID?: string;
+
+    @Field({ nullable: true })
+    SessionID?: string;
+
+    @Field({ nullable: true })
+    UserID?: string;
+
+    @Field(() => Int, { nullable: true })
+    YearOfExp?: number | null;
+
+    @Field({ nullable: true })
+    AbstractText?: string | null;
+
+    @Field({ nullable: true })
+    UploadUrl?: string | null;
+
+    @Field({ nullable: true })
+    AbstractCreatedAt?: Date | null;
+
+    @Field({ nullable: true })
+    EventID?: string;
+
+    @Field({ nullable: true })
+    SessionName?: string | null;
+
+    @Field({ nullable: true })
+    EventName?: string | null;
+
+    @Field({ nullable: true })
+    FirstName?: string | null;
+
+    @Field({ nullable: true })
+    LastName?: string | null;
+
+    @Field({ nullable: true })
+    UserTitle?: string | null;
+
+    @Field({ nullable: true })
+    UserEmail?: string | null;
+
+    @Field({ nullable: true })
+    UserType?: string | null;
+
+    @Field(() => Boolean, { nullable: true })
+    IsActive?: boolean | null;
+
+    @Field({ nullable: true })
+    PhoneNumber?: string | null;
+
+    @Field({ nullable: true })
+    AbstractResultID?: string;
+
+    @Field({ nullable: true })
+    AbstractStatusId?: string;
+
+    @Field({ nullable: true })
+    AbstractStatusName?: string | null;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Abstract Details Stagings
+//****************************************************************************
+@ObjectType()
+export class RunAbstractDetailsStagingViewResult {
+    @Field(() => [AbstractDetailsStaging_])
+    Results: AbstractDetailsStaging_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(AbstractDetailsStaging_)
+export class AbstractDetailsStagingResolver extends ResolverBase {
+    @Query(() => RunAbstractDetailsStagingViewResult)
+    async RunAbstractDetailsStagingViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunAbstractDetailsStagingViewResult)
+    async RunAbstractDetailsStagingViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunAbstractDetailsStagingViewResult)
+    async RunAbstractDetailsStagingDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        input.EntityName = 'Abstract Details Stagings';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => AbstractDetailsStaging_, { nullable: true })
+    async AbstractDetailsStaging(@Arg('ID', () => String) ID: string, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<AbstractDetailsStaging_ | null> {
+        this.CheckUserReadPermissions('Abstract Details Stagings', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstractDetailsStagings] WHERE [ID]='${ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Details Stagings', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Abstract Details Stagings', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @Mutation(() => AbstractDetailsStaging_)
+    async CreateAbstractDetailsStaging(
+        @Arg('input', () => CreateAbstractDetailsStagingInput) input: CreateAbstractDetailsStagingInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.CreateRecord('Abstract Details Stagings', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => AbstractDetailsStaging_)
+    async UpdateAbstractDetailsStaging(
+        @Arg('input', () => UpdateAbstractDetailsStagingInput) input: UpdateAbstractDetailsStagingInput,
+        @Ctx() { dataSources, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        return this.UpdateRecord('Abstract Details Stagings', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => AbstractDetailsStaging_)
+    async DeleteAbstractDetailsStaging(@Arg('ID', () => String) ID: string, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const dataSource = GetReadWriteDataSource(dataSources);
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Abstract Details Stagings', key, options, dataSource, userPayload, pubSub);
+    }
+    
 }
 
 //****************************************************************************
@@ -1644,6 +2032,9 @@ export class AbstractStatus_ {
         
     @Field(() => [AbstractResult_])
     AbstractResults_AbstractStatusIdArray: AbstractResult_[]; // Link to AbstractResults
+    
+    @Field(() => [AbstractDetailsStaging_])
+    AbstractDetailsStagings_AbstractStatusIdArray: AbstractDetailsStaging_[]; // Link to AbstractDetailsStagings
     
 }
 
@@ -1734,6 +2125,15 @@ export class AbstractStatusResolver extends ResolverBase {
         const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
         const sSQL = `SELECT * FROM [dbo].[vwAbstractResults] WHERE [AbstractStatusId]='${abstractstatus_.ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Results', userPayload, EntityPermissionType.Read, 'AND');
         const result = this.ArrayMapFieldNamesToCodeNames('Abstract Results', await dataSource.query(sSQL));
+        return result;
+    }
+        
+    @FieldResolver(() => [AbstractDetailsStaging_])
+    async AbstractDetailsStagings_AbstractStatusIdArray(@Root() abstractstatus_: AbstractStatus_, @Ctx() { dataSources, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Abstract Details Stagings', userPayload);
+        const dataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+        const sSQL = `SELECT * FROM [dbo].[vwAbstractDetailsStagings] WHERE [AbstractStatusId]='${abstractstatus_.ID}' ` + this.getRowLevelSecurityWhereClause('Abstract Details Stagings', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Abstract Details Stagings', await dataSource.query(sSQL));
         return result;
     }
         

@@ -125,7 +125,7 @@
             "Name": "AI Models",
             "Description": "Catalog of all AI Models configured in the system",
             "BaseView": "vwAIModels", 
-            "Fields": ["ID","Name","Description","Vendor","AIModelTypeID","PowerRank","IsActive","DriverClass","DriverImportPath","APIName","__mj_CreatedAt","__mj_UpdatedAt","AIModelType","SpeedRank","CostRank","ModelSelectionInsights","InputTokenLimit","SupportedResponseFormats"]
+            "Fields": ["ID","Name","Description","Vendor","AIModelTypeID","PowerRank","IsActive","DriverClass","DriverImportPath","APIName","__mj_CreatedAt","__mj_UpdatedAt","SpeedRank","CostRank","ModelSelectionInsights","InputTokenLimit","SupportedResponseFormats","AIModelType"]
         },
         { 
             "Name": "AI Prompt Categories",
@@ -143,7 +143,7 @@
             "Name": "AI Prompts",
             "Description": "Stores AI prompts, including references to categories, types, and templates.",
             "BaseView": "vwAIPrompts", 
-            "Fields": ["ID","Name","Description","TemplateID","CategoryID","TypeID","Status","CacheResults","CacheExpiration","__mj_CreatedAt","__mj_UpdatedAt","ResponseFormat","Template","ModelSpecificResponseFormat","Category","Type"]
+            "Fields": ["ID","Name","Description","TemplateID","CategoryID","TypeID","Status","CacheResults","CacheExpiration","__mj_CreatedAt","__mj_UpdatedAt","ResponseFormat","ModelSpecificResponseFormat","Template","Category","Type"]
         },
         { 
             "Name": "AI Result Cache",
@@ -179,7 +179,7 @@
             "Name": "Audit Logs",
             "Description": "",
             "BaseView": "vwAuditLogs", 
-            "Fields": ["ID","UserID","AuditLogTypeID","AuthorizationID","Status","Description","Details","EntityID","RecordID","__mj_CreatedAt","__mj_UpdatedAt","User","Entity","AuditLogType","Authorization"]
+            "Fields": ["ID","UserID","AuditLogTypeID","AuthorizationID","Status","Description","Details","EntityID","RecordID","__mj_CreatedAt","__mj_UpdatedAt","User","AuditLogType","Authorization","Entity"]
         },
         { 
             "Name": "Authorization Roles",
@@ -215,7 +215,7 @@
             "Name": "Communication Providers",
             "Description": "All supported communication providers.",
             "BaseView": "vwCommunicationProviders", 
-            "Fields": ["ID","Name","Description","Status","SupportsSending","SupportsReceiving","__mj_CreatedAt","__mj_UpdatedAt","SupportsScheduledSending"]
+            "Fields": ["ID","Name","Description","Status","SupportsSending","SupportsReceiving","__mj_CreatedAt","__mj_UpdatedAt","SupportsScheduledSending","SupportsForwarding","SupportsReplying"]
         },
         { 
             "Name": "Communication Runs",
@@ -353,7 +353,7 @@
             "Name": "Data Context Items",
             "Description": "Data Context Items store information about each item within a Data Context. Each item stores a link to a view, query, or raw sql statement and can optionally cache the JSON representing the last run of that data object as well.",
             "BaseView": "vwDataContextItems", 
-            "Fields": ["ID","DataContextID","Type","ViewID","QueryID","EntityID","RecordID","SQL","DataJSON","LastRefreshedAt","__mj_CreatedAt","__mj_UpdatedAt","DataContext","Description","View","Query","Entity"]
+            "Fields": ["ID","DataContextID","Type","ViewID","QueryID","EntityID","RecordID","SQL","DataJSON","LastRefreshedAt","__mj_CreatedAt","__mj_UpdatedAt","Description","DataContext","View","Query","Entity"]
         },
         { 
             "Name": "Data Contexts",
@@ -365,7 +365,7 @@
             "Name": "Dataset Items",
             "Description": "A single item in a Dataset and can be sourced from multiple methods.",
             "BaseView": "vwDatasetItems", 
-            "Fields": ["ID","Code","DatasetID","Sequence","EntityID","WhereClause","DateFieldToCheck","Description","__mj_CreatedAt","__mj_UpdatedAt","Columns","Entity","Dataset"]
+            "Fields": ["ID","Code","DatasetID","Sequence","EntityID","WhereClause","DateFieldToCheck","Description","__mj_CreatedAt","__mj_UpdatedAt","Columns","Dataset","Entity"]
         },
         { 
             "Name": "Datasets",
@@ -419,7 +419,7 @@
             "Name": "Entities",
             "Description": "Catalog of all entities across all schemas",
             "BaseView": "vwEntities", 
-            "Fields": ["ID","ParentID","Name","NameSuffix","Description","AutoUpdateDescription","BaseTable","BaseView","BaseViewGenerated","SchemaName","VirtualEntity","TrackRecordChanges","AuditRecordAccess","AuditViewRuns","IncludeInAPI","AllowAllRowsAPI","AllowUpdateAPI","AllowCreateAPI","AllowDeleteAPI","CustomResolverAPI","AllowUserSearchAPI","FullTextSearchEnabled","FullTextCatalog","FullTextCatalogGenerated","FullTextIndex","FullTextIndexGenerated","FullTextSearchFunction","FullTextSearchFunctionGenerated","UserViewMaxRows","spCreate","spUpdate","spDelete","spCreateGenerated","spUpdateGenerated","spDeleteGenerated","CascadeDeletes","DeleteType","AllowRecordMerge","spMatch","RelationshipDefaultDisplayType","UserFormGenerated","EntityObjectSubclassName","EntityObjectSubclassImport","PreferredCommunicationField","Icon","__mj_CreatedAt","__mj_UpdatedAt","ScopeDefault","CodeName","RowsToPackWithSchema","ClassName","RowsToPackSampleMethod","BaseTableCodeName","RowsToPackSampleCount","ParentEntity","ParentBaseTable","RowsToPackSampleOrder","ParentBaseView"]
+            "Fields": ["ID","ParentID","Name","NameSuffix","Description","AutoUpdateDescription","BaseTable","BaseView","BaseViewGenerated","SchemaName","VirtualEntity","TrackRecordChanges","AuditRecordAccess","AuditViewRuns","IncludeInAPI","AllowAllRowsAPI","AllowUpdateAPI","AllowCreateAPI","AllowDeleteAPI","CustomResolverAPI","AllowUserSearchAPI","FullTextSearchEnabled","FullTextCatalog","FullTextCatalogGenerated","FullTextIndex","FullTextIndexGenerated","FullTextSearchFunction","FullTextSearchFunctionGenerated","UserViewMaxRows","spCreate","spUpdate","spDelete","spCreateGenerated","spUpdateGenerated","spDeleteGenerated","CascadeDeletes","DeleteType","AllowRecordMerge","spMatch","RelationshipDefaultDisplayType","UserFormGenerated","EntityObjectSubclassName","EntityObjectSubclassImport","PreferredCommunicationField","Icon","__mj_CreatedAt","__mj_UpdatedAt","ScopeDefault","RowsToPackWithSchema","RowsToPackSampleMethod","RowsToPackSampleCount","RowsToPackSampleOrder","CodeName","ClassName","BaseTableCodeName","ParentEntity","ParentBaseTable","ParentBaseView"]
         },
         { 
             "Name": "Entity Action Filters",
@@ -503,7 +503,7 @@
             "Name": "Entity Fields",
             "Description": "List of all fields within each entity with metadata about each field",
             "BaseView": "vwEntityFields", 
-            "Fields": ["ID","EntityID","Sequence","Name","DisplayName","Description","AutoUpdateDescription","IsPrimaryKey","IsUnique","Category","Type","Length","Precision","Scale","AllowsNull","DefaultValue","AutoIncrement","ValueListType","ExtendedType","CodeType","DefaultInView","ViewCellTemplate","DefaultColumnWidth","AllowUpdateAPI","AllowUpdateInView","IncludeInUserSearchAPI","FullTextSearchEnabled","UserSearchParamFormatAPI","IncludeInGeneratedForm","GeneratedFormSection","IsVirtual","IsNameField","RelatedEntityID","RelatedEntityFieldName","IncludeRelatedEntityNameFieldInBaseView","RelatedEntityNameFieldMap","RelatedEntityDisplayType","EntityIDFieldName","__mj_CreatedAt","__mj_UpdatedAt","ScopeDefault","Entity","SchemaName","AutoUpdateRelatedEntityInfo","ValuesToPackWithSchema","BaseTable","BaseView","EntityCodeName","EntityClassName","RelatedEntity","RelatedEntitySchemaName","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityCodeName","RelatedEntityClassName"]
+            "Fields": ["ID","EntityID","Sequence","Name","DisplayName","Description","AutoUpdateDescription","IsPrimaryKey","IsUnique","Category","Type","Length","Precision","Scale","AllowsNull","DefaultValue","AutoIncrement","ValueListType","ExtendedType","CodeType","DefaultInView","ViewCellTemplate","DefaultColumnWidth","AllowUpdateAPI","AllowUpdateInView","IncludeInUserSearchAPI","FullTextSearchEnabled","UserSearchParamFormatAPI","IncludeInGeneratedForm","GeneratedFormSection","IsVirtual","IsNameField","RelatedEntityID","RelatedEntityFieldName","IncludeRelatedEntityNameFieldInBaseView","RelatedEntityNameFieldMap","RelatedEntityDisplayType","EntityIDFieldName","__mj_CreatedAt","__mj_UpdatedAt","ScopeDefault","AutoUpdateRelatedEntityInfo","ValuesToPackWithSchema","GeneratedValidationFunctionName","GeneratedValidationFunctionDescription","GeneratedValidationFunctionCode","GeneratedValidationFunctionCheckConstraint","FieldCodeName","Entity","SchemaName","BaseTable","BaseView","EntityCodeName","EntityClassName","RelatedEntity","RelatedEntitySchemaName","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityCodeName","RelatedEntityClassName"]
         },
         { 
             "Name": "Entity Permissions",
@@ -527,7 +527,7 @@
             "Name": "Entity Relationships",
             "Description": "Metadata about relationships between entities including display preferences for the UI",
             "BaseView": "vwEntityRelationships", 
-            "Fields": ["ID","EntityID","Sequence","RelatedEntityID","BundleInAPI","IncludeInParentAllQuery","Type","EntityKeyField","RelatedEntityJoinField","JoinView","JoinEntityJoinField","JoinEntityInverseJoinField","DisplayInForm","DisplayLocation","DisplayName","DisplayIconType","DisplayIcon","DisplayUserViewID","DisplayComponentID","DisplayComponentConfiguration","__mj_CreatedAt","__mj_UpdatedAt","Entity","AutoUpdateFromSchema","EntityBaseTable","EntityBaseView","RelatedEntity","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityClassName","RelatedEntityCodeName","RelatedEntityBaseTableCodeName","DisplayUserViewName"]
+            "Fields": ["ID","EntityID","Sequence","RelatedEntityID","BundleInAPI","IncludeInParentAllQuery","Type","EntityKeyField","RelatedEntityJoinField","JoinView","JoinEntityJoinField","JoinEntityInverseJoinField","DisplayInForm","DisplayLocation","DisplayName","DisplayIconType","DisplayIcon","DisplayUserViewID","DisplayComponentID","DisplayComponentConfiguration","__mj_CreatedAt","__mj_UpdatedAt","AutoUpdateFromSchema","Entity","EntityBaseTable","EntityBaseView","RelatedEntity","RelatedEntityBaseTable","RelatedEntityBaseView","RelatedEntityClassName","RelatedEntityCodeName","RelatedEntityBaseTableCodeName","DisplayUserViewName"]
         },
         { 
             "Name": "Entity Settings",
@@ -617,7 +617,7 @@
             "Name": "List Details",
             "Description": "Tracks the records within each list.",
             "BaseView": "vwListDetails", 
-            "Fields": ["ID","ListID","RecordID","Sequence","__mj_CreatedAt","__mj_UpdatedAt","Status","List","AdditionalData"]
+            "Fields": ["ID","ListID","RecordID","Sequence","__mj_CreatedAt","__mj_UpdatedAt","Status","AdditionalData","List"]
         },
         { 
             "Name": "Lists",
@@ -845,7 +845,7 @@
             "Name": "Template Params",
             "Description": "Parameters allowed for use inside the template",
             "BaseView": "vwTemplateParams", 
-            "Fields": ["ID","TemplateID","Name","Description","Type","DefaultValue","IsRequired","LinkedParameterName","LinkedParameterField","ExtraFilter","EntityID","RecordID","__mj_CreatedAt","__mj_UpdatedAt","Template","OrderBy","Entity"]
+            "Fields": ["ID","TemplateID","Name","Description","Type","DefaultValue","IsRequired","LinkedParameterName","LinkedParameterField","ExtraFilter","EntityID","RecordID","__mj_CreatedAt","__mj_UpdatedAt","OrderBy","Template","Entity"]
         },
         { 
             "Name": "Templates",
@@ -893,7 +893,7 @@
             "Name": "User View Categories",
             "Description": "",
             "BaseView": "vwUserViewCategories", 
-            "Fields": ["ID","Name","Description","ParentID","EntityID","UserID","__mj_CreatedAt","__mj_UpdatedAt","Parent","User","Entity"]
+            "Fields": ["ID","Name","Description","ParentID","EntityID","UserID","__mj_CreatedAt","__mj_UpdatedAt","Parent","Entity","User"]
         },
         { 
             "Name": "User View Run Details",

@@ -16,6 +16,19 @@
                         </mj-form-section>
                     </mj-tab-body>
                     
+                    <mj-tab Name="Abstract Details Stagings" [Visible]="record.IsSaved"> 
+                        Abstract Details Stagings
+                    </mj-tab>
+                    <mj-tab-body>
+                        <mj-user-view-grid 
+                            [Params]="BuildRelationshipViewParamsByEntityName('Abstract Details Stagings','AbstractResultID')"  
+                            [NewRecordValues]="NewRecordValues('Abstract Details Stagings')"
+                            [AllowLoad]="IsCurrentTab('Abstract Details Stagings')"  
+                            [EditMode]="GridEditMode()"  
+                            [BottomMargin]="GridBottomMargin">
+                        </mj-user-view-grid>                    
+                    </mj-tab-body>
+
                     <mj-tab Name="Abstract Logs" [Visible]="record.IsSaved"> 
                         Abstract Logs
                     </mj-tab>

@@ -49,6 +49,7 @@ import { ManageAbstractDetailsComponent } from './modules/manage-abstract-detail
 import { ViewEventComponent } from './modules/view-event/view-event.component';
 import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component';
 import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
+import { CreateSessionDialogComponent } from './components/create-session-dialog/create-session-dialog.component';
 
 
 
@@ -63,7 +64,8 @@ import { SessionDetailsComponent } from './modules/manage-event/session-details/
     ViewEventComponent,
     ManageAbstractDetailsComponent,
     ViewDetailsComponent,
-    SessionDetailsComponent
+    SessionDetailsComponent,
+    CreateSessionDialogComponent
   ],
   imports: [
     MatDialogModule,

@@ -5,7 +5,181 @@
             "Name": "Abstract Details Stagings",
             "Description": "",
             "BaseView": "vwAbstractDetailsStagings", 
-            "Fields": [        
+            "Fields": [         
+                {
+                    "Name": "ID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Abstracts",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "SessionID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Sessions",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "UserID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Users",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "YearOfExp", 
+                    "Description": "",  
+                    "Type": "int",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractText", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UploadUrl", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractCreatedAt", 
+                    "Description": "",  
+                    "Type": "datetime",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "EventID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Events",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "SessionName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "EventName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "FirstName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "LastName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserTitle", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserEmail", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "UserType", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "IsActive", 
+                    "Description": "",  
+                    "Type": "bit",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "PhoneNumber", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "AbstractResultID", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Abstract Results",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractStatusId", 
+                    "Description": "",  
+                    "Type": "uniqueidentifier",
+                "RelatedEntity": "Abstract Status",
+                "RelatedEntityFieldName": "ID",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractStatusName", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "__mj_CreatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "__mj_UpdatedAt", 
+                    "Description": "",  
+                    "Type": "datetimeoffset",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Session", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "User", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "Event", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                },         
+                {
+                    "Name": "AbstractStatusId_Virtual", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": false 
+                }        
             ]
         },
         { 
@@ -192,6 +366,12 @@
                 },         
                 {
                     "Name": "UploadUrl", 
+                    "Description": "",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
+                    "Name": "FileName", 
                     "Description": "",  
                     "Type": "nvarchar",
                     "AllowsNull": true 

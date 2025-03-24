@@ -26,6 +26,7 @@ import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 
 // Import Generated Components
+import { AbstractDetailsStagingFormComponent, LoadAbstractDetailsStagingFormComponent } from "./Entities/AbstractDetailsStaging/abstractdetailsstaging.form.component";
 import { AbstractLogsFormComponent, LoadAbstractLogsFormComponent } from "./Entities/AbstractLogs/abstractlogs.form.component";
 import { AbstractResultFormComponent, LoadAbstractResultFormComponent } from "./Entities/AbstractResult/abstractresult.form.component";
 import { AbstractStatusFormComponent, LoadAbstractStatusFormComponent } from "./Entities/AbstractStatus/abstractstatus.form.component";
@@ -37,6 +38,7 @@ import { ScoreBoardFormComponent, LoadScoreBoardFormComponent } from "./Entities
 import { SessionScoreBoardFormComponent, LoadSessionScoreBoardFormComponent } from "./Entities/SessionScoreBoard/sessionscoreboard.form.component";
 import { SessionFormComponent, LoadSessionFormComponent } from "./Entities/Session/session.form.component";
 import { UserPersonalDetailsFormComponent, LoadUserPersonalDetailsFormComponent } from "./Entities/UserPersonalDetails/userpersonaldetails.form.component";
+import { AbstractDetailsStagingDetailsComponent, LoadAbstractDetailsStagingDetailsComponent } from "./Entities/AbstractDetailsStaging/sections/details.component"
 import { AbstractLogsDetailsComponent, LoadAbstractLogsDetailsComponent } from "./Entities/AbstractLogs/sections/details.component"
 import { AbstractResultDetailsComponent, LoadAbstractResultDetailsComponent } from "./Entities/AbstractResult/sections/details.component"
 import { AbstractStatusDetailsComponent, LoadAbstractStatusDetailsComponent } from "./Entities/AbstractStatus/sections/details.component"
@@ -52,6 +54,7 @@ import { UserPersonalDetailsDetailsComponent, LoadUserPersonalDetailsDetailsComp
 
 @NgModule({
 declarations: [
+    AbstractDetailsStagingFormComponent,
     AbstractLogsFormComponent,
     AbstractResultFormComponent,
     AbstractStatusFormComponent,
@@ -63,15 +66,14 @@ declarations: [
     SessionScoreBoardFormComponent,
     SessionFormComponent,
     UserPersonalDetailsFormComponent,
+    AbstractDetailsStagingDetailsComponent,
     AbstractLogsDetailsComponent,
     AbstractResultDetailsComponent,
     AbstractStatusDetailsComponent,
     AbstractDetailsComponent,
     EmailTemplateDetailsComponent,
     EventDetailsComponent,
-    ReviewCriteriaDetailsComponent,
-    ScoreBoardDetailsComponent,
-    SessionScoreBoardDetailsComponent],
+    ReviewCriteriaDetailsComponent],
 imports: [
     CommonModule,
     FormsModule,
@@ -98,6 +100,8 @@ export class GeneratedForms_SubModule_0 { }
 
 @NgModule({
 declarations: [
+    ScoreBoardDetailsComponent,
+    SessionScoreBoardDetailsComponent,
     SessionDetailsComponent,
     UserPersonalDetailsDetailsComponent],
 imports: [
@@ -139,6 +143,7 @@ export function LoadGeneratedForms() {
     // code do NOTHING - the point is to prevent the code from being eliminated during tree shaking
     // since it is dynamically instantiated on demand, and the Angular compiler has no way to know that,
     // in production builds tree shaking will eliminate the code unless we do this
+    LoadAbstractDetailsStagingFormComponent();
     LoadAbstractLogsFormComponent();
     LoadAbstractResultFormComponent();
     LoadAbstractStatusFormComponent();
@@ -150,6 +155,7 @@ export function LoadGeneratedForms() {
     LoadSessionScoreBoardFormComponent();
     LoadSessionFormComponent();
     LoadUserPersonalDetailsFormComponent();
+    LoadAbstractDetailsStagingDetailsComponent();
     LoadAbstractLogsDetailsComponent();
     LoadAbstractResultDetailsComponent();
     LoadAbstractStatusDetailsComponent();

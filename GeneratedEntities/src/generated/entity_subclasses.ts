@@ -9,6 +9,135 @@ export const loadModule = () => {
      
  
 /**
+ * zod schema definition for the entity Abstract Details Stagings
+ */
+export const AbstractDetailsStagingSchema = z.object({
+    ID: z.string().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: uniqueidentifier
+        * * Default Value: newid()`),
+    AbstractID: z.string().describe(`
+        * * Field Name: AbstractID
+        * * Display Name: Abstract ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Abstracts (vwAbstracts.ID)`),
+    SessionID: z.string().describe(`
+        * * Field Name: SessionID
+        * * Display Name: Session ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Sessions (vwSessions.ID)`),
+    UserID: z.string().describe(`
+        * * Field Name: UserID
+        * * Display Name: User ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Users (vwUsers.ID)`),
+    YearOfExp: z.number().nullish().describe(`
+        * * Field Name: YearOfExp
+        * * Display Name: Year Of Exp
+        * * SQL Data Type: int`),
+    AbstractText: z.string().nullish().describe(`
+        * * Field Name: AbstractText
+        * * Display Name: Abstract Text
+        * * SQL Data Type: nvarchar(MAX)`),
+    UploadUrl: z.string().nullish().describe(`
+        * * Field Name: UploadUrl
+        * * Display Name: Upload Url
+        * * SQL Data Type: nvarchar(255)`),
+    AbstractCreatedAt: z.date().nullish().describe(`
+        * * Field Name: AbstractCreatedAt
+        * * Display Name: Abstract Created At
+        * * SQL Data Type: datetime`),
+    EventID: z.string().describe(`
+        * * Field Name: EventID
+        * * Display Name: Event ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Events (vwEvents.ID)`),
+    SessionName: z.string().nullish().describe(`
+        * * Field Name: SessionName
+        * * Display Name: Session Name
+        * * SQL Data Type: nvarchar(255)`),
+    EventName: z.string().nullish().describe(`
+        * * Field Name: EventName
+        * * Display Name: Event Name
+        * * SQL Data Type: nvarchar(255)`),
+    FirstName: z.string().nullish().describe(`
+        * * Field Name: FirstName
+        * * Display Name: First Name
+        * * SQL Data Type: nvarchar(100)`),
+    LastName: z.string().nullish().describe(`
+        * * Field Name: LastName
+        * * Display Name: Last Name
+        * * SQL Data Type: nvarchar(100)`),
+    UserTitle: z.string().nullish().describe(`
+        * * Field Name: UserTitle
+        * * Display Name: User Title
+        * * SQL Data Type: nvarchar(100)`),
+    UserEmail: z.string().nullish().describe(`
+        * * Field Name: UserEmail
+        * * Display Name: User Email
+        * * SQL Data Type: nvarchar(255)`),
+    UserType: z.string().nullish().describe(`
+        * * Field Name: UserType
+        * * Display Name: User Type
+        * * SQL Data Type: nvarchar(100)`),
+    IsActive: z.boolean().nullish().describe(`
+        * * Field Name: IsActive
+        * * Display Name: Is Active
+        * * SQL Data Type: bit`),
+    PhoneNumber: z.string().nullish().describe(`
+        * * Field Name: PhoneNumber
+        * * Display Name: Phone Number
+        * * SQL Data Type: nvarchar(20)`),
+    AbstractResultID: z.string().describe(`
+        * * Field Name: AbstractResultID
+        * * Display Name: Abstract Result ID
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Abstract Results (vwAbstractResults.ID)`),
+    AbstractStatusId: z.string().describe(`
+        * * Field Name: AbstractStatusId
+        * * Display Name: Abstract Status Id
+        * * SQL Data Type: uniqueidentifier
+        * * Related Entity/Foreign Key: Abstract Status (vwAbstractStatus.ID)`),
+    AbstractStatusName: z.string().nullish().describe(`
+        * * Field Name: AbstractStatusName
+        * * Display Name: Abstract Status Name
+        * * SQL Data Type: nvarchar(255)`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    Session: z.string().describe(`
+        * * Field Name: Session
+        * * Display Name: Session
+        * * SQL Data Type: nvarchar(255)
+        * * Default Value: null`),
+    User: z.string().describe(`
+        * * Field Name: User
+        * * Display Name: User
+        * * SQL Data Type: nvarchar(100)
+        * * Default Value: null`),
+    Event: z.string().describe(`
+        * * Field Name: Event
+        * * Display Name: Event
+        * * SQL Data Type: nvarchar(255)
+        * * Default Value: null`),
+    AbstractStatusId_Virtual: z.string().describe(`
+        * * Field Name: AbstractStatusId_Virtual
+        * * Display Name: Abstract Status Id _ Virtual
+        * * SQL Data Type: nvarchar(255)
+        * * Default Value: null`),
+});
+
+export type AbstractDetailsStagingEntityType = z.infer<typeof AbstractDetailsStagingSchema>;
+
+/**
  * zod schema definition for the entity Abstract Logs
  */
 export const AbstractLogsSchema = z.object({
@@ -149,11 +278,15 @@ export const AbstractSchema = z.object({
     AbstractText: z.string().nullish().describe(`
         * * Field Name: AbstractText
         * * Display Name: Abstract Text
-        * * SQL Data Type: nvarchar(MAX)`),
+        * * SQL Data Type: nvarchar(4000)`),
     UploadUrl: z.string().nullish().describe(`
         * * Field Name: UploadUrl
         * * Display Name: Upload Url
         * * SQL Data Type: nvarchar(500)`),
+    FileName: z.string().nullish().describe(`
+        * * Field Name: FileName
+        * * Display Name: File Name
+        * * SQL Data Type: nvarchar(200)`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -476,6 +609,353 @@ export const UserPersonalDetailsSchema = z.object({
 export type UserPersonalDetailsEntityType = z.infer<typeof UserPersonalDetailsSchema>;
  
  
+
+/**
+ * Abstract Details Stagings - strongly typed entity sub-class
+ * * Schema: dbo
+ * * Base Table: AbstractDetailsStaging
+ * * Base View: vwAbstractDetailsStagings
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'Abstract Details Stagings')
+export class AbstractDetailsStagingEntity extends BaseEntity<AbstractDetailsStagingEntityType> {
+    /**
+    * Loads the Abstract Details Stagings record from the database
+    * @param ID: string - primary key value to load the Abstract Details Stagings record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof AbstractDetailsStagingEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: string, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: uniqueidentifier
+    * * Default Value: newid()
+    */
+    get ID(): string {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: AbstractID
+    * * Display Name: Abstract ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Abstracts (vwAbstracts.ID)
+    */
+    get AbstractID(): string {
+        return this.Get('AbstractID');
+    }
+    set AbstractID(value: string) {
+        this.Set('AbstractID', value);
+    }
+
+    /**
+    * * Field Name: SessionID
+    * * Display Name: Session ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Sessions (vwSessions.ID)
+    */
+    get SessionID(): string {
+        return this.Get('SessionID');
+    }
+    set SessionID(value: string) {
+        this.Set('SessionID', value);
+    }
+
+    /**
+    * * Field Name: UserID
+    * * Display Name: User ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Users (vwUsers.ID)
+    */
+    get UserID(): string {
+        return this.Get('UserID');
+    }
+    set UserID(value: string) {
+        this.Set('UserID', value);
+    }
+
+    /**
+    * * Field Name: YearOfExp
+    * * Display Name: Year Of Exp
+    * * SQL Data Type: int
+    */
+    get YearOfExp(): number | null {
+        return this.Get('YearOfExp');
+    }
+    set YearOfExp(value: number | null) {
+        this.Set('YearOfExp', value);
+    }
+
+    /**
+    * * Field Name: AbstractText
+    * * Display Name: Abstract Text
+    * * SQL Data Type: nvarchar(MAX)
+    */
+    get AbstractText(): string | null {
+        return this.Get('AbstractText');
+    }
+    set AbstractText(value: string | null) {
+        this.Set('AbstractText', value);
+    }
+
+    /**
+    * * Field Name: UploadUrl
+    * * Display Name: Upload Url
+    * * SQL Data Type: nvarchar(255)
+    */
+    get UploadUrl(): string | null {
+        return this.Get('UploadUrl');
+    }
+    set UploadUrl(value: string | null) {
+        this.Set('UploadUrl', value);
+    }
+
+    /**
+    * * Field Name: AbstractCreatedAt
+    * * Display Name: Abstract Created At
+    * * SQL Data Type: datetime
+    */
+    get AbstractCreatedAt(): Date | null {
+        return this.Get('AbstractCreatedAt');
+    }
+    set AbstractCreatedAt(value: Date | null) {
+        this.Set('AbstractCreatedAt', value);
+    }
+
+    /**
+    * * Field Name: EventID
+    * * Display Name: Event ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Events (vwEvents.ID)
+    */
+    get EventID(): string {
+        return this.Get('EventID');
+    }
+    set EventID(value: string) {
+        this.Set('EventID', value);
+    }
+
+    /**
+    * * Field Name: SessionName
+    * * Display Name: Session Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get SessionName(): string | null {
+        return this.Get('SessionName');
+    }
+    set SessionName(value: string | null) {
+        this.Set('SessionName', value);
+    }
+
+    /**
+    * * Field Name: EventName
+    * * Display Name: Event Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get EventName(): string | null {
+        return this.Get('EventName');
+    }
+    set EventName(value: string | null) {
+        this.Set('EventName', value);
+    }
+
+    /**
+    * * Field Name: FirstName
+    * * Display Name: First Name
+    * * SQL Data Type: nvarchar(100)
+    */
+    get FirstName(): string | null {
+        return this.Get('FirstName');
+    }
+    set FirstName(value: string | null) {
+        this.Set('FirstName', value);
+    }
+
+    /**
+    * * Field Name: LastName
+    * * Display Name: Last Name
+    * * SQL Data Type: nvarchar(100)
+    */
+    get LastName(): string | null {
+        return this.Get('LastName');
+    }
+    set LastName(value: string | null) {
+        this.Set('LastName', value);
+    }
+
+    /**
+    * * Field Name: UserTitle
+    * * Display Name: User Title
+    * * SQL Data Type: nvarchar(100)
+    */
+    get UserTitle(): string | null {
+        return this.Get('UserTitle');
+    }
+    set UserTitle(value: string | null) {
+        this.Set('UserTitle', value);
+    }
+
+    /**
+    * * Field Name: UserEmail
+    * * Display Name: User Email
+    * * SQL Data Type: nvarchar(255)
+    */
+    get UserEmail(): string | null {
+        return this.Get('UserEmail');
+    }
+    set UserEmail(value: string | null) {
+        this.Set('UserEmail', value);
+    }
+
+    /**
+    * * Field Name: UserType
+    * * Display Name: User Type
+    * * SQL Data Type: nvarchar(100)
+    */
+    get UserType(): string | null {
+        return this.Get('UserType');
+    }
+    set UserType(value: string | null) {
+        this.Set('UserType', value);
+    }
+
+    /**
+    * * Field Name: IsActive
+    * * Display Name: Is Active
+    * * SQL Data Type: bit
+    */
+    get IsActive(): boolean | null {
+        return this.Get('IsActive');
+    }
+    set IsActive(value: boolean | null) {
+        this.Set('IsActive', value);
+    }
+
+    /**
+    * * Field Name: PhoneNumber
+    * * Display Name: Phone Number
+    * * SQL Data Type: nvarchar(20)
+    */
+    get PhoneNumber(): string | null {
+        return this.Get('PhoneNumber');
+    }
+    set PhoneNumber(value: string | null) {
+        this.Set('PhoneNumber', value);
+    }
+
+    /**
+    * * Field Name: AbstractResultID
+    * * Display Name: Abstract Result ID
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Abstract Results (vwAbstractResults.ID)
+    */
+    get AbstractResultID(): string {
+        return this.Get('AbstractResultID');
+    }
+    set AbstractResultID(value: string) {
+        this.Set('AbstractResultID', value);
+    }
+
+    /**
+    * * Field Name: AbstractStatusId
+    * * Display Name: Abstract Status Id
+    * * SQL Data Type: uniqueidentifier
+    * * Related Entity/Foreign Key: Abstract Status (vwAbstractStatus.ID)
+    */
+    get AbstractStatusId(): string {
+        return this.Get('AbstractStatusId');
+    }
+    set AbstractStatusId(value: string) {
+        this.Set('AbstractStatusId', value);
+    }
+
+    /**
+    * * Field Name: AbstractStatusName
+    * * Display Name: Abstract Status Name
+    * * SQL Data Type: nvarchar(255)
+    */
+    get AbstractStatusName(): string | null {
+        return this.Get('AbstractStatusName');
+    }
+    set AbstractStatusName(value: string | null) {
+        this.Set('AbstractStatusName', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
+    }
+
+    /**
+    * * Field Name: Session
+    * * Display Name: Session
+    * * SQL Data Type: nvarchar(255)
+    * * Default Value: null
+    */
+    get Session(): string {
+        return this.Get('Session');
+    }
+
+    /**
+    * * Field Name: User
+    * * Display Name: User
+    * * SQL Data Type: nvarchar(100)
+    * * Default Value: null
+    */
+    get User(): string {
+        return this.Get('User');
+    }
+
+    /**
+    * * Field Name: Event
+    * * Display Name: Event
+    * * SQL Data Type: nvarchar(255)
+    * * Default Value: null
+    */
+    get Event(): string {
+        return this.Get('Event');
+    }
+
+    /**
+    * * Field Name: AbstractStatusId_Virtual
+    * * Display Name: Abstract Status Id _ Virtual
+    * * SQL Data Type: nvarchar(255)
+    * * Default Value: null
+    */
+    get AbstractStatusId_Virtual(): string {
+        return this.Get('AbstractStatusId_Virtual');
+    }
+}
+
 
 /**
  * Abstract Logs - strongly typed entity sub-class
@@ -868,7 +1348,7 @@ export class AbstractEntity extends BaseEntity<AbstractEntityType> {
     /**
     * * Field Name: AbstractText
     * * Display Name: Abstract Text
-    * * SQL Data Type: nvarchar(MAX)
+    * * SQL Data Type: nvarchar(4000)
     */
     get AbstractText(): string | null {
         return this.Get('AbstractText');
@@ -887,6 +1367,18 @@ export class AbstractEntity extends BaseEntity<AbstractEntityType> {
     }
     set UploadUrl(value: string | null) {
         this.Set('UploadUrl', value);
+    }
+
+    /**
+    * * Field Name: FileName
+    * * Display Name: File Name
+    * * SQL Data Type: nvarchar(200)
+    */
+    get FileName(): string | null {
+        return this.Get('FileName');
+    }
+    set FileName(value: string | null) {
+        this.Set('FileName', value);
     }
 
     /**
