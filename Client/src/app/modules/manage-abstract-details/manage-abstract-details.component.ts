@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Metadata, RunView, LogStatus } from '@memberjunction/core';
+import { Metadata, RunView, LogStatus, RunQuery } from '@memberjunction/core';
 
 interface AbstractDetails {
   id: string;
@@ -38,7 +38,7 @@ export class ManageAbstractDetailsComponent implements OnInit {
         let decodedSpeakerName = decodeURIComponent(speakerName).trim();
         let cleanedSpeakerName = [...new Set(decodedSpeakerName.split(' '))].join(' ');
 
-        console.log("🔹 Decoded Speaker Name (Cleaned):", cleanedSpeakerName);
+        console.log("Decoded Speaker Name (Cleaned):", cleanedSpeakerName);
 
         await this.loadAbstractDetails(cleanedSpeakerName);
       }
@@ -47,18 +47,20 @@ export class ManageAbstractDetailsComponent implements OnInit {
 
   async loadAbstractDetails(speakerName: string) {
     try {
-      console.log("🔹 Fetching Abstract Details...");
-      const rv = new RunView();
-      const result = await rv.RunView({
-        EntityName: 'Abstracts'
-      });
+      console.log("Fetching Abstract Details...");
+      const rv = new RunQuery();
+            const result = await rv.RunQuery({
+              QueryID: 'D1E2F3A4-B5C6-7890-1234-56789ABCDEF1',
+              QueryName: 'Abstract Details Query'
+            });
+      
 
-      console.log("🔹 API Response:", result);
+      console.log("API Response:", result);
 
       if (result.Success) {
         // Debugging: Log each record in API response
         result.Results.forEach((item: any) => {
-          console.log(`🔍 Checking: ${item.FirstName} ${item.LastName} | ${item.Email}`);
+          console.log(`Checking: ${item.FirstName} ${item.LastName} | ${item.Email}`);
         });
 
         // Find a matching abstract
@@ -70,14 +72,14 @@ export class ManageAbstractDetailsComponent implements OnInit {
             `${item?.FirstName} ${item?.LastName}`.trim().toLowerCase() === speakerName.toLowerCase()
         );
 
-        console.log("🔹 Matching Abstract:", matchingAbstract);
+        console.log("Matching Abstract:", matchingAbstract);
 
         if (matchingAbstract) {
           const parsedDetails = this.parseAbstractText(matchingAbstract.AbstractText);
           console.log("🔹 Parsed Details:", parsedDetails);
 
           this.abstractDetails = {
-            id: matchingAbstract.ID || '',
+            id: matchingAbstract.AbstractID || '',
             firstName: matchingAbstract.FirstName || '',
             lastName: matchingAbstract.LastName || '',
             email: matchingAbstract.Email || '',
@@ -89,50 +91,56 @@ export class ManageAbstractDetailsComponent implements OnInit {
             speakingExperiences: parsedDetails.speakingExperiences
           };
 
-          console.log("✅ Abstract Details Set:", this.abstractDetails);
+          console.log("Abstract Details Set:", this.abstractDetails);
         } else {
-          console.log("⚠️ No matching abstract found for speaker:", speakerName);
+          console.log("No matching abstract found for speaker:", speakerName);
         }
       } else {
-        console.log("⚠️ API Call Failed.");
+        console.log(" API Call Failed.");
       }
     } catch (error) {
-      console.error("❌ Error fetching abstract details:", error);
+      console.error("Error fetching abstract details:", error);
     }
   }
 
   parseAbstractText(abstractText: string) {
     if (!abstractText) {
-      return { summary: 'No summary available.', speakingExperiences: [] };
+        return { summary: 'No summary available.', speakingExperiences: [] };
     }
 
-    console.log("🔹 Raw Abstract Text:", abstractText);
+    console.log("Raw Abstract Text:", abstractText);
 
-    const sections = abstractText.split('Previous Speaking Experiences –');
+    // Ensure different formatting variations are handled
+    const sections = abstractText.split(/Previous Speaking Experiences\s*[-–]?/i);
+    
     const summary = sections[0]?.trim() || '';
 
     const speakingExperiences: { title: string; description: string }[] = [];
-    if (sections[1]) {
-      const experiences = sections[1]
-        .split(/\d+\./) // Splitting on numbered points (e.g., "1.", "2.", etc.)
-        .map(exp => exp.trim())
-        .filter(exp => exp.length > 0);
 
-      experiences.forEach(exp => {
-        const firstLineEndIndex = exp.indexOf('\n');
-        if (firstLineEndIndex !== -1) {
-          const title = exp.substring(0, firstLineEndIndex).trim();
-          const description = exp.substring(firstLineEndIndex + 1).trim();
-          speakingExperiences.push({ title, description });
-        } else {
-          speakingExperiences.push({ title: exp, description: '' });
-        }
-      });
+    if (sections.length > 1) {
+        // Extract experiences based on numbered points
+        const experienceEntries = sections[1]
+            .split(/\n\d+\.\s+/) // Split numbered list (e.g., "1. ", "2. ")
+            .map(exp => exp.trim())
+            .filter(exp => exp.length > 0);
+
+        experienceEntries.forEach(exp => {
+            const firstLineEndIndex = exp.indexOf('\n');
+            if (firstLineEndIndex !== -1) {
+                const title = exp.substring(0, firstLineEndIndex).trim();
+                const description = exp.substring(firstLineEndIndex + 1).trim();
+                speakingExperiences.push({ title, description });
+            } else {
+                speakingExperiences.push({ title: exp, description: '' });
+            }
+        });
     }
 
     console.log("🔹 Parsed Summary:", summary);
     console.log("🔹 Parsed Speaking Experiences:", speakingExperiences);
 
     return { summary, speakingExperiences };
-  }
+}
+
+
 }
