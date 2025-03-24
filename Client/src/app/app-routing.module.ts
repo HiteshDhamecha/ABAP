@@ -12,6 +12,7 @@ import { ViewEventComponent } from './modules/view-event/view-event.component'; 
 import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component'; // Corrected import path
 import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
 import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abstract-form.component';
+import { ScorecardDetailsComponent } from './modules/manage-scorecard/scorecard-details/scorecard-details.component';
 
 const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
   if (!Metadata.Provider) {
@@ -44,6 +45,11 @@ const routes: Routes = [
   {
     path: 'manage-scorecard',
     component: ManageScorecardComponent,
+  },
+  {
+    path: 'scoreboard-details/:id',
+    component: ScorecardDetailsComponent,
+    canActivate: [AuthGuard, MJProviderSet]
   },
   {
     path: 'event-details/:id',

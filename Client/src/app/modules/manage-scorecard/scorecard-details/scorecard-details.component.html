@@ -1,0 +1,15 @@
+<div class="heading-row">
+    <div class="title">Scorecard Details</div>
+    <div class="add-criteria">
+      <button class="add-criteria-btn">Add New Criteria</button>
+    </div>
+  </div>
+  <div class="scorecard-details-container">
+    <div *ngIf="scorecard">
+      <h2>{{ scorecard.Name }}</h2>
+      <div class="scorecard-description">{{ scorecard.Description }}</div>
+    </div>
+    <div *ngIf="!scorecard">
+      <p>Loading scorecard details...</p>
+    </div>
+  </div>
