@@ -44,7 +44,10 @@ jobs:
           AUTH0_DOMAIN: '${{ secrets.AUTH0_DOMAIN }}',
           AUTH0_CLIENT_SECRET: '${{ secrets.AUTH0_CLIENT_SECRET }}',
           AUTH0_CLIENTID: '${{ secrets.AUTH0_CLIENTID }}',
-          TOKEN_CACHE_KEY: '${{ secrets.TOKEN_CACHE_KEY }}'
+          TOKEN_CACHE_KEY: '${{ secrets.TOKEN_CACHE_KEY }}',
+          SAS_TOKEN: '${{ secrets.SAS_TOKEN }}',
+          STORAGE_ACCT:'${{ secrets.STORAGE_ACCT }}',
+          CONTAINER:'${{ secrets.CONTAINER }}'
           };
           EOF
         working-directory: Client
