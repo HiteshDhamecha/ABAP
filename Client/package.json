@@ -67,7 +67,6 @@
     "assert": "^2.1.0",
     "axios": "^1.7.9",
     "chart.js": "^4.4.3",
-    "custom-server-entities": "file:../CustomServerEntities",
     "d3": "^7.9.0",
     "eva-icons": "^1.1.3",
     "hammerjs": "^2.0.0",
