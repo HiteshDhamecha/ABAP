@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LogStatus, Metadata, RunView, RunViewResult } from '@memberjunction/core';
+import { LogStatus, Metadata, RunView, RunViewResult,RunQuery } from '@memberjunction/core';
 import { EventEntity, SessionEntityType } from 'mj_generatedentities';
 import { CreateSessionDialogComponent } from 'src/app/components/create-session-dialog/create-session-dialog.component';
 
@@ -19,7 +19,6 @@ export class EventDetailsComponent implements OnInit {
   editMode: boolean = false;
   eventForm: FormGroup;
   md = new Metadata();
-
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, public dialog: MatDialog) {
     this.eventForm = this.fb.group({
@@ -39,6 +38,7 @@ export class EventDetailsComponent implements OnInit {
       await this.loadSessionDetails();
     }
   }
+
   openCreateSessionDialog(): void {
     const dialogRef = this.dialog.open(CreateSessionDialogComponent, {
       width: '350px',
@@ -95,6 +95,12 @@ export class EventDetailsComponent implements OnInit {
  async getSessionEntity(eventId: string): Promise<SessionEntityType[] | null> {
     try {
       const rv = new RunView();
+      const rq = new RunQuery();
+      // const results = await rq.RunQuery({
+      //   QueryID: 'D1E2F3A4-B5C6-7890-1234-56789ABCDEF1',
+      //   QueryName: 'Abstract Details Query'
+      // });
+      // console.log('RunQuery result:', results); // Log the result of RunQuery
       const result: RunViewResult<SessionEntityType> = await rv.RunView<SessionEntityType>({
         EntityName: 'Sessions',
         Fields: ['ID', 'EventID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title'],
@@ -122,6 +128,7 @@ export class EventDetailsComponent implements OnInit {
   async getEventEntity(eventId: string): Promise<EventEntity | null> {
     try {
       const rv = new RunView();
+     
       const result: RunViewResult<EventEntity> = await rv.RunView<EventEntity>({
         EntityName: 'Events',
         Fields: ['ID', 'Name', 'EventStartDate', 'EventEndDate', 'Description'],
