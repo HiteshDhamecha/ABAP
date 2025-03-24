@@ -379,36 +379,6 @@ type AIResultCache_ {
   _mj__UpdatedAt: Timestamp!
 }
 
-type AbstractDetailsStaging_ {
-  AbstractCreatedAt: Timestamp
-  AbstractID: String!
-  AbstractResultID: String!
-  AbstractStatusId: String!
-  AbstractStatusId_Virtual: String!
-  AbstractStatusName: String
-  AbstractText: String
-  Event: String!
-  EventID: String!
-  EventName: String
-  FirstName: String
-  ID: String!
-  IsActive: Boolean
-  LastName: String
-  PhoneNumber: String
-  Session: String!
-  SessionID: String!
-  SessionName: String
-  UploadUrl: String
-  User: String!
-  UserEmail: String
-  UserID: String!
-  UserTitle: String
-  UserType: String
-  YearOfExp: Int
-  _mj__CreatedAt: Timestamp!
-  _mj__UpdatedAt: Timestamp!
-}
-
 type AbstractLogs_ {
   AIAgentId: String!
   AIAgentId_Virtual: String
@@ -421,7 +391,6 @@ type AbstractLogs_ {
 }
 
 type AbstractResult_ {
-  AbstractDetailsStagings_AbstractResultIDArray: [AbstractDetailsStaging_!]!
   AbstractID: String!
   AbstractLogs_AbstractResultIdArray: [AbstractLogs_!]!
   AbstractStatusId: String!
@@ -434,7 +403,6 @@ type AbstractResult_ {
 }
 
 type AbstractStatus_ {
-  AbstractDetailsStagings_AbstractStatusIdArray: [AbstractDetailsStaging_!]!
   AbstractResults_AbstractStatusIdArray: [AbstractResult_!]!
   ID: String!
   Name: String!
@@ -443,9 +411,7 @@ type AbstractStatus_ {
 }
 
 type Abstract_ {
-  AbstractDetailsStagings_AbstractIDArray: [AbstractDetailsStaging_!]!
   AbstractText: String
-  FileName: String
   ID: String!
   SessionID: String!
   UploadUrl: String
@@ -1439,32 +1405,8 @@ input CreateAIResultCacheInput {
   Status: String
 }
 
-input CreateAbstractDetailsStagingInput {
-  AbstractCreatedAt: Timestamp
-  AbstractID: String
-  AbstractResultID: String
-  AbstractStatusId: String
-  AbstractStatusName: String
-  AbstractText: String
-  EventID: String
-  EventName: String
-  FirstName: String
-  IsActive: Boolean
-  LastName: String
-  PhoneNumber: String
-  SessionID: String
-  SessionName: String
-  UploadUrl: String
-  UserEmail: String
-  UserID: String
-  UserTitle: String
-  UserType: String
-  YearOfExp: Int
-}
-
 input CreateAbstractInput {
   AbstractText: String
-  FileName: String
   SessionID: String
   UploadUrl: String
   UserID: String
@@ -2457,13 +2399,6 @@ input CreateResourcePermissionInput {
   UserID: String
 }
 
-input CreateReviewCriteriaInput {
-  Description: String
-  Name: String
-  ScoreBoardID: String
-  Weightage: Int
-}
-
 input CreateRoleInput {
   Description: String
   DirectoryID: String
@@ -2613,15 +2548,6 @@ input CreateUserNotificationInput {
   ResourceTypeID: String
   Title: String
   Unread: Boolean
-  UserID: String
-}
-
-input CreateUserPersonalDetailsInput {
-  Affiliation: String
-  JobTitle: String
-  PhoneNumber: String
-  PreviousSpeakingExperiences: String
-  SocialMediaLinks: String
   UserID: String
 }
 
@@ -3766,7 +3692,6 @@ type ErrorLog_ {
 }
 
 type Event_ {
-  AbstractDetailsStagings_EventIDArray: [AbstractDetailsStaging_!]!
   Description: String
   EventEndDate: Timestamp
   EventStartDate: Timestamp
@@ -4138,7 +4063,6 @@ type Mutation {
   CreateAIPromptType(input: CreateAIPromptTypeInput!): AIPromptType_!
   CreateAIResultCache(input: CreateAIResultCacheInput!): AIResultCache_!
   CreateAbstract(input: CreateAbstractInput!): Abstract_!
-  CreateAbstractDetailsStaging(input: CreateAbstractDetailsStagingInput!): AbstractDetailsStaging_!
   CreateAbstractLogs(input: CreateAbstractLogsInput!): AbstractLogs_!
   CreateAbstractResult(input: CreateAbstractResultInput!): AbstractResult_!
   CreateAbstractStatus(input: CreateAbstractStatusInput!): AbstractStatus_!
@@ -4242,7 +4166,6 @@ type Mutation {
   CreateReportSnapshot(input: CreateReportSnapshotInput!): ReportSnapshot_!
   CreateResourceLink(input: CreateResourceLinkInput!): ResourceLink_!
   CreateResourcePermission(input: CreateResourcePermissionInput!): ResourcePermission_!
-  CreateReviewCriteria(input: CreateReviewCriteriaInput!): ReviewCriteria_!
   CreateRole(input: CreateRoleInput!): Role_!
   CreateScheduledAction(input: CreateScheduledActionInput!): ScheduledAction_!
   CreateScheduledActionParam(input: CreateScheduledActionParamInput!): ScheduledActionParam_!
@@ -4260,7 +4183,6 @@ type Mutation {
   CreateUserApplicationEntity(input: CreateUserApplicationEntityInput!): UserApplicationEntity_!
   CreateUserFavorite(input: CreateUserFavoriteInput!): UserFavorite_!
   CreateUserNotification(input: CreateUserNotificationInput!): UserNotification_!
-  CreateUserPersonalDetails(input: CreateUserPersonalDetailsInput!): UserPersonalDetails_!
   CreateUserRole(input: CreateUserRoleInput!): UserRole_!
   CreateUserView(input: CreateUserViewInput!): UserView_!
   CreateUserViewCategory(input: CreateUserViewCategoryInput!): UserViewCategory_!
@@ -4287,7 +4209,6 @@ type Mutation {
   DeleteAIPromptType(ID: String!, options___: DeleteOptionsInput!): AIPromptType_!
   DeleteAIResultCache(ID: String!, options___: DeleteOptionsInput!): AIResultCache_!
   DeleteAbstract(ID: String!, options___: DeleteOptionsInput!): Abstract_!
-  DeleteAbstractDetailsStaging(ID: String!, options___: DeleteOptionsInput!): AbstractDetailsStaging_!
   DeleteAbstractLogs(ID: String!, options___: DeleteOptionsInput!): AbstractLogs_!
   DeleteAbstractResult(ID: String!, options___: DeleteOptionsInput!): AbstractResult_!
   DeleteAbstractStatus(ID: String!, options___: DeleteOptionsInput!): AbstractStatus_!
@@ -4371,7 +4292,6 @@ type Mutation {
   DeleteReportSnapshot(ID: String!, options___: DeleteOptionsInput!): ReportSnapshot_!
   DeleteResourceLink(ID: String!, options___: DeleteOptionsInput!): ResourceLink_!
   DeleteResourcePermission(ID: String!, options___: DeleteOptionsInput!): ResourcePermission_!
-  DeleteReviewCriteria(ID: String!, options___: DeleteOptionsInput!): ReviewCriteria_!
   DeleteRole(ID: String!, options___: DeleteOptionsInput!): Role_!
   DeleteScheduledAction(ID: String!, options___: DeleteOptionsInput!): ScheduledAction_!
   DeleteScheduledActionParam(ID: String!, options___: DeleteOptionsInput!): ScheduledActionParam_!
@@ -4388,7 +4308,6 @@ type Mutation {
   DeleteUserApplicationEntity(ID: String!, options___: DeleteOptionsInput!): UserApplicationEntity_!
   DeleteUserFavorite(ID: String!, options___: DeleteOptionsInput!): UserFavorite_!
   DeleteUserNotification(ID: String!, options___: DeleteOptionsInput!): UserNotification_!
-  DeleteUserPersonalDetails(ID: String!, options___: DeleteOptionsInput!): UserPersonalDetails_!
   DeleteUserRole(ID: String!, options___: DeleteOptionsInput!): UserRole_!
   DeleteUserView(ID: String!, options___: DeleteOptionsInput!): UserView_!
   DeleteUserViewCategory(ID: String!, options___: DeleteOptionsInput!): UserViewCategory_!
@@ -4420,7 +4339,6 @@ type Mutation {
   UpdateAIPromptType(input: UpdateAIPromptTypeInput!): AIPromptType_!
   UpdateAIResultCache(input: UpdateAIResultCacheInput!): AIResultCache_!
   UpdateAbstract(input: UpdateAbstractInput!): Abstract_!
-  UpdateAbstractDetailsStaging(input: UpdateAbstractDetailsStagingInput!): AbstractDetailsStaging_!
   UpdateAbstractLogs(input: UpdateAbstractLogsInput!): AbstractLogs_!
   UpdateAbstractResult(input: UpdateAbstractResultInput!): AbstractResult_!
   UpdateAbstractStatus(input: UpdateAbstractStatusInput!): AbstractStatus_!
@@ -4530,7 +4448,6 @@ type Mutation {
   UpdateReportSnapshot(input: UpdateReportSnapshotInput!): ReportSnapshot_!
   UpdateResourceLink(input: UpdateResourceLinkInput!): ResourceLink_!
   UpdateResourcePermission(input: UpdateResourcePermissionInput!): ResourcePermission_!
-  UpdateReviewCriteria(input: UpdateReviewCriteriaInput!): ReviewCriteria_!
   UpdateRole(input: UpdateRoleInput!): Role_!
   UpdateScheduledAction(input: UpdateScheduledActionInput!): ScheduledAction_!
   UpdateScheduledActionParam(input: UpdateScheduledActionParamInput!): ScheduledActionParam_!
@@ -4548,7 +4465,6 @@ type Mutation {
   UpdateUserApplicationEntity(input: UpdateUserApplicationEntityInput!): UserApplicationEntity_!
   UpdateUserFavorite(input: UpdateUserFavoriteInput!): UserFavorite_!
   UpdateUserNotification(input: UpdateUserNotificationInput!): UserNotification_!
-  UpdateUserPersonalDetails(input: UpdateUserPersonalDetailsInput!): UserPersonalDetails_!
   UpdateUserRecordLog(input: UpdateUserRecordLogInput!): UserRecordLog_!
   UpdateUserView(input: UpdateUserViewInput!): UserView_!
   UpdateUserViewCategory(input: UpdateUserViewCategoryInput!): UserViewCategory_!
@@ -4641,7 +4557,6 @@ type Query {
   AIPromptType(ID: String!): AIPromptType_
   AIResultCache(ID: String!): AIResultCache_
   Abstract(ID: String!): Abstract_
-  AbstractDetailsStaging(ID: String!): AbstractDetailsStaging_
   AbstractLogs(ID: String!): AbstractLogs_
   AbstractResult(ID: String!): AbstractResult_
   AbstractStatus(ID: String!): AbstractStatus_
@@ -4807,7 +4722,6 @@ type Query {
   ResourceLink(ID: String!): ResourceLink_
   ResourcePermission(ID: String!): ResourcePermission_
   ResourceType(ID: String!): ResourceType_
-  ReviewCriteria(ID: String!): ReviewCriteria_
   Role(ID: String!): Role_
   RowLevelSecurityFilter(ID: String!): RowLevelSecurityFilter_
   RunAIActionDynamicView(input: RunDynamicViewInput!): RunAIActionViewResult!
@@ -4855,9 +4769,6 @@ type Query {
   RunAIResultCacheDynamicView(input: RunDynamicViewInput!): RunAIResultCacheViewResult!
   RunAIResultCacheViewByID(input: RunViewByIDInput!): RunAIResultCacheViewResult!
   RunAIResultCacheViewByName(input: RunViewByNameInput!): RunAIResultCacheViewResult!
-  RunAbstractDetailsStagingDynamicView(input: RunDynamicViewInput!): RunAbstractDetailsStagingViewResult!
-  RunAbstractDetailsStagingViewByID(input: RunViewByIDInput!): RunAbstractDetailsStagingViewResult!
-  RunAbstractDetailsStagingViewByName(input: RunViewByNameInput!): RunAbstractDetailsStagingViewResult!
   RunAbstractDynamicView(input: RunDynamicViewInput!): RunAbstractViewResult!
   RunAbstractLogsDynamicView(input: RunDynamicViewInput!): RunAbstractLogsViewResult!
   RunAbstractLogsViewByID(input: RunViewByIDInput!): RunAbstractLogsViewResult!
@@ -5220,9 +5131,6 @@ type Query {
   RunResourceTypeDynamicView(input: RunDynamicViewInput!): RunResourceTypeViewResult!
   RunResourceTypeViewByID(input: RunViewByIDInput!): RunResourceTypeViewResult!
   RunResourceTypeViewByName(input: RunViewByNameInput!): RunResourceTypeViewResult!
-  RunReviewCriteriaDynamicView(input: RunDynamicViewInput!): RunReviewCriteriaViewResult!
-  RunReviewCriteriaViewByID(input: RunViewByIDInput!): RunReviewCriteriaViewResult!
-  RunReviewCriteriaViewByName(input: RunViewByNameInput!): RunReviewCriteriaViewResult!
   RunRoleDynamicView(input: RunDynamicViewInput!): RunRoleViewResult!
   RunRoleViewByID(input: RunViewByIDInput!): RunRoleViewResult!
   RunRoleViewByName(input: RunViewByNameInput!): RunRoleViewResult!
@@ -5284,9 +5192,6 @@ type Query {
   RunUserNotificationDynamicView(input: RunDynamicViewInput!): RunUserNotificationViewResult!
   RunUserNotificationViewByID(input: RunViewByIDInput!): RunUserNotificationViewResult!
   RunUserNotificationViewByName(input: RunViewByNameInput!): RunUserNotificationViewResult!
-  RunUserPersonalDetailsDynamicView(input: RunDynamicViewInput!): RunUserPersonalDetailsViewResult!
-  RunUserPersonalDetailsViewByID(input: RunViewByIDInput!): RunUserPersonalDetailsViewResult!
-  RunUserPersonalDetailsViewByName(input: RunViewByNameInput!): RunUserPersonalDetailsViewResult!
   RunUserRecordLogDynamicView(input: RunDynamicViewInput!): RunUserRecordLogViewResult!
   RunUserRecordLogViewByID(input: RunViewByIDInput!): RunUserRecordLogViewResult!
   RunUserRecordLogViewByName(input: RunViewByNameInput!): RunUserRecordLogViewResult!
@@ -5359,7 +5264,6 @@ type Query {
   UserFavoriteSearchByParams(params: Int!): [UserFavorite_!]!
   UserFavoritesByUserID(UserID: Int!): [UserFavorite_!]!
   UserNotification(ID: String!): UserNotification_
-  UserPersonalDetails(ID: String!): UserPersonalDetails_
   UserRecordLog(ID: String!): UserRecordLog_
   UserRole(ID: String!): UserRole_
   UserView(ID: String!): UserView_
@@ -5872,17 +5776,6 @@ type ResourceType_ {
   _mj__UpdatedAt: Timestamp!
 }
 
-type ReviewCriteria_ {
-  Description: String
-  ID: String!
-  Name: String
-  ScoreBoard: String
-  ScoreBoardID: String!
-  Weightage: Int!
-  _mj__CreatedAt: Timestamp!
-  _mj__UpdatedAt: Timestamp!
-}
-
 input RoleInputType {
   Description: String
   ID: String!
@@ -6077,16 +5970,6 @@ type RunAIResultCacheViewResult {
   ErrorMessage: String
   ExecutionTime: Int
   Results: [AIResultCache_!]!
-  RowCount: Int
-  Success: Boolean!
-  TotalRowCount: Int
-  UserViewRunID: String
-}
-
-type RunAbstractDetailsStagingViewResult {
-  ErrorMessage: String
-  ExecutionTime: Int
-  Results: [AbstractDetailsStaging_!]!
   RowCount: Int
   Success: Boolean!
   TotalRowCount: Int
@@ -7377,16 +7260,6 @@ type RunResourceTypeViewResult {
   UserViewRunID: String
 }
 
-type RunReviewCriteriaViewResult {
-  ErrorMessage: String
-  ExecutionTime: Int
-  Results: [ReviewCriteria_!]!
-  RowCount: Int
-  Success: Boolean!
-  TotalRowCount: Int
-  UserViewRunID: String
-}
-
 type RunRoleViewResult {
   ErrorMessage: String
   ExecutionTime: Int
@@ -7581,16 +7454,6 @@ type RunUserNotificationViewResult {
   ErrorMessage: String
   ExecutionTime: Int
   Results: [UserNotification_!]!
-  RowCount: Int
-  Success: Boolean!
-  TotalRowCount: Int
-  UserViewRunID: String
-}
-
-type RunUserPersonalDetailsViewResult {
-  ErrorMessage: String
-  ExecutionTime: Int
-  Results: [UserPersonalDetails_!]!
   RowCount: Int
   Success: Boolean!
   TotalRowCount: Int
@@ -8058,8 +7921,6 @@ type ScoreBoard_ {
   Description: String
   ID: String!
   Name: String
-  ReviewCriterias_ScoreBoardIDArray: [ReviewCriteria_!]!
-  SessionScoreBoards_ScoreBoardIdArray: [SessionScoreBoard_!]!
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
 }
@@ -8074,7 +7935,6 @@ type SessionScoreBoard_ {
 }
 
 type Session_ {
-  AbstractDetailsStagings_SessionIDArray: [AbstractDetailsStaging_!]!
   AbstractSubmissionEndDate: Timestamp
   AbstractSubmissionStartDate: Timestamp
   Event: String!
@@ -8559,34 +8419,8 @@ input UpdateAIResultCacheInput {
   Status: String
 }
 
-input UpdateAbstractDetailsStagingInput {
-  AbstractCreatedAt: Timestamp
-  AbstractID: String
-  AbstractResultID: String
-  AbstractStatusId: String
-  AbstractStatusName: String
-  AbstractText: String
-  EventID: String
-  EventName: String
-  FirstName: String
-  ID: String!
-  IsActive: Boolean
-  LastName: String
-  OldValues___: [KeyValuePairInput!]
-  PhoneNumber: String
-  SessionID: String
-  SessionName: String
-  UploadUrl: String
-  UserEmail: String
-  UserID: String
-  UserTitle: String
-  UserType: String
-  YearOfExp: Int
-}
-
 input UpdateAbstractInput {
   AbstractText: String
-  FileName: String
   ID: String!
   OldValues___: [KeyValuePairInput!]
   SessionID: String
@@ -9843,15 +9677,6 @@ input UpdateResourcePermissionInput {
   UserID: String
 }
 
-input UpdateReviewCriteriaInput {
-  Description: String
-  ID: String!
-  Name: String
-  OldValues___: [KeyValuePairInput!]
-  ScoreBoardID: String
-  Weightage: Int
-}
-
 input UpdateRoleInput {
   Description: String
   DirectoryID: String
@@ -10035,17 +9860,6 @@ input UpdateUserNotificationInput {
   ResourceTypeID: String
   Title: String
   Unread: Boolean
-  UserID: String
-}
-
-input UpdateUserPersonalDetailsInput {
-  Affiliation: String
-  ID: String!
-  JobTitle: String
-  OldValues___: [KeyValuePairInput!]
-  PhoneNumber: String
-  PreviousSpeakingExperiences: String
-  SocialMediaLinks: String
   UserID: String
 }
 
@@ -10271,19 +10085,6 @@ type UserNotification_ {
   ResourceTypeID: String
   Title: String
   Unread: Boolean!
-  User: String!
-  UserID: String!
-  _mj__CreatedAt: Timestamp!
-  _mj__UpdatedAt: Timestamp!
-}
-
-type UserPersonalDetails_ {
-  Affiliation: String
-  ID: String!
-  JobTitle: String
-  PhoneNumber: String
-  PreviousSpeakingExperiences: String
-  SocialMediaLinks: String
   User: String!
   UserID: String!
   _mj__CreatedAt: Timestamp!
