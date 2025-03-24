@@ -1,0 +1,93 @@
+<h2 class="title">Fill Abstract</h2>
+<div class="sessionDetails">
+    <h4 class="subTitle">Session Details</h4>
+    <div class="details">
+        <div>
+            <p>Session Name</p>
+            <p>Session Time</p>
+            <p>Session Title</p>
+        </div>
+        <div>
+            <p>{{sessionDetails?.Name}}</p>
+            <p>{{formatSessionTime(sessionDetails?.SessionStartDate, sessionDetails?.SessionEndDate)}}</p>
+            <p>{{sessionDetails?.Title}}</p>
+        </div>
+    </div>
+</div>
+<form [noValidate]="false" class="publish-preview-container" (ngSubmit)="submitAbstract()">
+    <h4 class="subTitle">Personal Details</h4>
+    <div class="publish-preview-form">
+        <div class="publish-preview-group">
+            <label>First Name</label>
+            <input name="firstName" [value]="abstractDetails.firstName" type="text" disabled>
+        </div>
+        <div class="publish-preview-group">
+            <label>Last Name</label>
+            <input name="lastName" [value]="abstractDetails.lastName" type="text" disabled>
+        </div>
+        <div class="publish-preview-group">
+            <label>Email</label>
+            <input name="email" [value]="abstractDetails.email" type="email" disabled>
+        </div>
+        <div class="publish-preview-group">
+            <label>Affiliation</label>
+            <input name="affiliation" [disabled]="submittingForm" maxlength="50" required [(ngModel)]="abstractDetails.affiliation" type="text"
+                placeholder="Enter">
+        </div>
+        <div class="publish-preview-group">
+            <label>Job Title</label>
+            <input name="jobTitle" [disabled]="submittingForm" maxlength="50" required [(ngModel)]="abstractDetails.jobTitle" type="text" placeholder="Enter">
+        </div>
+        <div class="publish-preview-group">
+            <label>Phone Number</label>
+            <input name="phoneNumber" [disabled]="submittingForm" maxlength="20" required [(ngModel)]="abstractDetails.phoneNumber" type="text"
+                placeholder="Enter">
+        </div>
+        <div class="publish-preview-group">
+            <label>Social Media Links</label>
+            <input name="socialLinks" [disabled]="submittingForm" maxlength="4000" required [(ngModel)]="abstractDetails.socialLinks" type="url"
+                placeholder="Enter">
+        </div>
+        <div class="publish-preview-group full-width">
+            <label>Previous Speaking Experiences</label>
+            <textarea name="speakingExperiences" [disabled]="submittingForm" maxlength="4000" required [(ngModel)]="abstractDetails.speakingExperiences"
+                placeholder="Autosize height based on content lines"></textarea>
+        </div>
+    </div>
+
+    <h4 class="subTitle">Submission Details</h4>
+    <div class="publish-preview-form">
+        <div class="publish-preview-group">
+            <label>Topic</label>
+            <input name="topic" [value]="abstractDetails.topic" type="text" disabled>
+        </div>
+        <div class="publish-preview-group full-width">
+            <label>Summary</label>
+            <textarea name="summary" [disabled]="submittingForm" maxlength="4000" required [(ngModel)]="abstractDetails.summary"
+                placeholder="Autosize height based on content lines"></textarea>
+        </div>
+        <div *ngIf="!uploadedFile; else fileInfo" class="fileContainer publish-preview-group full-width">
+            <label for="fileUpload">
+                <span>Attachment</span>
+                <div class="publish-preview-upload">
+                    <i class="fa fa-cloud-upload"></i>
+                    <span>Upload</span>
+                </div>
+            </label>
+            <input name="uploadFile" [disabled]="submittingForm" required type="file" accept="image/*, .doc, .docx, application/pdf" single hidden
+                id="fileUpload" (change)="handleFileInput($event)">
+        </div>
+        <ng-template #fileInfo>
+            <div class="fileContainer">
+                <span>Attachment</span>
+                <div class="fileInfo">
+                    <span>{{uploadedFile.name}}</span>
+                    <i class="fa fa-trash" (click)="removeFile()"></i>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <div class="submitBtnContainer">
+        <button type="submit" [disabled]="submittingForm" class="publish-preview-btn">Submit</button>
+    </div>
+</form>

@@ -2,12 +2,20 @@
 
 <div class="event-details-container" *ngIf="event">
   <div class="event-header">
-    <h2>{{event.Name}}</h2>
-    <p class="event-description" *ngIf="event.Description">{{event.Description}}</p>
-    <p class="event-dates">
-      <span class="date-label">Date:</span> {{event.EventStartDate | date:'dd/MM/yyyy'}}
-    </p>
-    <div class="status-badge">{{ getEventStatus(event) }}</div>
+    <div class="left-side">
+      <h2>{{event.Name}}</h2>
+      <p class="event-description" *ngIf="event.Description">{{event.Description}}</p>
+    </div>
+    <div class="right-side">
+      <p class="event-dates">
+        <span class="date-label">Date:</span> {{event.EventStartDate | date:'dd/MM/yyyy'}}
+      </p>
+      <div [ngClass]="{'status-badge': true,
+              'completed': getEventStatus(event) === 'Completed',
+              'live': getEventStatus(event) === 'Live',
+              'upcoming': getEventStatus(event) === 'Upcoming'
+            }">{{getEventStatus(event)}}</div>
+    </div>
   </div>
 
   <table mat-table [dataSource]="sessions" class="mat-elevation-z8">
@@ -31,10 +39,16 @@
       <td mat-cell *matCellDef="let element"> {{element.topic}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Session Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="abstractStatus">
       <th mat-header-cell *matHeaderCellDef> Abstract Status </th>
       <td mat-cell *matCellDef="let element">
-        <button *ngIf="element.abstractStatus === 'pending'" class="submit-button">Submit Abstract</button>
+        <button (click)="submitAbstract(element.id)" *ngIf="element.abstractStatus === 'pending'"
+          class="submit-button">Submit Abstract</button>
         <div *ngIf="element.abstractStatus === 'submitted'" class="submitted-badge">Submitted</div>
       </td>
     </ng-container>
@@ -43,4 +57,3 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-

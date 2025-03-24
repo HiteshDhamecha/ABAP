@@ -50,6 +50,7 @@ import { ViewEventComponent } from './modules/view-event/view-event.component';
 import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component';
 import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
 import { CreateSessionDialogComponent } from './components/create-session-dialog/create-session-dialog.component';
+import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abstract-form.component';
 
 
 
@@ -64,8 +65,9 @@ import { CreateSessionDialogComponent } from './components/create-session-dialog
     ViewEventComponent,
     ManageAbstractDetailsComponent,
     ViewDetailsComponent,
+    UserAbstractFormComponent,
     SessionDetailsComponent,
-    CreateSessionDialogComponent
+    CreateSessionDialogComponent,
   ],
   imports: [
     MatDialogModule,
