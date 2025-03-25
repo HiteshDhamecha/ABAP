@@ -63,6 +63,10 @@ textarea.input-field {
     padding: 10px 0px;
     border-radius: 8px;
 }
+.dialog-actions button[disabled] {
+    cursor: not-allowed;
+    background-color: #ccc;
+}
 ::placeholder {
     font-family: 'Roboto', sans-serif;
     color:'#6C757D';
