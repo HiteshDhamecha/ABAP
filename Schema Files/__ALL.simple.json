@@ -1035,7 +1035,7 @@
             "Name": "Sessions",
             "Description": "",
             "BaseView": "vwSessions", 
-            "Fields": ["ID","EventID","Name","SessionStartDate","SessionEndDate","WeightedScore","Title","UserPrompt","AbstractSubmissionStartDate","AbstractSubmissionEndDate","__mj_CreatedAt","__mj_UpdatedAt","Event"]
+            "Fields": ["ID","EventID","Name","SessionStartDate","SessionEndDate","WeightedScore","Title","UserPrompt","AbstractSubmissionStartDate","AbstractSubmissionEndDate","__mj_CreatedAt","__mj_UpdatedAt","UserPrompt1","UserPrompt2","Event"]
         },
         { 
             "Name": "User Personal Details",

@@ -23,7 +23,9 @@ CREATE PROCEDURE [dbo].[spUpdateSession]
     @Title nvarchar(200),
     @UserPrompt nvarchar(MAX),
     @AbstractSubmissionStartDate datetime,
-    @AbstractSubmissionEndDate datetime
+    @AbstractSubmissionEndDate datetime,
+    @UserPrompt1 nvarchar(MAX),
+    @UserPrompt2 nvarchar(MAX)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -38,7 +40,9 @@ BEGIN
         [Title] = @Title,
         [UserPrompt] = @UserPrompt,
         [AbstractSubmissionStartDate] = @AbstractSubmissionStartDate,
-        [AbstractSubmissionEndDate] = @AbstractSubmissionEndDate
+        [AbstractSubmissionEndDate] = @AbstractSubmissionEndDate,
+        [UserPrompt1] = @UserPrompt1,
+        [UserPrompt2] = @UserPrompt2
     WHERE
         [ID] = @ID
 

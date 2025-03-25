@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Metadata,LogStatus, LogError } from '@memberjunction/core';
+import { Metadata,LogStatus, LogError, RunView, RunViewResult } from '@memberjunction/core';
 import { SessionEntity } from 'mj_generatedentities';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
@@ -17,6 +17,7 @@ export class CreateSessionDialogComponent {
   md= new Metadata();
   sessionForm: FormGroup;
   eventId: string;
+  scoreboards: any[] = [];
   
   constructor(
     public dialogRef: MatDialogRef<CreateSessionDialogComponent>,
@@ -33,10 +34,12 @@ export class CreateSessionDialogComponent {
       title: ['', Validators.required],
       abstractSubmissionStartDate: ['', Validators.required],
       abstractSubmissionEndDate: ['', Validators.required],
+      scoreboardId: ['', Validators.required],
     });
   }
   async ngOnInit() {
     this.sessionEntity = await this.md.GetEntityObject<SessionEntity>('Sessions');
+    await this.loadScoreboards();
     this.sessionForm.patchValue({
       name: this.sessionEntity.Name,
       startDate: this.sessionEntity.SessionStartDate,
@@ -46,6 +49,42 @@ export class CreateSessionDialogComponent {
       abstractSubmissionEndDate: this.sessionEntity.AbstractSubmissionEndDate,
     });
   }
+  async loadScoreboards() {
+    try {
+      const rv = new RunView();
+      const result: RunViewResult<any> = await rv.RunView<any>({
+        EntityName: 'Score Boards',
+        Fields: ['ID', 'Name'], // Fetch ID and Name
+      });
+  
+      if (result.Success) {
+        this.scoreboards = result.Results;
+      } else {
+        console.error('Failed to fetch scoreboards:', result.ErrorMessage);
+      }
+    } catch (error) {
+      console.error('Error loading scoreboards:', error);
+    }
+  }
+  async linkSessionToScoreboard(sessionId: string, scoreboardId: string) {
+    if (!sessionId || !scoreboardId) return;
+  
+    try {
+      const sessionScoreboard = await this.md.GetEntityObject<any>('Session Score Boards');
+      sessionScoreboard.SessionId = sessionId;
+      sessionScoreboard.ScoreBoardId = scoreboardId;
+  
+      const saveResult = await sessionScoreboard.Save();
+      if (!saveResult) {
+        console.error('Error saving session-scoreboard link:', sessionScoreboard.LatestResult.Message);
+      } else {
+        console.log('Successfully linked session to scoreboard');
+      }
+    } catch (error) {
+      console.error('Error linking session to scoreboard:', error);
+    }
+  }
+  
   async onSubmit() {
     if (this.sessionForm.valid) {
       // Update the session entity with form values
@@ -65,6 +104,7 @@ export class CreateSessionDialogComponent {
         if (!saveResult) {
           LogError('Error saving session entity:', undefined, this.sessionEntity.LatestResult.Message);
         } else {
+          await this.linkSessionToScoreboard(this.sessionEntity.ID, this.sessionForm.value.scoreboardId);
           window.location.reload();
           this.dialogRef.close(this.sessionForm.value);
         }

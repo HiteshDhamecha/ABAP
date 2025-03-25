@@ -35,9 +35,12 @@
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "axios": "^1.6.7",
     "class-validator": "^0.14.0",
+    "fs": "^0.0.1-security",
+    "mammoth": "^1.9.0",
     "mj_generatedactions": "1.0.0",
     "mj_generatedentities": "1.0.0",
     "nodemailer": "^6.10.0",
+    "path": "^0.12.7",
     "typeorm": "^0.3.20"
   }
 }

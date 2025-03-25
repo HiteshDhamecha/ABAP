@@ -1,0 +1,131 @@
+.title {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32.78px;
+}
+
+.subTitle {
+    display: flex;
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+.subTitle::after {
+    content: "";
+    width: 90%;
+    height: 1px;
+    display: inline-block;
+    background: #00000080;
+    margin: 10px 0 4px 10px;
+}
+
+.sessionDetails, .publish-preview-container {
+    width: 80%;
+    margin: auto;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.details {
+    display: flex;
+    gap: 10%;
+}
+
+.publish-preview-container h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 10px;
+
+}
+
+.publish-preview-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.publish-preview-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.publish-preview-group.full-width {
+    grid-column: span 2;
+}
+
+.publish-preview-group label {
+    font-family: Roboto;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.publish-preview-group input,
+.publish-preview-group textarea {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.publish-preview-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Upload Box */
+.publish-preview-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.fileInfo {
+    max-width: 40%;
+    margin-top: 5px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.publish-preview-upload i {
+    font-size: 24px;
+    color: #767CFF;
+}
+
+.publish-preview-upload span {
+    display: block;
+    font-size: 14px;
+    color: #767CFF;
+}
+
+/* Submit Button */
+.submitBtnContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.publish-preview-btn {
+    width: fit-content;
+    background-color: #767CFF;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+}

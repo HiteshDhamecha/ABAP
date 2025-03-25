@@ -2452,6 +2452,8 @@ input CreateSessionInput {
   SessionStartDate: Timestamp
   Title: String
   UserPrompt: String
+  UserPrompt1: String
+  UserPrompt2: String
   WeightedScore: Float
 }
 
@@ -7946,6 +7948,8 @@ type Session_ {
   SessionStartDate: Timestamp
   Title: String
   UserPrompt: String
+  UserPrompt1: String
+  UserPrompt2: String
   WeightedScore: Float
   _mj__CreatedAt: Timestamp!
   _mj__UpdatedAt: Timestamp!
@@ -9742,6 +9746,8 @@ input UpdateSessionInput {
   SessionStartDate: Timestamp
   Title: String
   UserPrompt: String
+  UserPrompt1: String
+  UserPrompt2: String
   WeightedScore: Float
 }
 

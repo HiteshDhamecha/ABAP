@@ -39,7 +39,7 @@ export class SessionDetailsComponent implements OnInit {
       const rv = new RunView();
       const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
         EntityName: 'Sessions',
-        Fields: ['ID', 'EventID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title', 'AbstractSubmissionStartDate', 'AbstractSubmissionEndDate'],
+        Fields: ['ID', 'EventID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title', 'AbstractSubmissionStartDate', 'AbstractSubmissionEndDate','UserPrompt','UserPrompt1'],
         ExtraFilter: `ID = '${this.sessionId}'`,
         MaxRows: 1
       });

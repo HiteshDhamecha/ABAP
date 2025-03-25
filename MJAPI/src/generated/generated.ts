@@ -939,6 +939,12 @@ export class Session_ {
     @MaxLength(10)
     _mj__UpdatedAt: Date;
         
+    @Field({nullable: true}) 
+    UserPrompt1?: string;
+        
+    @Field({nullable: true}) 
+    UserPrompt2?: string;
+        
     @Field() 
     @MaxLength(510)
     Event: string;
@@ -982,6 +988,12 @@ export class CreateSessionInput {
 
     @Field({ nullable: true })
     AbstractSubmissionEndDate: Date | null;
+
+    @Field({ nullable: true })
+    UserPrompt1: string | null;
+
+    @Field({ nullable: true })
+    UserPrompt2: string | null;
 }
     
 
@@ -1019,6 +1031,12 @@ export class UpdateSessionInput {
 
     @Field({ nullable: true })
     AbstractSubmissionEndDate?: Date | null;
+
+    @Field({ nullable: true })
+    UserPrompt1?: string | null;
+
+    @Field({ nullable: true })
+    UserPrompt2?: string | null;
 
     @Field(() => [KeyValuePairInput], { nullable: true })
     OldValues___?: KeyValuePairInput[];

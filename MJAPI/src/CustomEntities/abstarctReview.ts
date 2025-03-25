@@ -132,7 +132,7 @@ export async function processAbstract(abstractText: string, sessionID: string, u
     return;
   }
 
-  const promptTemplate = await getPromptTemplate(user,sessionID);
+  const promptTemplate = await getPromptTemplate(user,sessionID,0);
   if (!promptTemplate) {
     console.error("Failed to retrieve prompt template");
     return;
@@ -169,20 +169,24 @@ export async function processAbstract(abstractText: string, sessionID: string, u
   }
 }
 
- async function getPromptTemplate(user: UserInfo,sessionID:string): Promise<string | null> {
+ async function getPromptTemplate(user: UserInfo,sessionID:string,rank:number): Promise<string | null> {
   try {
     const rv = new RunView();
     const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
       EntityName: 'Sessions',
       ExtraFilter: `ID = '${sessionID}'`,
-      Fields: ['UserPrompt']
+      Fields: ['UserPrompt','UserPrompt1']
     }, user);
 
     if (!result.Success || result.Results.length === 0) {
       return null;
     }
-
-    return result.Results[0].UserPrompt;
+if(rank==1){
+  return result.Results[0].UserPrompt1;
+}
+  else{ 
+    return result.Results[0].UserPrompt;  
+  }
   } catch (error) {
     LogStatus(error);
     return null;
@@ -240,7 +244,7 @@ export async function getCutOffScore(user: UserInfo,sessionID:string, sessionTit
   const criteriaText = criteria.map((c, index) => `${index + 1}. ${c.name} (${c.weight}%)`).join('\n');
   
 
-  const prompt = await getPromptTemplate(user,sessionID);
+  const prompt = await getPromptTemplate(user,sessionID,1);
   if (!prompt) {
     console.error("Failed to retrieve prompt template");
     return { cutOffScore: 0, reasoning: "Failed to retrieve prompt template" };

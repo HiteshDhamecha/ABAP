@@ -11,6 +11,8 @@ import { ManageAbstractDetailsComponent } from './modules/manage-abstract-detail
 import { ViewEventComponent } from './modules/view-event/view-event.component'; // Add this import
 import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component'; // Corrected import path
 import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
+import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abstract-form.component';
+import { ScorecardDetailsComponent } from './modules/manage-scorecard/scorecard-details/scorecard-details.component';
 
 const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
   if (!Metadata.Provider) {
@@ -45,6 +47,11 @@ const routes: Routes = [
     component: ManageScorecardComponent,
   },
   {
+    path: 'scoreboard-details/:id',
+    component: ScorecardDetailsComponent,
+    canActivate: [AuthGuard, MJProviderSet]
+  },
+  {
     path: 'event-details/:id',
     component: EventDetailsComponent,
     canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
@@ -69,7 +76,11 @@ const routes: Routes = [
     component: ViewDetailsComponent,
     canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
   },
-
+  {
+    path: 'abstract-form/:session',
+    component: UserAbstractFormComponent,
+    canActivate: [AuthGuard, MJProviderSet]
+  },
   {
     path: '**',
     redirectTo: 'event-settings'
