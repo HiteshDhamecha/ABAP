@@ -129,7 +129,7 @@ export class ViewDetailsComponent implements OnInit {
   };
 
   submitAbstract(sessionID: string) {
-    this.router.navigate(['/abstract-form', sessionID]);
+    this.router.navigate(['/abstract-form', this.eventId, sessionID]);
   };
 
   formatSessionTime(startDate: Date, endDate: Date): string {

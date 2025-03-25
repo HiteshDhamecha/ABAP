@@ -71,7 +71,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
   },
   {
-    path: 'abstract-form/:session',
+    path: 'abstract-form/:event/:session',
     component: UserAbstractFormComponent,
     canActivate: [AuthGuard, MJProviderSet]
   },
