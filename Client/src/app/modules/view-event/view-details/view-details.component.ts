@@ -128,15 +128,8 @@ export class ViewDetailsComponent implements OnInit {
     }
   };
 
-  async submitAbstract(sessionID: string) {
-    if(await this.getAbstractStatus(sessionID) ==='pending'){
-      this.router.navigate(['/abstract-form', sessionID]);
-    }else{
-      LogStatus('Abstract Alredy Submitted by you!');
-      console.log('Abstract Alredy Submitted by you!');
-      return;
-    }
-    
+  submitAbstract(sessionID: string) {
+    this.router.navigate(['/abstract-form', this.eventId, sessionID]);
   };
 
   formatSessionTime(startDate: Date, endDate: Date): string {

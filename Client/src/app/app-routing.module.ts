@@ -104,7 +104,7 @@ const routes: Routes = [
     data: { roles: ['User'] }  // Only User can access
   },
   {
-    path: 'abstract-form/:session',
+    path: 'abstract-form/:event/:session',
     component: UserAbstractFormComponent,
     canActivate: [AuthGuard, MJProviderSet],
     data: { roles: ['User'] }  // Only User can access
