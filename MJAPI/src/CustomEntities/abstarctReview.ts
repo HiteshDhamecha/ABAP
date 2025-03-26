@@ -44,7 +44,10 @@ async function reviewAbstract(abstractText: string, criteria: { name: string, we
     totalScore += Number(scores.scores[c.name] || 0) * Number(c.weight);
   });
 
-  console.log("Weighted Score:", totalScore);
+   console.log("###############################################################");
+  console.log("Weighted Score of a Abstarct:", totalScore);
+  console.log("Review Comments for a Abstarct : ", scores["Review Comments"]);
+  console.log("###############################################################");
 
   const reviewComments = scores["Review Comments"] || "No review comments provided";
   return { score: totalScore, reviewComments };
@@ -129,19 +132,19 @@ export async function processAbstract(abstractText: string, sessionID: string, u
   const criteria = await getCritearea(sessionID, user);
   if (!criteria) {
     console.error("Failed to retrieve criteria");
-    return;
+    return false;
   }
 
   const promptTemplate = await getPromptTemplate(user,sessionID,0);
   if (!promptTemplate) {
     console.error("Failed to retrieve prompt template");
-    return;
+    return false;
   }
 
   const sessionDetails = await getScoreDetails(user, sessionID);
   if (!sessionDetails) {
     console.error("Failed to retrieve session details");
-    return;
+    return false;
   }
 
   const { title: sessionTitle, weightedScore } = sessionDetails;
@@ -167,6 +170,8 @@ export async function processAbstract(abstractText: string, sessionID: string, u
       "Your abstract did not meet the required criteria."
     );
   }
+
+  return true;
 }
 
  async function getPromptTemplate(user: UserInfo,sessionID:string,rank:number): Promise<string | null> {

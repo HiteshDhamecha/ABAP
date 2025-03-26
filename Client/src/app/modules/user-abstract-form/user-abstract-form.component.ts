@@ -137,11 +137,15 @@ export class UserAbstractFormComponent implements OnInit {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
       console.log('Abstract Entity: ', abstractEntity);
       console.log('Abstract Entity Url: ', this.abstractDetails.uploadUrl);
-      await abstractEntity.Save();
+      if(await abstractEntity.Save()){
+        alert('Abstract form submitted!');
+        this.submittingForm = false;
+        this.router.navigate(['view-details', this.eventID]);
+      }else{
+        alert('Abstract form Not Submitted!');
+      }
     };
-    alert('Abstract form submitted!');
-    this.submittingForm = false;
-    this.router.navigate(['view-details', this.eventID]);
+
   };
 
   formatSessionTime(startDate: Date, endDate: Date): string {

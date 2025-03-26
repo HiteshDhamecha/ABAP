@@ -28,6 +28,10 @@ export class ScoreBoardEntityServer extends ScoreBoardEntity {
             }
 
             this.CutOffScore = cutOffScore.cutOffScore;
+            console.log("###############################################################");
+            console.log('Cut-off Score : ',cutOffScore.cutOffScore)
+            console.log('Reasoning for Cut-off score : ', cutOffScore.reasoning);
+            console.log("###############################################################");
 
             return await super.Save(options);
         } else {
