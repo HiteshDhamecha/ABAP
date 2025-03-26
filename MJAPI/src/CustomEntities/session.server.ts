@@ -22,8 +22,8 @@ export class SessionEntityServer extends SessionEntity {
               console.error("Failed to retrieve cut-off score");
               return false;
             }
-            console.log(cutOffScore.cutOffScore);
-            console.log(cutOffScore.reasoning);
+            //console.log(cutOffScore.cutOffScore);
+            //console.log(cutOffScore.reasoning);
             
             this.WeightedScore = cutOffScore.cutOffScore;
             this.UserPrompt=PROMPTS.REVIEW
