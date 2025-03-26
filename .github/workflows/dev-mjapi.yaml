@@ -8,6 +8,7 @@ on:
     paths:
       - 'GeneratedEntities/**'
       - 'GeneratedActions/**'
+      - 'MJAPI/**'
     branches:
       - Development
   workflow_dispatch:
