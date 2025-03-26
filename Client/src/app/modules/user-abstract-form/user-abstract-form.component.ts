@@ -130,8 +130,8 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
-    //const saved = await abstractEntity.Save();
-    //console.log('saved: ', saved);
+    await abstractEntity.Save();
+    await userPersonalDetailsEntity.Save();
     this.abstractDetails.uploadUrl = await this.azureBlob.uploadFile(this.uploadedFile);
     if (this.abstractDetails.uploadUrl !== '') {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
