@@ -1,4 +1,4 @@
-name: Deploy Client-ABPA using Developement Branch
+name: Deploy Client-ABPA app using Developement Branch
  
 on:
   push:
