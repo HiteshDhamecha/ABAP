@@ -8,8 +8,23 @@ on:
     branches:
       - Development
   workflow_dispatch:
- 
+
 jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete all artifacts
+        run: |
+          ARTIFACTS=$(curl -s -H "Authorization: token ${{ secrets.TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" \
+            | jq -r '.artifacts[].id')
+
+          for ARTIFACT_ID in $ARTIFACTS; do
+            curl -X DELETE -H "Authorization: token ${{ secrets.TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$ARTIFACT_ID"
+          done
+
+
   build:
     runs-on: ubuntu-latest
  
