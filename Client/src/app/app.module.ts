@@ -51,6 +51,11 @@ import { ViewDetailsComponent } from './modules/view-event/view-details/view-det
 import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
 import { CreateSessionDialogComponent } from './components/create-session-dialog/create-session-dialog.component';
 import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abstract-form.component';
+import { ManageScorecardComponent } from './modules/manage-scorecard/manage-scorecard.component';
+import { ScorecardDetailsComponent } from './modules/manage-scorecard/scorecard-details/scorecard-details.component';
+import { CreateScorecardDialogComponent } from './components/create-scorecard-dialog/create-scorecard-dialog.component';
+import { CreateCriteriaDialogComponent } from './components/create-criteria-dialog/create-criteria-dialog.component';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 
 
 
@@ -68,6 +73,11 @@ import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abs
     UserAbstractFormComponent,
     SessionDetailsComponent,
     CreateSessionDialogComponent,
+    ManageScorecardComponent,
+    ScorecardDetailsComponent,
+    CreateScorecardDialogComponent,
+    CreateCriteriaDialogComponent,
+    ErrorDialogComponent
   ],
   imports: [
     MatDialogModule,
@@ -115,7 +125,7 @@ import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abs
     DecimalPipe
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
 }

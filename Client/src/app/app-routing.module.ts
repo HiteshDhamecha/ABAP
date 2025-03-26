@@ -1,6 +1,7 @@
 import { inject, NgModule } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterModule, RouterStateSnapshot, Routes } from '@angular/router';
-import { AuthGuard } from '@auth0/auth0-angular';
+// import { AuthGuard } from '@auth0/auth0-angular';
+import { AuthGuard } from './guards/auth.guard';
 import { Metadata } from '@memberjunction/core';
 import { LoginComponent } from './modules/login/login.component';
 import { ManageEventComponent } from './modules/manage-event/manage-event.component';
@@ -12,18 +13,34 @@ import { ViewEventComponent } from './modules/view-event/view-event.component'; 
 import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component'; // Corrected import path
 import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
 import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abstract-form.component';
+import { ScorecardDetailsComponent } from './modules/manage-scorecard/scorecard-details/scorecard-details.component';
 
 const MJProviderSet: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot,) => {
+  const metadata = new Metadata(); // Instantiate Metadata
+
   if (!Metadata.Provider) {
     console.log("MJProviderSet: Provider not set. Redirecting to login.");
     inject(Router).navigate(['/']);
     return false;
   }
-  if (!Metadata.prototype.CurrentUser) {
+  if (!metadata.CurrentUser) {
     console.log("MJProviderSet: CurrentUser not set. Redirecting to login.");
     inject(Router).navigate(['/']);
     return false;
   }
+
+  const requiredRoles = route.data?.['roles'];
+  const userRole = metadata.CurrentUser.Type.trim();
+
+  console.log(`🔍 Checking access for role: "${userRole}"`); // Debugging
+ 
+
+  if (requiredRoles && !requiredRoles.includes(userRole)) {
+    console.log(`Access denied. User role '${userRole}' is not authorized for this route.`);
+    inject(Router).navigate(['/view-event']); // Redirect users to a safe page
+    return false;
+  }
+
   return true;
 };
 
@@ -34,46 +51,63 @@ const routes: Routes = [
   {
     path: 'event-settings',
     component: ManageEventComponent,
-    canActivate: [AuthGuard, MJProviderSet]
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['Owner'] }  // Only admins can access
   },
   {
     path: 'manage-abstract',
     component: ManageAbstractComponent,
-    canActivate: [AuthGuard, MJProviderSet]
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['Owner'] }  // Only admins can access
   },
   {
     path: 'manage-scorecard',
     component: ManageScorecardComponent,
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['Owner'] }  // Only admins can access
+  },
+  {
+    path: 'scoreboard-details/:id',
+    component: ScorecardDetailsComponent,
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['Owner'] }  // Only admins can access
+    
   },
   {
     path: 'event-details/:id',
     component: EventDetailsComponent,
-    canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
+    canActivate: [AuthGuard, MJProviderSet], // Protect the route if needed
+    data: { roles: ['Owner'] }  // Only admins can access
   },
   {
     path: 'session-details/:id',
     component: SessionDetailsComponent,
-    canActivate: [AuthGuard, MJProviderSet]
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['Owner'] }  // Only admins can access
   },
   {
     path: 'manage-abstract-details/:speaker',
     component: ManageAbstractDetailsComponent, // Direct reference
-    canActivate: [AuthGuard, MJProviderSet]
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['Owner'] }  // Only admins can access
   },
   {
     path: 'view-event',
     component: ViewEventComponent,
-    canActivate: [AuthGuard, MJProviderSet]
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['User'] }  // Only User can access
   },
   {
     path: 'view-details/:id',
     component: ViewDetailsComponent,
-    canActivate: [AuthGuard, MJProviderSet] // Protect the route if needed
+    canActivate: [AuthGuard, MJProviderSet], // Protect the route if needed
+    data: { roles: ['User'] }  // Only User can access
   },
   {
     path: 'abstract-form/:event/:session',
     component: UserAbstractFormComponent,
-    canActivate: [AuthGuard, MJProviderSet]
+    canActivate: [AuthGuard, MJProviderSet],
+    data: { roles: ['User'] }  // Only User can access
   },
   {
     path: '**',

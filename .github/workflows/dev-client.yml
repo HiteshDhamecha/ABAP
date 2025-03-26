@@ -1,4 +1,4 @@
-name: Deploy Client-ABPA using Develop Branch
+name: Deploy Client-ABPA using Developement Branch
  
 on:
   push:
@@ -8,14 +8,14 @@ on:
     branches:
       - Development
   workflow_dispatch:
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
  
     steps:
       - uses: actions/checkout@v4
-      
+    
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -44,7 +44,10 @@ jobs:
           AUTH0_DOMAIN: '${{ secrets.AUTH0_DOMAIN }}',
           AUTH0_CLIENT_SECRET: '${{ secrets.AUTH0_CLIENT_SECRET }}',
           AUTH0_CLIENTID: '${{ secrets.AUTH0_CLIENTID }}',
-          TOKEN_CACHE_KEY: '${{ secrets.TOKEN_CACHE_KEY }}'
+          TOKEN_CACHE_KEY: '${{ secrets.TOKEN_CACHE_KEY }}',
+          SAS_TOKEN: '${{ secrets.SAS_TOKEN }}',
+          STORAGE_ACCT:'${{ secrets.STORAGE_ACCT }}',
+          CONTAINER:'${{ secrets.CONTAINER }}'
           };
           EOF
         working-directory: Client
@@ -61,7 +64,7 @@ jobs:
           npm link ../GeneratedEntities --force
           npm install --force
           npm run build
- 
+          
       - name: Zip artifact for Client deployment
         run: |
           cd Client

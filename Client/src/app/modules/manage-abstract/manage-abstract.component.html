@@ -18,8 +18,8 @@
           <td>{{ abstract.session || '-' }}</td>
           <td>{{ abstract.date }}</td>
           <td>
-            <span class="status" [ngClass]="abstract.status.toLowerCase()">
-              {{ abstract.status }}
+            <span class="status" [ngClass]="getStatusClass(abstract.status)">
+              {{ abstract.status || 'Pending' }}
             </span>
           </td>
         </tr>

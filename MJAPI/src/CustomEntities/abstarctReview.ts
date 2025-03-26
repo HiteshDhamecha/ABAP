@@ -60,7 +60,7 @@ export async function getCritearea(sessionId: string, user: UserInfo): Promise<{
       ExtraFilter: `SessionId = '${sessionId}'`
     }, user);
 
-    if (!sessionScoreBoard.Success || sessionScoreBoard.Results.length === 0) {
+    if (sessionScoreBoard.Success && sessionScoreBoard.Results.length > 0) {
      
       const result: RunViewResult<ReviewCriteriaEntity> = await rv.RunView<ReviewCriteriaEntity>({
         EntityName: 'Review Criterias',
@@ -132,7 +132,7 @@ export async function processAbstract(abstractText: string, sessionID: string, u
     return;
   }
 
-  const promptTemplate = await getPromptTemplate(user,sessionID);
+  const promptTemplate = await getPromptTemplate(user,sessionID,0);
   if (!promptTemplate) {
     console.error("Failed to retrieve prompt template");
     return;
@@ -151,7 +151,7 @@ export async function processAbstract(abstractText: string, sessionID: string, u
 
 
   if (score.score > weightedScore) {
-    saveAbstractResult(user,abstarctId,score.score,await getStatuses("Accepted",user),score.reviewComments);
+    saveAbstractResult(user,abstarctId,score.score,await getStatuses("Selected",user),score.reviewComments);
     console.log("Passed Review with Score:", score);
     await sendEmail(
       recipientEmail,
@@ -169,20 +169,24 @@ export async function processAbstract(abstractText: string, sessionID: string, u
   }
 }
 
- async function getPromptTemplate(user: UserInfo,sessionID:string): Promise<string | null> {
+ async function getPromptTemplate(user: UserInfo,sessionID:string,rank:number): Promise<string | null> {
   try {
     const rv = new RunView();
     const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
       EntityName: 'Sessions',
       ExtraFilter: `ID = '${sessionID}'`,
-      Fields: ['UserPrompt']
+      Fields: ['UserPrompt','UserPrompt1']
     }, user);
 
     if (!result.Success || result.Results.length === 0) {
       return null;
     }
-
-    return result.Results[0].UserPrompt;
+if(rank==1){
+  return result.Results[0].UserPrompt1;
+}
+  else{ 
+    return result.Results[0].UserPrompt;  
+  }
   } catch (error) {
     LogStatus(error);
     return null;
@@ -206,7 +210,7 @@ async function getScoreDetails(user: UserInfo, sessionID: string): Promise<{ tit
 
     const sessionScoreResult: RunViewResult<SessionScoreBoardEntity> = await rv.RunView<SessionScoreBoardEntity>({
       EntityName: 'Session Score Boards',
-      ExtraFilter: `ID = '${sessionID}'`,
+      ExtraFilter: `SessionId = '${sessionID}'`,
       Fields: ['ScoreBoardId']
     }, user);
 
@@ -240,7 +244,7 @@ export async function getCutOffScore(user: UserInfo,sessionID:string, sessionTit
   const criteriaText = criteria.map((c, index) => `${index + 1}. ${c.name} (${c.weight}%)`).join('\n');
   
 
-  const prompt = await getPromptTemplate(user,sessionID);
+  const prompt = await getPromptTemplate(user,sessionID,1);
   if (!prompt) {
     console.error("Failed to retrieve prompt template");
     return { cutOffScore: 0, reasoning: "Failed to retrieve prompt template" };
