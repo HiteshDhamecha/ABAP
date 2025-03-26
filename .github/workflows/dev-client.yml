@@ -15,13 +15,7 @@ jobs:
  
     steps:
       - uses: actions/checkout@v4
-
-      - name: Delete all artifacts
-        run: |
-            curl -H "Authorization: token ${{ secrets.TOKEN }}" \
-                 -X DELETE \
-              https://api.github.com/repos/${{ github.repository }}/actions/artifacts
-      
+    
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -70,12 +64,7 @@ jobs:
           npm link ../GeneratedEntities --force
           npm install --force
           npm run build
-
-      - name: Delete old artifacts
-        uses: c-hive/gha-remove-artifacts@v1
-        with:
-          age: '0 day'  # Change this to set retention (e.g., '0 days' to delete all)
- 
+          
       - name: Zip artifact for Client deployment
         run: |
           cd Client
