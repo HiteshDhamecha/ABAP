@@ -60,7 +60,7 @@ export async function getCritearea(sessionId: string, user: UserInfo): Promise<{
       ExtraFilter: `SessionId = '${sessionId}'`
     }, user);
 
-    if (!sessionScoreBoard.Success || sessionScoreBoard.Results.length === 0) {
+    if (sessionScoreBoard.Success && sessionScoreBoard.Results.length > 0) {
      
       const result: RunViewResult<ReviewCriteriaEntity> = await rv.RunView<ReviewCriteriaEntity>({
         EntityName: 'Review Criterias',
@@ -151,7 +151,7 @@ export async function processAbstract(abstractText: string, sessionID: string, u
 
 
   if (score.score > weightedScore) {
-    saveAbstractResult(user,abstarctId,score.score,await getStatuses("Accepted",user),score.reviewComments);
+    saveAbstractResult(user,abstarctId,score.score,await getStatuses("Selected",user),score.reviewComments);
     console.log("Passed Review with Score:", score);
     await sendEmail(
       recipientEmail,
@@ -210,7 +210,7 @@ async function getScoreDetails(user: UserInfo, sessionID: string): Promise<{ tit
 
     const sessionScoreResult: RunViewResult<SessionScoreBoardEntity> = await rv.RunView<SessionScoreBoardEntity>({
       EntityName: 'Session Score Boards',
-      ExtraFilter: `ID = '${sessionID}'`,
+      ExtraFilter: `SessionId = '${sessionID}'`,
       Fields: ['ScoreBoardId']
     }, user);
 
