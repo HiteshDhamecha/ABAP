@@ -64,6 +64,14 @@ jobs:
           npm link ../GeneratedEntities --force
           npm install --force
           npm run build
+
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete old artifacts
+        uses: c-hive/gha-remove-artifacts@v1
+        with:
+          age: '0 day'  # Change this to set retention (e.g., '0 days' to delete all)
  
       - name: Zip artifact for Client deployment
         run: |
