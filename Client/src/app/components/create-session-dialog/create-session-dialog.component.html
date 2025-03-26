@@ -36,6 +36,15 @@
             <input type="text" id="title" placeholder="Enter Session Topic" formControlName="title" class="input-field">
         </div>
 
+        <div>
+            <label for="scoreboard">Select Scoreboard</label>
+            <select formControlName="scoreboardId">
+              <option *ngFor="let sb of scoreboards" [value]="sb.ID">
+                {{ sb.Name }}
+              </option>
+            </select>
+        </div>
+        
         <div class="dialog-actions">
             <button mat-button mat-dialog-close>Cancel</button>
             <button mat-button type="submit">Submit</button>
