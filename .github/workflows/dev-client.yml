@@ -65,9 +65,6 @@ jobs:
           npm install --force
           npm run build
 
-  cleanup:
-    runs-on: ubuntu-latest
-    steps:
       - name: Delete old artifacts
         uses: c-hive/gha-remove-artifacts@v1
         with:
