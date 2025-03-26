@@ -61,52 +61,60 @@ export class AppComponent implements OnInit {
 
   private async SetupApp(token: string, user: User): Promise<void> {
     try {
-      if (!token) {
-        console.error("Unable to setup app: No token provided");
-        this.NavigateToLogin();
-        return;
-      }
-      
-      const url: string = environment.GRAPHQL_URI;
-      const wsurl: string = environment.GRAPHQL_WS_URI;
-  
-      const start = new Date();
-  
-      const refreshTokenFunction: RefreshTokenFunction = async () => { return 'NoToken'; };
-      const config = new GraphQLProviderConfigData(token, url, wsurl, refreshTokenFunction);
-  
-      const provider: GraphQLDataProvider = await setupGraphQLClient(config);
-  
-      // Check to see if the user has access
-      const md: Metadata = new Metadata();
-      if (!md.CurrentUser){
-        console.error("User is logged in but no user found in metadata");
-        this.NavigateToLogin();
-        return;
-      }
-      else{
-        console.log(md.CurrentUser);
-        this.userService.setUserInfo(md.CurrentUser);
-      }
-      if(md.CurrentUser.Email !== user.email){
-        console.log("User's email does not match metadata email, refreshing metadata");
-        await provider.Refresh();
-      }
-      else{
-        console.log("User's email matches metadata email");
-      }
-  
-      const end = new Date();
-      const elapsed = (end.getTime() - start.getTime()) / 1000;
-      console.log(`GraphQL client setup in ${elapsed} seconds`);
-      console.log("App setup complete");
-      
-      localStorage.setItem(environment.TOKEN_CACHE_KEY, token);
-  
-      this.loginComponent?.SetLoading(false);
-      this.router.navigate(['/event-settings']);
-    } 
-    catch (err) {
+        if (!token) {
+            console.error("Unable to setup app: No token provided");
+            this.NavigateToLogin();
+            return;
+        }
+
+        const url: string = environment.GRAPHQL_URI;
+        const wsurl: string = environment.GRAPHQL_WS_URI;
+        const start = new Date();
+        const refreshTokenFunction: RefreshTokenFunction = async () => { return 'NoToken'; };
+        const config = new GraphQLProviderConfigData(token, url, wsurl, refreshTokenFunction);
+        const provider: GraphQLDataProvider = await setupGraphQLClient(config);
+        
+        const md: Metadata = new Metadata();
+
+        if (!md.CurrentUser) {
+            console.error("User is logged in but no user found in metadata");
+            this.NavigateToLogin();
+            return;
+        }else{
+          // console.log(md.CurrentUser);
+          this.userService.setUserInfo(md.CurrentUser);
+        }
+
+        console.log("User Info:", md.CurrentUser);
+        
+        // Store user type in local storage or service
+        localStorage.setItem('userType', md.CurrentUser.Type.trim());
+        this.userService.setUserType(md.CurrentUser.Type.trim()); 
+
+
+        if (md.CurrentUser.Email !== user.email) {
+            await provider.Refresh();
+        }
+        else{
+          console.log("User's email matches metadata email");
+        }
+    
+        const end = new Date();
+        const elapsed = (end.getTime() - start.getTime()) / 1000;
+        console.log(`GraphQL client setup in ${elapsed} seconds`);
+
+        console.log("App setup complete");
+        localStorage.setItem(environment.TOKEN_CACHE_KEY, token);
+
+        this.loginComponent?.SetLoading(false);
+        if(md.CurrentUser.Type.trim()=='Owner'){
+          this.router.navigate(['/event-settings']);
+        }else{
+          this.router.navigate(['/view-event'])
+        }
+         
+
+    }    catch (err) {
       if (err.response && err.response.errors) {
         const unauthorizedError = err.response.errors.find((error: any) => error.extensions.code === 'UNAUTHORIZED');
         if (unauthorizedError) {
@@ -119,7 +127,8 @@ export class AppComponent implements OnInit {
       console.error(err);
       this.NavigateToLogin();
     }
-  }
+}
+
 
   private NavigateToLogin(): void {
     this.loginComponent?.SetLoading(false);
