@@ -55,6 +55,11 @@
     background-color: #ffcdd2;
     color: #c62828;
   }
+
+  .pending {
+    background-color: #ffeb3b; /* Yellow */
+    color: #856404;
+  }
   
   /* Responsive Design */
   @media (max-width: 768px) {

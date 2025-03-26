@@ -39,6 +39,20 @@ export class ManageAbstractComponent {
       LogStatus('Error getting event entity:', error);
     }
   }
+  getStatusClass(status: string | null | undefined): string {
+    if (!status) {
+      return 'pending'; // Default to Pending
+    }
+    switch (status.toLowerCase()) {
+      case 'selected':
+        return 'selected';
+      case 'not selected':
+        return 'rejected';
+      default:
+        return 'pending';
+    }
+  }
+  
   viewDetails(speaker: string) {
     this.router.navigate(['/manage-abstract-details', speaker]);
   }

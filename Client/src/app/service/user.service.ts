@@ -7,6 +7,7 @@ import { UserInfo } from '@memberjunction/core';
 })
 export class UserService {
   private userInfo!: UserInfo;
+  private userType: string | null = null;  // Added userType property
 
   constructor() {}
 
@@ -16,9 +17,19 @@ export class UserService {
   setUserInfo(user: UserInfo): void {
     this.userInfo = user;
     this.userInfoSource.next(true);
+    this.setUserType(user.Type);  // Set userType when userInfo is updated
   }
 
   getUserInfo(): UserInfo {
     return this.userInfo;
+  }
+
+  // New methods to store and retrieve user type
+  setUserType(type: string): void {
+    this.userType = type;
+  }
+
+  getUserType(): string | null {
+    return this.userType;
   }
 }
