@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation  } from '@angular/core';
 import { Router } from '@angular/router';
 import { Metadata, RunView, LogStatus, RunQuery } from '@memberjunction/core';
-// import { AbstractEntity } from 'mj_generatedentities';
 
 @Component({
   selector: 'app-manage-abstract',

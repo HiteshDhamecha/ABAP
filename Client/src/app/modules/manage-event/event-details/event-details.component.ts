@@ -83,24 +83,88 @@ export class EventDetailsComponent implements OnInit {
     return '';
   }
   async loadSessionDetails() {
-    console.log('Loading session details...'); // Log the start of the method
+    console.log('Loading session details...');
+    
     const sessionEntities = await this.getSessionEntity(this.eventId);
-    if (sessionEntities) {
-      this.sessions = sessionEntities;
-      console.log('Loaded sessions:', this.sessions); // Log the loaded sessions
-    } else {
+    if (!sessionEntities) {
       console.error('Sessions not found');
+      return;
     }
+  
+    // Fetch all abstracts for these sessions
+    const sessionIds = sessionEntities.map(session => session.ID);
+    const abstracts = await this.getAbstractsBySessionIds(sessionIds);
+    
+    if (!abstracts || abstracts.length === 0) {
+      console.log('No abstracts found for sessions.');
+      this.sessions = sessionEntities.map(session => ({ ...session, abstractStatus: 'Not Yet Selected' }));
+      return;
+    }
+  
+    // Fetch AbstractResults using abstract IDs
+    const abstractIds = abstracts.map(abstract => abstract.ID);
+    const abstractResults = await this.getAbstractResultsByAbstractIds(abstractIds);
+  
+    // Fetch Abstract Status Names (Selected/Rejected)
+    const abstractStatuses = await this.getAbstractStatuses();
+  
+    // Create a mapping of status IDs to Names
+    const statusMap = abstractStatuses.reduce((acc, status) => {
+      acc[status.ID] = status.Name;
+      return acc;
+    }, {} as Record<string, string>);
+  
+    // Compute abstract status for each session
+    this.sessions = sessionEntities.map(session => {
+      const abstractsForSession = abstracts.filter(abstract => abstract.SessionID === session.ID);
+      const resultsForSession = abstractsForSession.map(abstract => 
+        abstractResults.find(result => result.AbstractID === abstract.ID)
+      ).filter(result => result); // Remove undefined values
+  
+      // Check if at least one abstract is "Selected"
+      const hasSelected = resultsForSession.some(result => statusMap[result?.AbstractStatusId] === "Selected");
+      
+      return {
+        ...session,
+        abstractStatus: hasSelected ? "Selected" : "Not Yet Selected"
+      };
+    });
+  
+    console.log('Loaded sessions with abstract status:', this.sessions);
   }
+  
+  async getAbstractsBySessionIds(sessionIds: string[]): Promise<any[]> {
+    const rv = new RunView();
+    const result: RunViewResult<any> = await rv.RunView<any>({
+      EntityName: 'Abstracts',
+      Fields: ['ID', 'SessionID', 'UserID'],
+      ExtraFilter: `SessionID IN (${sessionIds.map(id => `'${id}'`).join(',')})`
+    });
+    return result.Success ? result.Results : [];
+  }
+  
+  async getAbstractResultsByAbstractIds(abstractIds: string[]): Promise<any[]> {
+    const rv = new RunView();
+    const result: RunViewResult<any> = await rv.RunView<any>({
+      EntityName: 'Abstract Results',
+      Fields: ['AbstractID', 'AbstractStatusId'],
+      ExtraFilter: `AbstractID IN (${abstractIds.map(id => `'${id}'`).join(',')})`
+    });
+    return result.Success ? result.Results : [];
+  }
+  
+  async getAbstractStatuses(): Promise<any[]> {
+    const rv = new RunView();
+    const result: RunViewResult<any> = await rv.RunView<any>({
+      EntityName: 'Abstract Status',
+      Fields: ['ID', 'Name']
+    });
+    return result.Success ? result.Results : [];
+  }
+   
  async getSessionEntity(eventId: string): Promise<SessionEntityType[] | null> {
     try {
       const rv = new RunView();
-      const rq = new RunQuery();
-      // const results = await rq.RunQuery({
-      //   QueryID: 'D1E2F3A4-B5C6-7890-1234-56789ABCDEF1',
-      //   QueryName: 'Abstract Details Query'
-      // });
-      // console.log('RunQuery result:', results); // Log the result of RunQuery
       const result: RunViewResult<SessionEntityType> = await rv.RunView<SessionEntityType>({
         EntityName: 'Sessions',
         Fields: ['ID', 'EventID', 'Name', 'SessionStartDate', 'SessionEndDate', 'Title'],

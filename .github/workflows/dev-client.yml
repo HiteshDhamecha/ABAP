@@ -1,4 +1,4 @@
-name: Deploy Client-ABPA using Develop Branch
+name: Deploy Client-ABPA using Developement Branch
  
 on:
   push:
@@ -8,14 +8,14 @@ on:
     branches:
       - Development
   workflow_dispatch:
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
  
     steps:
       - uses: actions/checkout@v4
-      
+    
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -64,7 +64,7 @@ jobs:
           npm link ../GeneratedEntities --force
           npm install --force
           npm run build
- 
+          
       - name: Zip artifact for Client deployment
         run: |
           cd Client
