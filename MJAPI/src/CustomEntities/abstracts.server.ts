@@ -10,22 +10,23 @@ import { extractTextFromBlob } from './utility/contentExtraxtUtility';
 @RegisterClass(BaseEntity, 'Abstracts')
 export class AbstractEntityServer extends AbstractEntity {
     override async Save(options?: EntitySaveOptions): Promise<boolean> {
-        if (await super.Save(options)) { 
             const filePath = this.UploadUrl;    
             const fileName = path.basename(filePath);
             let abstarctText = "";
             abstarctText = await extractTextFromBlob(fileName);
           
-
             // Review abstract
-            sendEmail(this.ContextCurrentUser.Email, "Abstract Submitted", "Your abstract has been submitted successfully");
-             await processAbstract(abstarctText,this.SessionID,this.ContextCurrentUser,this.ID);  
-            return true;
+            if (await processAbstract(abstarctText, this.SessionID, this.ContextCurrentUser, this.ID)) {
+                sendEmail(this.ContextCurrentUser.Email, "Abstract Submitted", "Your abstract has been submitted successfully");
+                await super.Save(options)
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-        else 
-            return false;
+        
     }
-}
 
 export function LoadCustomAbstract() {
 }
