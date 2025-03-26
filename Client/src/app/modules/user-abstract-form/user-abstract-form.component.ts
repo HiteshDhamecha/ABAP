@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Metadata, RunView } from '@memberjunction/core';
 import { AbstractEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
 import { AzureBlobService } from 'src/app/service/azure-blob.service';
@@ -43,11 +43,13 @@ export class UserAbstractFormComponent implements OnInit {
   currentUser: any;
   md = new Metadata();
   submittingForm: boolean = false;
+  eventID: string;
 
-  constructor(private route: ActivatedRoute, private user: UserService, private azureBlob: AzureBlobService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private user: UserService, private azureBlob: AzureBlobService) { }
 
   async ngOnInit() {
     this.route.paramMap.subscribe(async params => {
+      let event = params.get('event');
       let session = params.get('session');
       console.log("🔹 Session from URL:", session);
 
@@ -56,9 +58,18 @@ export class UserAbstractFormComponent implements OnInit {
         let decodedSessionID = decodeURIComponent(session).trim();
         let cleanedSessionID = [...new Set(decodedSessionID.split(' '))].join(' ');
 
-        console.log("🔹 Decoded Speaker Name (Cleaned):", cleanedSessionID);
+        console.log("🔹 Decoded Session ID (Cleaned):", cleanedSessionID);
 
         await this.loadSessionDetails(cleanedSessionID);
+      }
+      if (event) {
+        // Decode and remove duplicates
+        let decodedEventID = decodeURIComponent(event).trim();
+        let cleanedEventID = [...new Set(decodedEventID.split(' '))].join(' ');
+
+        console.log("🔹 Decoded Event ID (Cleaned):", cleanedEventID);
+
+        this.eventID = cleanedEventID;
       }
     });
     this.currentUser = this.user.getUserInfo();
@@ -119,17 +130,22 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
-    //const saved = await abstractEntity.Save();
-    //console.log('saved: ', saved);
+    await abstractEntity.Save();
+    await userPersonalDetailsEntity.Save();
     this.abstractDetails.uploadUrl = await this.azureBlob.uploadFile(this.uploadedFile);
     if (this.abstractDetails.uploadUrl !== '') {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
       console.log('Abstract Entity: ', abstractEntity);
       console.log('Abstract Entity Url: ', this.abstractDetails.uploadUrl);
-      await abstractEntity.Save();
+      if(await abstractEntity.Save()){
+        alert('Abstract form submitted!');
+        this.submittingForm = false;
+        this.router.navigate(['view-details', this.eventID]);
+      }else{
+        alert('Abstract form Not Submitted!');
+      }
     };
-    alert(`Abstract Submitted with the following details: ${JSON.stringify({...this.abstractDetails, uploadedFile: this.uploadedFile.name})}`);
-    this.submittingForm = false;
+
   };
 
   formatSessionTime(startDate: Date, endDate: Date): string {
