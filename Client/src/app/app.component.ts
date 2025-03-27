@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService, IdToken, User } from '@auth0/auth0-angular';
 import { Metadata } from '@memberjunction/core';
@@ -6,7 +6,14 @@ import { GraphQLDataProvider, GraphQLProviderConfigData, setupGraphQLClient } fr
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './modules/login/login.component';
 import { UserService } from './service/user.service';
+import { MJAuthBase } from '@memberjunction/ng-auth-services';
 
+
+
+import { lastValueFrom } from 'rxjs';
+
+
+import { SharedService } from '@memberjunction/ng-shared';
 export type RefreshTokenFunction = () => Promise<string>;
 
 @Component({
@@ -18,7 +25,7 @@ export class AppComponent implements OnInit {
   private loginComponent: LoginComponent | null = null;
   public showSidebar: boolean = true;
 
-  constructor(private router: Router, public authService: AuthService, private userService: UserService) { 
+  constructor(private router: Router, public authService: AuthService, private userService: UserService, @Inject(MJAuthBase) public authBase: MJAuthBase) { 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showSidebar = event.url !== '/';
@@ -71,8 +78,15 @@ export class AppComponent implements OnInit {
         const wsurl: string = environment.GRAPHQL_WS_URI;
         const start = new Date();
         const refreshTokenFunction: RefreshTokenFunction = async () => { return 'NoToken'; };
-        const config = new GraphQLProviderConfigData(token, url, wsurl, refreshTokenFunction);
+        const config = new GraphQLProviderConfigData(token, url, wsurl, async () => {
+          const refresh$ = await this.authBase.refresh();
+          const claims = await lastValueFrom(refresh$);
+          const token = environment.AUTH_TYPE === 'auth0' ? claims?.__raw : claims?.idToken;
+          return token;
+        }, environment.MJ_CORE_SCHEMA_NAME);
         const provider: GraphQLDataProvider = await setupGraphQLClient(config);
+
+        await SharedService.RefreshData(true);
         
         const md: Metadata = new Metadata();
 

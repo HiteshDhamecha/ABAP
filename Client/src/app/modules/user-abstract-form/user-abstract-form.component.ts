@@ -126,10 +126,10 @@ export class UserAbstractFormComponent implements OnInit {
       alert('Abstract form submitted!');
       this.submittingForm = false;
       this.router.navigate(['view-details', this.eventID]);
-    }else{        
+    }else{
+      console.log("Error saving Abstarct ", abstractEntity.LatestResult)        
       alert('Abstract form Not Submitted! ');
     }
-
     
   }
   formatSessionTime(startDate: Date, endDate: Date): string {
