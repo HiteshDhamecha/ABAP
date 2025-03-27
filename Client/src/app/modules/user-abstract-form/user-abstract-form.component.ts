@@ -124,6 +124,7 @@ export class UserAbstractFormComponent implements OnInit {
     const abstractEntity = await this.md.GetEntityObject<AbstractEntity>('Abstracts');
     const userPersonalDetailsEntity = await this.md.GetEntityObject<UserPersonalDetailsEntity>('User Personal Details');
     abstractEntity.SessionID = "58FCC61A-BF88-4E54-9F08-37F8EFD2BF58";
+    console.log("Current User", this.currentUser.ID);
     abstractEntity.UserID = this.currentUser.ID;
     abstractEntity.AbstractText = this.abstractDetails.summary;
     abstractEntity.FileName = this.uploadedFile?.name;
