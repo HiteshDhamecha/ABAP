@@ -86,7 +86,7 @@ export class ManageAbstractDetailsComponent implements OnInit {
             affiliation: matchingAbstract.Affiliation || '-',
             jobTitle: matchingAbstract.JobTitle || '-',
             phoneNumber: matchingAbstract.PhoneNumber || '-',
-            socialLinks: matchingAbstract.SocialLinks || '-',
+            socialLinks: matchingAbstract.SocialMediaLinks || '-',
             summary: parsedDetails.summary || 'No summary available.',
             speakingExperiences: parsedDetails.speakingExperiences
           };

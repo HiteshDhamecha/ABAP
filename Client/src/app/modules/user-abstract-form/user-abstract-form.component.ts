@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Metadata, RunView } from '@memberjunction/core';
-import { AbstractEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
+import { Metadata, RunView, RunViewResult } from '@memberjunction/core';
+import { Session } from 'inspector/promises';
+import { AbstractEntity, SessionEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
 import { AzureBlobService } from 'src/app/service/azure-blob.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -45,7 +46,7 @@ export class UserAbstractFormComponent implements OnInit {
   submittingForm: boolean = false;
   eventID: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private user: UserService, private azureBlob: AzureBlobService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private user: UserService, private azureBlob: AzureBlobService,private cd:ChangeDetectorRef) { }
 
   async ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -61,6 +62,7 @@ export class UserAbstractFormComponent implements OnInit {
         console.log("🔹 Decoded Session ID (Cleaned):", cleanedSessionID);
 
         await this.loadSessionDetails(cleanedSessionID);
+        this.cd.detectChanges();
       }
       if (event) {
         // Decode and remove duplicates
@@ -95,20 +97,21 @@ export class UserAbstractFormComponent implements OnInit {
 
   async loadSessionDetails(sessionID: string) {
     try {
-      console.log("🔹 Fetching Session Details...");
+      console.log("Fetching Session Details...");
       const rv = new RunView();
-      const result = await rv.RunView({
+      const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
         EntityName: 'Sessions',
+        ExtraFilter:`ID='${sessionID}'`,
         MaxRows: 1,
       });
 
-      console.log("🔹 API Response:", result.Results[0]);
+      console.log("API Response:", result.Results[0]);
 
       if (result.Success) {
         this.sessionDetails = result.Results[0];
         this.abstractDetails.topic = this.sessionDetails.Title;
       } else {
-        console.log("⚠️ API Call Failed.");
+        console.log("⚠️ API Call Failed.", result.ErrorMessage);
       }
     } catch (error) {
       console.error("❌ Error fetching abstract details:", error);
@@ -130,7 +133,6 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
-    await abstractEntity.Save();
     await userPersonalDetailsEntity.Save();
     this.abstractDetails.uploadUrl = await this.azureBlob.uploadFile(this.uploadedFile);
     if (this.abstractDetails.uploadUrl !== '') {

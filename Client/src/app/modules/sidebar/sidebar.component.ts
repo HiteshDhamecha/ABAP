@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Metadata } from '@memberjunction/core';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,18 +21,18 @@ export class SidebarComponent {
  //TODO:update this logic after roles have been added
  public tabs: any[] = [];
 
- constructor(private router: Router) {
+ constructor(private router: Router, private user: UserService) {
    this.setUserTabs();
  }
 
  setUserTabs() {
-  const metadata = new Metadata();  // Ensure Metadata instance is created
-  if (!metadata?.CurrentUser) {  // Handle undefined CurrentUser
+ const userInfo= this.user.getUserInfo()
+  if (!userInfo) {  // Handle undefined CurrentUser
     console.warn("Metadata CurrentUser is not available yet.");
     return;
   }
 
-  const userType = metadata?.CurrentUser?.Type?.trim(); // Trim extra spaces
+  const userType = userInfo?.Type?.trim(); // Trim extra spaces
 
   console.log("User Type:", userType); // Debugging
 
