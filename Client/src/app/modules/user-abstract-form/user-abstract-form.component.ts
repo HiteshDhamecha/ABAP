@@ -144,7 +144,8 @@ export class UserAbstractFormComponent implements OnInit {
         this.submittingForm = false;
         this.router.navigate(['view-details', this.eventID]);
       }else{
-        alert('Abstract form Not Submitted!');
+        
+        alert('Abstract form Not Submitted! '+abstractEntity.LatestResult);
       }
     };
 
