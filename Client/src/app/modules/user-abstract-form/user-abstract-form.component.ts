@@ -46,7 +46,7 @@ export class UserAbstractFormComponent implements OnInit {
   submittingForm: boolean = false;
   eventID: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private user: UserService, private azureBlob: AzureBlobService,private cd:ChangeDetectorRef) { }
+  constructor(private router: Router, private route: ActivatedRoute, private user: UserService, private azureBlob: AzureBlobService) { }
 
   async ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -62,7 +62,6 @@ export class UserAbstractFormComponent implements OnInit {
         console.log("🔹 Decoded Session ID (Cleaned):", cleanedSessionID);
 
         await this.loadSessionDetails(cleanedSessionID);
-        this.cd.detectChanges();
       }
       if (event) {
         // Decode and remove duplicates
@@ -124,7 +123,7 @@ export class UserAbstractFormComponent implements OnInit {
     console.log('Submit Clicked', this.abstractDetails);
     const abstractEntity = await this.md.GetEntityObject<AbstractEntity>('Abstracts');
     const userPersonalDetailsEntity = await this.md.GetEntityObject<UserPersonalDetailsEntity>('User Personal Details');
-    abstractEntity.SessionID = this.sessionDetails.ID;
+    abstractEntity.SessionID = "58FCC61A-BF88-4E54-9F08-37F8EFD2BF58";
     abstractEntity.UserID = this.currentUser.ID;
     abstractEntity.AbstractText = this.abstractDetails.summary;
     abstractEntity.FileName = this.uploadedFile?.name;
