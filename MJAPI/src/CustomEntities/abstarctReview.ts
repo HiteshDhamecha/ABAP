@@ -131,7 +131,7 @@ async function sendEmailNodeMailer(recipient: string, subject: string, body: str
 export async function processAbstract(abstractText: string, sessionID: string, user: UserInfo,abstarctId:string) {
   const criteria = await getCritearea(sessionID, user);
   if (!criteria) {
-    console.error("Failed to retrieve criteria");
+    console.log('Failed to retrieve criteria');
     return false;
   }
 

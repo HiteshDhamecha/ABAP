@@ -8,8 +8,8 @@ LoadGeneratedActions();
 import { LoadProvider } from '@memberjunction/communication-sendgrid';
 LoadProvider();
 
-import {LoadCustomAbstract } from './CustomEntities/abstracts.server';
-LoadCustomAbstract();
+// import {LoadCustomAbstract } from './CustomEntities/abstracts.server';
+// LoadCustomAbstract();
 import {LoadCustomScoreBoard } from './CustomEntities/scorecard.server';
 LoadCustomScoreBoard();
 //import './auth/exampleNewUserSubClass'; // make sure this new class gets registered
