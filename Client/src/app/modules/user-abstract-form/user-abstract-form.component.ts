@@ -118,40 +118,20 @@ export class UserAbstractFormComponent implements OnInit {
   }
 
   async submitAbstract() {
-    //proceed to submit the form
-    this.submittingForm = true;
-    console.log('Submit Clicked', this.abstractDetails);
     const abstractEntity = await this.md.GetEntityObject<AbstractEntity>('Abstracts');
-    const userPersonalDetailsEntity = await this.md.GetEntityObject<UserPersonalDetailsEntity>('User Personal Details');
     abstractEntity.SessionID = "58FCC61A-BF88-4E54-9F08-37F8EFD2BF58";
     console.log("Current User", this.currentUser.ID);
     abstractEntity.UserID = this.currentUser.ID;
-    //abstractEntity.AbstractText = this.abstractDetails.summary;
-    //abstractEntity.FileName = this.uploadedFile?.name;
-    userPersonalDetailsEntity.Affiliation = this.abstractDetails.affiliation;
-    userPersonalDetailsEntity.JobTitle = this.abstractDetails.jobTitle;
-    userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
-    userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
-    userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
-    if(await userPersonalDetailsEntity.Save()) {
-    this.abstractDetails.uploadUrl = await this.azureBlob.uploadFile(this.uploadedFile);
-    if (this.abstractDetails.uploadUrl !== '') {
-      //abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
-      console.log('Abstract Entity: ', abstractEntity);
-      console.log('Abstract Entity Url: ', this.abstractDetails.uploadUrl);
-     
-      console.log(abstractEntity.LatestResult);
-    };
-  }
-  if(await abstractEntity.Save()){
-    alert('Abstract form submitted!');
-    this.submittingForm = false;
-    this.router.navigate(['view-details', this.eventID]);
-  }else{        
-    alert('Abstract form Not Submitted! ');
-  }
-  };
+    if(await abstractEntity.Save()){
+      alert('Abstract form submitted!');
+      this.submittingForm = false;
+      this.router.navigate(['view-details', this.eventID]);
+    }else{        
+      alert('Abstract form Not Submitted! ');
+    }
 
+    
+  }
   formatSessionTime(startDate: Date, endDate: Date): string {
     if (!startDate) return 'TBD';
 
