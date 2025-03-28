@@ -153,7 +153,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    SetProductionStatus(environment.production)
+    SetProductionStatus(false)
     this.setupAuth();
   }
  
