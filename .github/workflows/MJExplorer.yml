@@ -1,0 +1,69 @@
+name: Deploy MJExplorer-ABPA app using Developement Branch
+ 
+on:
+  push:
+    paths:
+      - 'GeneratedEntities/**'
+      - 'MJExplorer/**'
+    branches:
+      - Development
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - uses: actions/checkout@v4
+    
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Build GeneratedEntities
+        run: |
+          cd GeneratedEntities
+          npm install
+          npm run build
+
+      - name: Build MJExplorer
+        run: |
+          cd MJExplorer
+          npm link ../GeneratedEntities --force
+          npm install --force
+          npm run build
+          
+      - name: Zip artifact for mjexplorer deployment
+        run: |
+          cd MJExplorer
+          zip et-dev-mjexplorer-release.zip ./* -r
+ 
+      - name: Upload artifact for mjexplorer deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: et-dev-mjexplorer-app
+          path: MJExplorer/et-dev-mjexplorer-release.zip          
+ 
+  deploy-mjexplorer:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: et-dev-mjexplorer-app
+
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-align-dev-mjwebapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'et-ci-dev-abpa-ui'
+          slot-name: 'Production'
+          package: et-dev-mjexplorer-release.zip
+          publish-profile: ${{ secrets.AZURE_WEBAPP_DEV_UI_PUBLISH_PROFILE }}
+ 

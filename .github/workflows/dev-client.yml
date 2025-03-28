@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'GeneratedEntities/**'
-      - 'MJExplorer/**'
+      - 'Client/**'
     branches:
       - Development
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
           CONTAINER:'${{ secrets.CONTAINER }}'
           };
           EOF
-        working-directory: MJExplorer
+        working-directory: Client
 
       - name: Build GeneratedEntities
         run: |
@@ -58,16 +58,16 @@ jobs:
           npm install
           npm run build
 
-      - name: Build MJExplorer
+      - name: Build Client
         run: |
-          cd MJExplorer
+          cd Client
           npm link ../GeneratedEntities --force
           npm install --force
           npm run build
           
       - name: Zip artifact for Client deployment
         run: |
-          cd MJExplorer
+          cd Client
           zip et-dev-client-release.zip ./* -r
  
       - name: Upload artifact for Client deployment job
