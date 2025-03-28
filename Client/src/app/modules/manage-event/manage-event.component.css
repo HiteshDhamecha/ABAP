@@ -1,0 +1,229 @@
+.heading-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.title{
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32.78px;
+  letter-spacing: 0%;
+  padding-bottom: 20px;
+}
+.add-event-btn{
+  background-color:#767CFF;
+  width: 140;
+  height: 30;
+  gap: 10px;
+  border-radius: 4px;
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  border-width: 1px;
+  border: none;
+  color: #fff;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19.36px;
+  letter-spacing: 0%;
+  text-align: center;
+}
+.container-manage {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-left:12.5%;
+  margin-right: 12.5%;
+}
+.tabs {
+  display: flex;
+}
+
+.tab-title {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21.86px;
+  letter-spacing: 0%;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #EEF2F5;
+  transition: background-color 0.3s;
+}
+
+.tab.active {
+  background-color: white;
+}
+
+
+.tab-content {
+  padding: 20px;
+  background-color: #fff;
+}
+
+.table-main th,
+.table-main td {
+  color: #404D61;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24.2px;
+  letter-spacing: 0%;
+  border: none;
+}
+
+.table-main th {
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the table header */
+}
+
+.table-main tr:last-child td {
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the last table row */
+}
+.table-main tr {
+  display: block;
+  margin-bottom: 10px; /* Adds gap */
+}
+.table-main tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Adds row gap */
+}
+
+.table-main th, 
+.table-main td {
+  flex: 1; /* Ensures equal width distribution */
+  text-align: left;
+  padding: 10px;
+}
+
+.table-main td.status-completed {
+  background-color: #107C1033;
+  border: 1px solid #107C10;
+  border-radius: 4px;
+  color:#107C10;
+}
+
+.table-main td.status-live {
+  background-color: #767CFF33;
+  border: 1px solid #767CFF;
+  border-radius: 4px;
+  color: #767CFF;
+}
+
+.table-main td.status-upcoming {
+  background-color: #FFCD2333;
+  border: 1px solid #FFCD23;
+  border-radius: 4px;
+  color: #FFCD23;
+}
+
+/* Add max-width to status and event date columns */
+.table-main th.event-header,
+.table-main td.event-cell,
+.table-main th.status-header,
+.table-main td.status-cell,
+.table-main th.date-header,
+.table-main td.date-cell {
+  min-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===========================
+   Publish & Preview Tab Styles
+   =========================== */
+
+   .publish-preview-container {
+    /* padding: 20px; */
+    background: #fff;
+    border-radius: 8px;
+  }
+
+  
+  .publish-preview-container h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 10px;
+   
+  }
+  
+  .publish-preview-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .publish-preview-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .publish-preview-group.full-width {
+    grid-column: span 2;
+  }
+  
+  .publish-preview-group label {
+    font-family: Roboto;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  
+  .publish-preview-group input,
+  .publish-preview-group textarea {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .publish-preview-group textarea {
+    min-height: 80px;
+    resize: none;
+  }
+  
+  /* Upload Box */
+  .publish-preview-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .publish-preview-upload i {
+    font-size: 24px;
+    color: #767CFF;
+  }
+  
+  .publish-preview-upload span {
+    display: block;
+    font-size: 14px;
+    color: #767CFF;
+  }
+  
+  /* Make Live Button */
+  .publish-preview-btn {
+    background-color: #767CFF;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+  }
+  
