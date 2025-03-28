@@ -3,7 +3,7 @@ import 'hammerjs'
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';  
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,78 +29,31 @@ import { SplitterModule } from '@progress/kendo-angular-layout';
 
 import { MenuModule } from '@progress/kendo-angular-menu';
 import { PDFExportModule } from "@progress/kendo-angular-pdf-export";
-import { ChatModule } from '@memberjunction/ng-chat';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+
+import { LoginComponent } from './modules/login/login.component';
 import { MarkdownModule } from 'ngx-markdown';
-import { ManageEventComponent } from './modules/manage-event/manage-event.component';
-import { SidebarComponent } from './modules/sidebar/sidebar.component';
-import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstract.component';
-
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDividerModule } from '@angular/material/divider';
-import { CreateEventDialogComponent } from './components/create-event-dialog/create-event-dialog.component';
-import { EventDetailsComponent } from './modules/manage-event/event-details/event-details.component';
-
-import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
-import { ViewEventComponent } from './modules/view-event/view-event.component';
-import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component';
-import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
-import { CreateSessionDialogComponent } from './components/create-session-dialog/create-session-dialog.component';
-import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abstract-form.component';
-import { ManageScorecardComponent } from './modules/manage-scorecard/manage-scorecard.component';
-import { ScorecardDetailsComponent } from './modules/manage-scorecard/scorecard-details/scorecard-details.component';
-import { CreateScorecardDialogComponent } from './components/create-scorecard-dialog/create-scorecard-dialog.component';
-import { CreateCriteriaDialogComponent } from './components/create-criteria-dialog/create-criteria-dialog.component';
-import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
-
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ManageEventComponent,
-    SidebarComponent,
-    ManageAbstractComponent,
-    CreateEventDialogComponent,
-    EventDetailsComponent,
-    ViewEventComponent,
-    ManageAbstractDetailsComponent,
-    ViewDetailsComponent,
-    UserAbstractFormComponent,
-    SessionDetailsComponent,
-    CreateSessionDialogComponent,
-    ManageScorecardComponent,
-    ScorecardDetailsComponent,
-    CreateScorecardDialogComponent,
-    CreateCriteriaDialogComponent,
-    ErrorDialogComponent
+    LoginComponent
   ],
   imports: [
-    MatDialogModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatDividerModule,
-    ReactiveFormsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
     BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     AuthModule.forRoot({
-      domain: environment.AUTH0_DOMAIN,
-      clientId: environment.AUTH0_CLIENTID,
+      domain: environment.CLIENT_AUTHORITY,
+      clientId: environment.CLIENT_ID,
       authorizationParams: {
         redirect_uri: window.location.origin
       },
-      cacheLocation: 'localstorage',
+      cacheLocation: 'localstorage', 
       useRefreshTokens: true
     }),
+    BrowserAnimationsModule,
     DropDownsModule,
     GridModule,
     ChartsModule,
@@ -117,15 +70,15 @@ import { ErrorDialogComponent } from './components/error-dialog/error-dialog.com
     SplitterModule,
     MenuModule,
     PDFExportModule,
-    ChatModule,
     MarkdownModule.forRoot(),
   ],
   providers: [
-    CurrencyPipe,
-    DecimalPipe
+    CurrencyPipe, 
+    DecimalPipe,
+    provideHttpClient(withInterceptorsFromDi())
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {
+export class AppModule { 
 }
