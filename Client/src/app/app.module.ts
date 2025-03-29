@@ -31,23 +31,64 @@ import { MenuModule } from '@progress/kendo-angular-menu';
 import { PDFExportModule } from "@progress/kendo-angular-pdf-export";
 import { ChatModule } from '@memberjunction/ng-chat';
 import { MarkdownModule } from 'ngx-markdown';
+import { ManageEventComponent } from './modules/manage-event/manage-event.component';
+import { SidebarComponent } from './modules/sidebar/sidebar.component';
+import { ManageAbstractComponent } from './modules/manage-abstract/manage-abstract.component';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDividerModule } from '@angular/material/divider';
+import { CreateEventDialogComponent } from './components/create-event-dialog/create-event-dialog.component';
+import { EventDetailsComponent } from './modules/manage-event/event-details/event-details.component';
 
-
-
+import { ManageAbstractDetailsComponent } from './modules/manage-abstract-details/manage-abstract-details.component';
+import { ViewEventComponent } from './modules/view-event/view-event.component';
+import { ViewDetailsComponent } from './modules/view-event/view-details/view-details.component';
+import { SessionDetailsComponent } from './modules/manage-event/session-details/session-details.component';
+import { CreateSessionDialogComponent } from './components/create-session-dialog/create-session-dialog.component';
 import { UserAbstractFormComponent } from './modules/user-abstract-form/user-abstract-form.component';
-
+import { ManageScorecardComponent } from './modules/manage-scorecard/manage-scorecard.component';
+import { ScorecardDetailsComponent } from './modules/manage-scorecard/scorecard-details/scorecard-details.component';
+import { CreateScorecardDialogComponent } from './components/create-scorecard-dialog/create-scorecard-dialog.component';
+import { CreateCriteriaDialogComponent } from './components/create-criteria-dialog/create-criteria-dialog.component';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserAbstractFormComponent
-
+    ManageEventComponent,
+    SidebarComponent,
+    ManageAbstractComponent,
+    CreateEventDialogComponent,
+    EventDetailsComponent,
+    ViewEventComponent,
+    ManageAbstractDetailsComponent,
+    ViewDetailsComponent,
+    UserAbstractFormComponent,
+    SessionDetailsComponent,
+    CreateSessionDialogComponent,
+    ManageScorecardComponent,
+    ScorecardDetailsComponent,
+    CreateScorecardDialogComponent,
+    CreateCriteriaDialogComponent,
+    ErrorDialogComponent
   ],
   imports: [
+    MatDialogModule,
     ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
