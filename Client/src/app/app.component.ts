@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
 
       // Check to see if the user has access
       const md: Metadata = new Metadata();
+      console.log("Current User ",md.CurrentUser);
       if (!md.CurrentUser){
         console.error("User is logged in but no user found in metadata");
         this.NavigateToLogin();
