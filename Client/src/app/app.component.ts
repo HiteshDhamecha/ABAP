@@ -7,10 +7,12 @@ import { environment } from 'src/environments/environment';
 import { LoginComponent } from './modules/login/login.component';
 import { UserService } from './service/user.service';
 import { LoadGeneratedEntities } from 'mj_generatedentities';
+LoadGeneratedEntities();
+import { AbstractEntity } from 'mj_generatedentities';
 
 export type RefreshTokenFunction = () => Promise<string>;
 
-LoadGeneratedEntities();
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -108,6 +110,8 @@ export class AppComponent implements OnInit {
         console.log("App setup complete");
         localStorage.setItem(environment.TOKEN_CACHE_KEY, token);
 
+        this.submitAbstract();
+
         this.loginComponent?.SetLoading(false);
         if(md.CurrentUser.Type.trim()=='Owner'){
           this.router.navigate(['/event-settings']);
@@ -131,7 +135,19 @@ export class AppComponent implements OnInit {
     }
 }
 
-
+async submitAbstract() {
+  const md = new Metadata();
+  const abstractEntity = await md.GetEntityObject<AbstractEntity>('Abstracts');
+  abstractEntity.SessionID = "3AEE2703-25DF-4512-8AD0-2B82D62A4474";
+abstractEntity.UserID = "3AEE2703-25DF-4512-8AD0-2B82D62A4474";
+console.log('Abstract Entity: ', abstractEntity);
+if(await abstractEntity.Save()){
+  alert('Abstract form submitted!');
+}else{
+  console.log(abstractEntity.LatestResult);
+  alert('Abstract form Not Submitted!');
+}
+}
   private NavigateToLogin(): void {
     this.loginComponent?.SetLoading(false);
     //this.router.navigate(['/']);
