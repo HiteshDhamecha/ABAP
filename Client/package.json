@@ -1,6 +1,6 @@
 {
-  "name": "abstracts-ui",
-  "description": "Abstarcts Application UI",
+  "name": "abstracts",
+  "description": "Abstracts UI",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -20,7 +20,7 @@
     "@angular/localize": "18.0.2",
     "@angular/platform-browser": "18.0.2",
     "@angular/platform-browser-dynamic": "18.0.2",
-    "@angular/router": "18.0.2",
+    "@angular/router": "^18.0.2",
     "@azure/msal-angular": "^3.0.11",
     "@memberjunction/core": "2.30.0",
     "@memberjunction/core-entities": "2.30.0",
@@ -44,7 +44,7 @@
     "@progress/kendo-licensing": "^1.3.5",
     "@progress/kendo-theme-default": "8.0.1",
     "hammerjs": "^2.0.0",
-    "mj_generatedentities": "file:../GeneratedEntities",
+    "mj_generatedentities": "1.0.0",
     "rxjs": "^7.8.1",
     "tslib": "^2.3.0",
     "zone.js": "^0.14.0"
