@@ -1,0 +1,111 @@
+<div class="heading-row">
+  <div class="title">Manage Event</div>
+  <div class="add-event">
+    <button class="add-event-btn" (click)="openCreateEventDialog()">Add New Event</button>
+  </div>
+</div>
+<div class="container-manage">
+  <div class="tabs">
+    <div class="tab" style=" border-top-left-radius: 8px; border-bottom-left-radius: 8px;"
+      [class.active]="selectedTab === 'event-settings'" (click)="selectTab('event-settings')">
+      <i class="fa fa-user"></i>&nbsp;
+      <span class="tab-title">Event Settings</span>
+    </div>
+    <div class="tab" style="  border-top-right-radius: 8px; border-bottom-right-radius: 8px;"
+      [class.active]="selectedTab === 'publish-preview'" (click)="selectTab('publish-preview')">
+      <i class="fa fa-user"></i>&nbsp;
+      <span class="tab-title">Preview & Publish</span>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div *ngIf="selectedTab === 'event-settings'">
+      <table mat-table [dataSource]="events" class=" table-main">
+        <!-- Event Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="event-header"> Event Name </th>
+          <td mat-cell *matCellDef="let event" class="event-cell"> {{event.name}} </td>
+        </ng-container>
+
+        <!-- Event Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="date-header"> Event Date </th>
+          <td mat-cell *matCellDef="let event" class="date-cell"> {{event.date| date:'MM/dd/yyyy'}} </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="status-header"> Status </th>
+          <td mat-cell *matCellDef="let event"class="status-cell" [ngClass]="{
+            'status-completed': event.status === 'Completed',
+            'status-live': event.status === 'Live',
+            'status-upcoming': event.status === 'Upcoming'
+          }"> {{event.status}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let event; columns: displayedColumns;"
+        (click)="viewEventDetails(event)"
+        style="cursor: pointer;">
+      </tr>      
+    </table>
+    </div>
+    <!-- Publish & Preview Tab -->
+<div *ngIf="selectedTab === 'publish-preview'" class="publish-preview-container">
+  <h3 >Personal Details</h3>
+  <div class="publish-preview-form">
+    <div class="publish-preview-group">
+      <label>First Name</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Last Name</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Email</label>
+      <input type="email" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Affiliation</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Job Title</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Phone Number</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group">
+      <label>Social Media Links</label>
+      <input type="text" placeholder="Enter">
+    </div>
+    <div class="publish-preview-group full-width">
+      <label>Previous Speaking Experiences</label>
+      <textarea placeholder="Autosize height based on content lines"></textarea>
+    </div>
+  </div>
+
+  <h3>Submission Details</h3>
+  <div class="publish-preview-form">
+    <div class="publish-preview-group full-width">
+      <label>Topic</label>
+      <input type="text" placeholder="Enter topic">
+    </div>
+    <div class="publish-preview-group full-width">
+      <label>Summary</label>
+      <textarea placeholder="Autosize height based on content lines"></textarea>
+    </div>
+    <div class="publish-preview-group full-width">
+      <label>Attachment</label>
+      <div class="publish-preview-upload">
+        <i class="fa fa-cloud-upload"></i>
+        <span>Upload</span>
+      </div>
+    </div>
+  </div>
+  <button class="publish-preview-btn">Make Live</button>
+</div>
+  </div>
+</div>

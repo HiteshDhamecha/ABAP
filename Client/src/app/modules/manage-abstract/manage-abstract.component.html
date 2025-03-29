@@ -1,0 +1,29 @@
+<div class="manage-abstract-container">
+  <h2>Manage Abstract</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Speaker Name</th>
+          <th>Event Name</th>
+          <th>Session Name</th>
+          <th>Submission Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let abstract of abstracts" (click)="viewDetails(abstract.speaker)" class="clickable-row">
+          <td>{{ abstract.speaker }}</td>
+          <td>{{ abstract.event || '-' }}</td>
+          <td>{{ abstract.session || '-' }}</td>
+          <td>{{ abstract.date }}</td>
+          <td>
+            <span class="status" [ngClass]="getStatusClass(abstract.status)">
+              {{ abstract.status || 'Pending' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

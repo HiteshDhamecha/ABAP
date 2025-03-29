@@ -1,0 +1,25 @@
+<div class="title">Session Details</div>
+<div class="session-details-container">
+    <form [formGroup]="sessionForm">
+      <div class="form-group">
+        <label for="name">Session Name:</label>
+        <p>{{ session.Name }}</p>
+      </div>
+      <div class="form-group">
+        <label for="sessionTime">Session Time:</label>
+        <p>{{ session.SessionStartDate | date:'shortTime' }} - {{ session.SessionEndDate | date:'shortTime' }}</p>
+      </div>
+      <div class="form-group">
+        <label for="title">Session Topic:</label>
+        <p>{{ session.Title }}</p>
+      </div>
+      <div class="form-group">
+        <label for="title">Speaker Score:</label>
+        <p>{{ session.UserPrompt }}</p>
+      </div>
+      <div class="form-group">
+        <label for="title">Abstract Cutoff Score:</label>
+        <p>{{ session.UserPrompt1 }}</p>
+      </div>
+    </form>
+  </div>

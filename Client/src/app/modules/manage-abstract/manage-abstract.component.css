@@ -1,0 +1,72 @@
+/* .manage-abstract-container {
+  font-family: 'Inter', sans-serif;
+  } */
+  
+  /* Style for the heading */
+.manage-abstract-container h2 {
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+  
+  .table-container {
+    overflow-x: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    background: white;
+    color: #404D61;
+  }
+  
+  th {
+    background: white;
+    font-weight: normal;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: normal;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .selected {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+  }
+  
+  .rejected {
+    background-color: #ffcdd2;
+    color: #c62828;
+  }
+
+  .pending {
+    background-color: #ffeb3b; /* Yellow */
+    color: #856404;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+  

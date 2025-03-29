@@ -1,0 +1,241 @@
+.heading-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.title{
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32.78px;
+  letter-spacing: 0%;
+  padding-bottom: 20px;
+}
+.edit-event-btn{
+  background-color:#767CFF;
+  width: 140;
+  height: 30;
+  gap: 10px;
+  border-radius: 4px;
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  border-width: 1px;
+  border: none;
+  color: #fff;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19.36px;
+  letter-spacing: 0%;
+  text-align: center;
+}
+.add-new-session-btn{
+  margin-left: 20px;
+}
+.event-details-container {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 20px;
+}
+
+h2 {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+p {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 8px;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.status {
+  padding: 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.status.completed {
+  background-color: #107C1033;
+  border: 1px solid #107C10;
+  color: #107C10;
+}
+
+.status.live {
+  background-color: #767CFF33;
+  border: 1px solid #767CFF;
+  color: #767CFF;
+}
+
+.status.upcoming {
+  background-color: #FFCD2333;
+  border: 1px solid #FFCD23;
+  color: #FFCD23;
+}
+
+.event-details-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button[mat-raised-button] {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 0 10px;
+}
+/* Session Tablevent-headere Styles */
+.session-details-container {
+  margin-top: 20px;
+}
+
+.table-main th,
+.table-main td {
+  color: #404D61;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24.2px;
+  letter-spacing: 0%;
+  border: none;
+}
+
+.table-main th {
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the table header */
+}
+
+.table-main tr:last-child td {
+  border-bottom: 1px solid #ccc;
+  /* Add border to the bottom of the last table row */
+}
+.table-main tr {
+  display: block;
+  margin-bottom: 10px; /* Adds gap */
+}
+.table-main tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Adds row gap */
+}
+
+.table-main th, 
+.table-main td {
+  flex: 1; /* Ensures equal width distribution */
+  text-align: left;
+  padding: 10px;
+}
+
+/* Add max-width to status and event date columns */
+.table-main th.session-header,
+.table-main td.session-cell,
+.table-main th.topic-header,
+.table-main td.topic-cell,
+.table-main th.time-header,
+.table-main td.time-cell {
+  min-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status-badge {
+  padding: 8px;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+}
+.status-badge.completed {
+  background-color: #107C1033;
+  border: 1px solid #107C10;
+  color: #107C10;
+}
+.status-badge.live {
+  background-color: #767CFF33;
+  border: 1px solid #767CFF;
+  color: #767CFF;
+}
+.status-badge.upcoming {
+  background-color: #FFCD2333;
+  border: 1px solid #FFCD23;
+  color: #FFCD23;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.event-header h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color:#404D61;
+}
+.event-description {
+  color:#404D61;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+.event-dates {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+.date-label{
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+
+}

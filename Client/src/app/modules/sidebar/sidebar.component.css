@@ -1,0 +1,50 @@
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  padding: 10px;
+  height: 100%;
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.logo img {
+  max-width: 180px;
+  height: auto;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19.12px;
+  letter-spacing: 0%;
+}
+
+.sidebar ul li:hover {
+  background-color: #e9ecef;
+}
+
+.sidebar ul li.selected {
+  background-color: #767CFF;
+  color: white;
+}
+
+.tab-icon {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
