@@ -1,11 +1,12 @@
-/// <reference types="@angular/localize" />
-
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
-import { LoadGeneratedEntities } from 'mj_generatedentities'
-import './polyfills';
-LoadGeneratedEntities();
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-    
+async function initAndBootstrap() {
+  platformBrowserDynamic().bootstrapModule(AppModule)
+    .then(ref => {
+      //LogStatus('Bootstrap success: ' + ref);
+    })
+    .catch(err => console.error(err));
+}
+
+initAndBootstrap();

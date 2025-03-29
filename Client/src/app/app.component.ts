@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, IdToken, User } from '@auth0/auth0-angular';
 import { Metadata } from '@memberjunction/core';
-import { GraphQLDataProvider, GraphQLProviderConfigData, setupGraphQLClient } from '@memberjunction/graphql-dataprovider';
-import { AbstractEntity, LoadGeneratedEntities } from 'mj_generatedentities';
+import {LoadGeneratedEntities } from 'mj_generatedentities';
 LoadGeneratedEntities();
+import { GraphQLDataProvider, GraphQLProviderConfigData, setupGraphQLClient } from '@memberjunction/graphql-dataprovider';
+import { AbstractEntity } from 'mj_generatedentities';
 import { environment } from 'src/environments/environment';
 
 
@@ -73,7 +74,6 @@ export class AppComponent implements OnInit {
 
       // Check to see if the user has access
       const md: Metadata = new Metadata();
-      console.log("Current User ",md.CurrentUser);
       if (!md.CurrentUser){
         console.error("User is logged in but no user found in metadata");
         this.NavigateToLogin();

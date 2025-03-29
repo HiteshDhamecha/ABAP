@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "Abstracts": {
@@ -11,49 +11,44 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "microsoft-cognitiveservices-speech-sdk"
-            ],
-            "outputPath": {
-              "base": "dist/abstracts"
-            },
+            "outputPath": "dist/abstracts",
             "index": "src/index.html",
+            "main": "src/main.ts",
             "polyfills": [
-              "zone.js",
-              "@angular/localize/init",
-              "src/polyfills.ts"
-              
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/staticwebapp.config.json"
+              "src/staticwebapp.config.json",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@progress/kendo-theme-default/dist",
+                "output": "/assets/kendo-theme-default/dist"
+              }
             ],
             "styles": [
               {
-                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
-              },
-              "src/styles.css",
-              "src/styles.scss"
+                "input": "src/styles/main.scss"
+              }
             ],
-            "scripts": [],
-            "browser": "src/main.ts"
+            "scripts": []
           },
           "configurations": {
             "production": {
+              "optimization": false,
               "budgets": [
                 {
                   "type": "initial",
                   "maximumWarning": "15mb",
-                  "maximumError": "20mb"
+                  "maximumError": "50mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "9kb"
+                  "maximumWarning": "6kb"
                 }
               ],
               "outputHashing": "all"
@@ -68,14 +63,50 @@
               ]
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
+              "sourceMap": {
+                "scripts": true,
+                "styles": true,
+                "vendor": true,
+                "hidden": false
+              },
               "namedChunks": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.development.ts"
+                }
+              ]
+            },
+            "local_modules": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": {
+                "scripts": true,
+                "styles": true,
+                "vendor": true,
+                "hidden": false
+              },
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ],
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                "src/staticwebapp.config.json",
+                {
+                  "glob": "**/*",
+                  "input": "node_modules/@progress/kendo-theme-default/dist",
+                  "output": "/assets/kendo-theme-default/dist"
                 }
               ]
             }
@@ -88,11 +119,14 @@
             "production": {
               "buildTarget": "Abstracts:build:production"
             },
+            "staging": {
+              "buildTarget": "Abstracts:build:staging"
+            },
             "development": {
               "buildTarget": "Abstracts:build:development"
             },
-            "staging": {
-              "buildTarget": "Abstracts:build:staging"
+            "local_modules": {
+              "buildTarget": "Abstracts:build:local_modules"
             }
           },
           "defaultConfiguration": "development"
@@ -108,9 +142,7 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing",
-              "@angular/localize/init",
-              "src/polyfills.ts"
+              "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
