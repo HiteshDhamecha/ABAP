@@ -132,7 +132,7 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
     await userPersonalDetailsEntity.Save();
     if (this.uploadedFile) {
-      this.abstractDetails.uploadUrl = "google.com";
+      this.abstractDetails.uploadUrl = "https://etcidevabpastorage.blob.core.windows.net/abstract-uploads/Cheat-Sheet-Data-Volumes.pdf";
     } else {
       this.abstractDetails.uploadUrl = '';
     }

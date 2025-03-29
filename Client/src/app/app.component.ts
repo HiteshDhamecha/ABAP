@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.AutoLogin();
   }
 
   public onOutletLoaded(event: any): void {
@@ -108,7 +107,6 @@ export class AppComponent implements OnInit {
 
         console.log("App setup complete");
         localStorage.setItem(environment.TOKEN_CACHE_KEY, token);
-        this.submitAbstract();
 
         this.loginComponent?.SetLoading(false);
         if(md.CurrentUser.Type.trim()=='Owner'){
@@ -132,21 +130,6 @@ export class AppComponent implements OnInit {
       this.NavigateToLogin();
     }
 }
-
- async submitAbstract() {
-      const md = new Metadata();
-      const abstractEntity = await md.GetEntityObject<AbstractEntity>('Abstracts');
-      abstractEntity.SessionID = "58FCC61A-BF88-4E54-9F08-37F8EFD2BF58";
-      abstractEntity.UserID = "58FCC61A-BF88-4E54-9F08-37F8EFD2BF58";
-      console.log(abstractEntity)
-      if(await abstractEntity.Save()){
-        alert('Abstract form submitted!');
-      }else{
-        console.log("Error saving Abstarct ", abstractEntity.LatestResult)        
-        alert('Abstract form Not Submitted! ');
-      }
-      
-    }
   private NavigateToLogin(): void {
     this.loginComponent?.SetLoading(false);
     //this.router.navigate(['/']);

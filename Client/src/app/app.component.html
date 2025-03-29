@@ -1,5 +1,6 @@
-<div class="app-wrap">
-  <div class="main-content">
-      <router-outlet></router-outlet>
-  </div>  
+<div class="container">
+  <app-sidebar *ngIf="showSidebar"></app-sidebar>
+  <div class="content" [class.full-width]="!showSidebar">
+    <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+  </div>
 </div>
