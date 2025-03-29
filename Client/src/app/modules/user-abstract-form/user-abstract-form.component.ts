@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Metadata, RunView, RunViewResult } from '@memberjunction/core';
-import { Session } from 'inspector/promises';
 import { AbstractEntity, SessionEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
-import { AzureBlobService } from 'src/app/service/azure-blob.service';
 import { UserService } from 'src/app/service/user.service';
 
 interface AbstractDetails {
@@ -46,7 +44,7 @@ export class UserAbstractFormComponent implements OnInit {
   submittingForm: boolean = false;
   eventID: string | undefined;
 
-  constructor(private router: Router, private route: ActivatedRoute, @Inject(UserService) private user: UserService, private azureBlob: AzureBlobService) { }
+  constructor(private router: Router, private route: ActivatedRoute, @Inject(UserService) private user: UserService) { }
 
   async ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -134,7 +132,7 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
     await userPersonalDetailsEntity.Save();
     if (this.uploadedFile) {
-      this.abstractDetails.uploadUrl = await this.azureBlob.uploadFile(this.uploadedFile);
+      this.abstractDetails.uploadUrl = "google.com";
     } else {
       this.abstractDetails.uploadUrl = '';
     }
