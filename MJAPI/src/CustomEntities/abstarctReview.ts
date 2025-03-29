@@ -204,7 +204,7 @@ async function getScoreDetails(user: UserInfo, sessionID: string): Promise<{ tit
     const result: RunViewResult<SessionEntity> = await rv.RunView<SessionEntity>({
       EntityName: 'Sessions',
       ExtraFilter: `ID = '${sessionID}'`,
-      Fields: ['Title', 'WeightedScore']
+      Fields: ['Title']
     }, user);
 
     if (!result.Success || result.Results.length === 0) {

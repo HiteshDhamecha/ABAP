@@ -8,10 +8,12 @@ LoadGeneratedActions();
 import { LoadProvider } from '@memberjunction/communication-sendgrid';
 LoadProvider();
 
-// import {LoadCustomAbstract } from './CustomEntities/abstracts.server';
-// LoadCustomAbstract();
+import {LoadCustomAbstract } from './CustomEntities/abstracts.server';
+ LoadCustomAbstract();
 import {LoadCustomScoreBoard } from './CustomEntities/scorecard.server';
+import { LoadCustomSession } from './CustomEntities/session.server';
 LoadCustomScoreBoard();
+LoadCustomSession();
 //import './auth/exampleNewUserSubClass'; // make sure this new class gets registered
  
 const localPath = (p: string) => {
