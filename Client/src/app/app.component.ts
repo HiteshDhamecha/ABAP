@@ -4,6 +4,7 @@ import { AuthService, IdToken, User } from '@auth0/auth0-angular';
 import { Metadata } from '@memberjunction/core';
 import { GraphQLDataProvider, GraphQLProviderConfigData, setupGraphQLClient } from '@memberjunction/graphql-dataprovider';
 import { AbstractEntity, LoadGeneratedEntities } from 'mj_generatedentities';
+LoadGeneratedEntities();
 import { environment } from 'src/environments/environment';
 
 
@@ -117,10 +118,10 @@ export class AppComponent implements OnInit {
       abstractEntity.UserID = "58FCC61A-BF88-4E54-9F08-37F8EFD2BF58";
       console.log(abstractEntity)
       if(await abstractEntity.Save()){
-        alert('App Abstract form submitted!');
+        alert('Abstract form submitted!');
       }else{
         console.log("Error saving Abstarct ", abstractEntity.LatestResult)        
-        alert('APP Abstract form Not Submitted! ');
+        alert('Abstract form Not Submitted! ');
       }
       
     }
