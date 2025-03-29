@@ -20,7 +20,7 @@
     "@angular/localize": "18.0.2",
     "@angular/platform-browser": "18.0.2",
     "@angular/platform-browser-dynamic": "18.0.2",
-    "@angular/router": "^18.0.2",
+    "@angular/router": "18.0.2",
     "@azure/msal-angular": "^3.0.11",
     "@memberjunction/core": "2.30.0",
     "@memberjunction/core-entities": "2.30.0",
