@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Metadata, RunView, RunViewResult } from '@memberjunction/core';
 import { AbstractEntity, SessionEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
 import { UserService } from 'src/app/service/user.service';
+import { AzureBlobService } from 'src/app/service/azure-blob.service';
 
 interface AbstractDetails {
   firstName: string;
@@ -44,7 +45,7 @@ export class UserAbstractFormComponent implements OnInit {
   submittingForm: boolean = false;
   eventID: string | undefined;
 
-  constructor(private router: Router, private route: ActivatedRoute, @Inject(UserService) private user: UserService) { }
+  constructor(private router: Router, private route: ActivatedRoute, @Inject(UserService) private user: UserService,@Inject(AzureBlobService) private azureBlob: AzureBlobService) { }
 
   async ngOnInit() {
     this.route.paramMap.subscribe(async params => {
@@ -132,7 +133,7 @@ export class UserAbstractFormComponent implements OnInit {
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
     await userPersonalDetailsEntity.Save();
     if (this.uploadedFile) {
-      this.abstractDetails.uploadUrl = "https://etcidevabpastorage.blob.core.windows.net/abstract-uploads/Cheat-Sheet-Data-Volumes.pdf";
+      this.abstractDetails.uploadUrl = await this.azureBlob.uploadFile(this.uploadedFile);
     } else {
       this.abstractDetails.uploadUrl = '';
     }
