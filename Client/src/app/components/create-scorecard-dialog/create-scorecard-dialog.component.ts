@@ -30,7 +30,8 @@ export class CreateScorecardDialogComponent implements OnInit {
   ) {
     this.scorecardForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      cutoffscore: [null, Validators.required]
     });
   }
 
@@ -41,7 +42,7 @@ export class CreateScorecardDialogComponent implements OnInit {
       this.scorecardEntity.Name = this.scorecardForm.value.name;
       this.scorecardEntity.Description = this.scorecardForm.value.description;
       console.log("cut off score",this.scorecardForm.value.cutoffscore);
-      this.scorecardEntity.CutOffScore=500;
+      this.scorecardEntity.CutOffScore=this.scorecardForm.value.cutoffscore;
       // Log the scorecard entity values
       console.log('Saving scorecard:', this.scorecardEntity);
 
