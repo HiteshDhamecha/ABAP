@@ -61,8 +61,8 @@ jobs:
       - name: Build Client
         run: |
           cd Client
-          npm link ../GeneratedEntities
-          npm install
+          npm link ../GeneratedEntities --force
+          npm install --force
           npm run build
           
       - name: Zip artifact for Client deployment
