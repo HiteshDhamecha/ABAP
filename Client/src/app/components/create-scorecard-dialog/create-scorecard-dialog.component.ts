@@ -19,7 +19,8 @@ export class CreateScorecardDialogComponent implements OnInit {
     this.scorecardEntity = await this.md.GetEntityObject<ScoreBoardEntity>('Score Boards');
     this.scorecardForm.patchValue({
       name: this.scorecardEntity.Name,
-      description: this.scorecardEntity.Description
+      description: this.scorecardEntity.Description,
+      cutoffscore:this.scorecardEntity.CutOffScore
     });
   }
 
@@ -39,7 +40,8 @@ export class CreateScorecardDialogComponent implements OnInit {
       // Update the scorecard entity with form values
       this.scorecardEntity.Name = this.scorecardForm.value.name;
       this.scorecardEntity.Description = this.scorecardForm.value.description;
-
+      console.log("cut off score",this.scorecardForm.value.cutoffscore);
+      this.scorecardEntity.CutOffScore=500;
       // Log the scorecard entity values
       console.log('Saving scorecard:', this.scorecardEntity);
 
@@ -47,7 +49,7 @@ export class CreateScorecardDialogComponent implements OnInit {
       try {
         const saveResult: boolean = await this.scorecardEntity.Save();
         if (!saveResult) {
-          LogError('Error saving scorecard entity:', undefined, this.scorecardEntity.LatestResult.Message);
+          console.log('Error saving scorecard entity:', this.scorecardEntity.LatestResult);
           this.isSubmitting = false;
         } else {
           window.location.reload();

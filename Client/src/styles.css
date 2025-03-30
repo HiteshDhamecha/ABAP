@@ -1,39 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+:root {
+    --main-font: 'Roboto', sans-serif;
+    --primary: #5cb9b9;
+    --secondary: #2f3745;
+    --secondary-dark: #1d232b;
+    --subtle-600: #ededf0;
+    --subtle-700: #f0f6ff;
+    --subtle-800: #aaafb7;
+    --border-radius: .5rem;
+    --box-shadow: 0 0px 10px rgba(0,0,0,.1);
+    --alert: #ea1026;
+    --transition-time: .3s;
+}
+
 html,
-body,
-my-app {
+body {
     padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
     height: 100%;
-    overflow: hidden;
-} 
-
-my-app {
-    display: flex;
-    flex-direction: column;
+    box-sizing: border-box;
+    background: var(--subtle-600);
 }
 
-kendo-drawer-container {
-    flex: 1 1 auto;
-    overflow-y: auto;
+button {
+    cursor: pointer;
 }
-
-.k-icon {
-    font-size: 20px;
+.cdk-global-overlay-wrapper{   
+    position: absolute !important;
+    top: 50%;   
+    left: 50%;   
+    transform: translate(-50%, -50%); 
 }
-
-
-.custom-toolbar {
-    width: 100%;
-    background-color: #f6f6f6;
-    line-height: 10px;
-    border-bottom: inset;
-    border-bottom-width: 1px;
-    padding: 3px 8px;
-    color: #656565;
-}
-
-.mail-box{
-    margin-left: 20px;
-    font-weight: bold;
-    font-size: 17px;
-} 
- 
