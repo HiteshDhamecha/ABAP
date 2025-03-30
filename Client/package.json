@@ -80,7 +80,7 @@
     "stream-browserify": "^3.0.0",
     "tslib": "^2.5.3",
     "util": "^0.12.5",
-    "zone.js": "^0.15.0"
+    "zone.js": "^0.14.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.2",
