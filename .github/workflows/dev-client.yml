@@ -61,8 +61,8 @@ jobs:
       - name: Build Client
         run: |
           cd Client
-          npm link ../GeneratedEntities
-          npm install
+          npm link ../GeneratedEntities --legacy-peer-deps
+          npm install --legacy-peer-deps
           npm run build
           
       - name: Zip artifact for Client deployment
