@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Metadata, RunView, RunViewResult } from '@memberjunction/core';
+import { FileEntity } from '@memberjunction/core-entities';
 import { AbstractEntity, SessionEntity, UserPersonalDetailsEntity } from 'mj_generatedentities';
 import { UserService } from 'src/app/service/user.service';
-
 interface AbstractDetails {
   firstName: string;
   lastName: string;
@@ -17,6 +17,7 @@ interface AbstractDetails {
   summary: string;
   uploadUrl: string;
 }
+
 
 @Component({
   selector: 'user-abstract-form',
@@ -43,6 +44,7 @@ export class UserAbstractFormComponent implements OnInit {
   md = new Metadata();
   submittingForm: boolean = false;
   eventID: string | undefined;
+fileUrl: any;
 
   constructor(private router: Router, private route: ActivatedRoute, @Inject(UserService) private user: UserService) { }
 
@@ -125,17 +127,20 @@ export class UserAbstractFormComponent implements OnInit {
     abstractEntity.UserID = this.currentUser.ID;
     abstractEntity.AbstractText = this.abstractDetails.summary;
     abstractEntity.FileName = this.uploadedFile?.name ?? null;
+    userPersonalDetailsEntity.UserID=this.currentUser.ID;
     userPersonalDetailsEntity.Affiliation = this.abstractDetails.affiliation;
     userPersonalDetailsEntity.JobTitle = this.abstractDetails.jobTitle;
     userPersonalDetailsEntity.PhoneNumber = this.abstractDetails.phoneNumber;
     userPersonalDetailsEntity.SocialMediaLinks = this.abstractDetails.socialLinks;
     userPersonalDetailsEntity.PreviousSpeakingExperiences = this.abstractDetails.speakingExperiences;
     await userPersonalDetailsEntity.Save();
-    if (this.uploadedFile) {
-      this.abstractDetails.uploadUrl = "";
-    } else {
-      this.abstractDetails.uploadUrl = '';
-    }
+    // if (this.uploadedFile) {
+    //   this.abstractDetails.uploadUrl = "rrr";
+    // } else {
+    //   this.abstractDetails.uploadUrl = 'ttt';
+    // }
+    this.abstractDetails.uploadUrl=await this.getFileUrl();
+    console.log("this.abstractDetails.uploadUrl  ",this.abstractDetails.uploadUrl);
     if (this.abstractDetails.uploadUrl !== '') {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
       console.log('Abstract Entity: ', abstractEntity);
@@ -149,6 +154,20 @@ export class UserAbstractFormComponent implements OnInit {
         alert('Abstract form Not Submitted!');
       }
     }
+  }
+
+  async getFileUrl(){
+    const rv = new RunView();
+    const result: RunViewResult<FileEntity> = await rv.RunView<FileEntity>({
+      EntityName: 'Files',
+      OrderBy:'__mj_CreatedAt desc',
+      MaxRows: 1,
+      Fields:['Name']
+    });
+      if(result.Success && result.Results.length>0){
+        return `https://etcidevabpastorage.blob.core.windows.net/abstract-uploads/${result.Results[0].Name}`;
+      }
+      return "";
   }
   formatSessionTime(startDate: Date, endDate: Date): string {
     if (!startDate) return 'TBD';
@@ -164,4 +183,5 @@ export class UserAbstractFormComponent implements OnInit {
 
     return timeStr;
   }
+
 }

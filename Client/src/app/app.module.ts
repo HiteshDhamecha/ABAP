@@ -56,8 +56,8 @@ import { ScorecardDetailsComponent } from './modules/manage-scorecard/scorecard-
 import { CreateScorecardDialogComponent } from './components/create-scorecard-dialog/create-scorecard-dialog.component';
 import { CreateCriteriaDialogComponent } from './components/create-criteria-dialog/create-criteria-dialog.component';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
-
-
+import { FileStorageModule} from '@memberjunction/ng-file-storage'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -80,7 +80,9 @@ import { ErrorDialogComponent } from './components/error-dialog/error-dialog.com
     ErrorDialogComponent
   ],
   imports: [
+    HttpClientModule,
     MatDialogModule,
+    FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
@@ -92,6 +94,7 @@ import { ErrorDialogComponent } from './components/error-dialog/error-dialog.com
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FileStorageModule,
     FormsModule,
     AuthModule.forRoot({
       domain: environment.AUTH0_DOMAIN,

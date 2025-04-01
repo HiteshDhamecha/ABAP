@@ -66,7 +66,7 @@
             <textarea name="summary" [disabled]="submittingForm" maxlength="4000" required [(ngModel)]="abstractDetails.summary"
                 placeholder="Autosize height based on content lines"></textarea>
         </div>
-        <div *ngIf="!uploadedFile; else fileInfo" class="fileContainer publish-preview-group full-width">
+        <!-- <div *ngIf="!uploadedFile; else fileInfo" class="fileContainer publish-preview-group full-width">
             <label for="fileUpload">
                 <span>Attachment</span>
                 <div class="publish-preview-upload">
@@ -76,8 +76,8 @@
             </label>
             <input name="uploadFile" [disabled]="submittingForm" required type="file" accept="image/*, .doc, .docx, application/pdf" single hidden
                 id="fileUpload" (change)="handleFileInput($event)">
-        </div>
-        <ng-template #fileInfo>
+        </div> -->
+        <!-- <ng-template #fileInfo>
             <div class="fileContainer">
                 <span>Attachment</span>
                 <div class="fileInfo">
@@ -85,8 +85,13 @@
                     <i class="fa fa-trash" (click)="removeFile()"></i>
                 </div>
             </div>
-        </ng-template>
+        </ng-template> -->
+        <div class="container">
+            <mj-files-grid></mj-files-grid>
+          </div> 
     </div>
+
+ 
     <div class="submitBtnContainer">
         <button type="submit" [disabled]="submittingForm" class="publish-preview-btn">Submit</button>
     </div>
