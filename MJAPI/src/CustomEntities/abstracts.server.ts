@@ -14,10 +14,10 @@ export class AbstractEntityServer extends AbstractEntity {
         console.log("Abstarct Save Method Called");
         if (await super.Save(options)) { 
     
-            const filePath = this.UploadUrl;    
-            const fileName = path.basename(filePath);
+           // const filePath = this.UploadUrl;    
+           // const fileName = path.basename(filePath);
             let abstarctText = "";
-            abstarctText = await extractTextFromBlob(fileName);
+            abstarctText = this.AbstractText;
           
 
             // Review abstract

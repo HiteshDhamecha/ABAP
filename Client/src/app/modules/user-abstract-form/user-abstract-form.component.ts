@@ -139,7 +139,7 @@ fileUrl: any;
     // } else {
     //   this.abstractDetails.uploadUrl = 'ttt';
     // }
-    this.abstractDetails.uploadUrl=await this.getFileUrl();
+    this.abstractDetails.uploadUrl="https://etcidevabpastorage.blob.core.windows.net/abstract-uploads/"; //await this.getFileUrl();
     console.log("this.abstractDetails.uploadUrl  ",this.abstractDetails.uploadUrl);
     if (this.abstractDetails.uploadUrl !== '') {
       abstractEntity.UploadUrl = this.abstractDetails.uploadUrl;
